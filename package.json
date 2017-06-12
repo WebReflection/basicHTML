@@ -1,14 +1,23 @@
 {
   "name": "basichtml",
   "version": "0.0.0",
-  "description": "",
+  "description": "A NodeJS based, standard oriented, HTML implementation.",
   "main": "basichtml.js",
-  "scripts": {},
+  "scripts": {
+    "test": "istanbul cover test/all.js",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
+  },
   "author": "Andrea Giammarchi",
   "license": "ISC",
   "dependencies": {
+    "broadcast": "^2.0.2",
     "html-escaper": "^1.0.1",
     "hyperhtml": "^0.11.8",
     "parse5": "^3.0.2"
+  },
+  "devDependencies": {
+    "coveralls": "^2.13.1",
+    "istanbul": "^0.4.5",
+    "tressa": "^0.3.1"
   }
 }

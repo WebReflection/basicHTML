@@ -1,3 +1,4 @@
+const utils = require('./utils');
 const EventTarget = require('./EventTarget');
 
 const nullParent = node => resetParent(null, node);
@@ -5,13 +6,17 @@ const nullParent = node => resetParent(null, node);
 const removeFromParent = (parentNode, child) => {
   const cn = parentNode.childNodes;
   cn.splice(cn.indexOf(child), 1);
+  utils.disconnect(parentNode, child);
 };
 
-const resetParent = (parentNode, node) => {
-  if (node.parentNode && node.parentNode !== parentNode) {
-    removeFromParent(node.parentNode, node);
+const resetParent = (parentNode, child) => {
+  if (child.parentNode !== parentNode) {
+    if (child.parentNode) {
+      removeFromParent(child.parentNode, child);
+    }
+    child.parentNode = parentNode;
+    utils.connect(parentNode, child);
   }
-  node.parentNode = parentNode;
 };
 
 const stringifiedContent = el => {
@@ -38,8 +43,8 @@ module.exports = class Node extends EventTarget {
     } else {
       const i = this.childNodes.indexOf(node);
       if (-1 < i) this.childNodes.splice(i, 1);
-      else resetParent(this, node);
       this.childNodes.push(node);
+      if (i < 0) resetParent(this, node);
     }
     return node;
   }
@@ -53,8 +58,8 @@ module.exports = class Node extends EventTarget {
       node.childNodes.slice().forEach(node => this.insertBefore(node, child));
     } else {
       const i = this.childNodes.indexOf(child);
-      resetParent(this, node);
       this.childNodes.splice(i, 0, node);
+      resetParent(this, node);
     }
     return node;
   }
@@ -85,17 +90,19 @@ module.exports = class Node extends EventTarget {
   }
 
   get nextSibling() {
-    const parent = this.parentNode;
-    return parent ?
-      (parent.childNodes[parent.indexOf(this) + 1] || null) :
-      null;
+    if (this.parentNode) {
+      const cn = this.parentNode.childNodes;
+      return cn[cn.indexOf(this) + 1] || null;
+    }
+    return null;
   }
 
   get previousSibling() {
-    const parent = this.parentNode;
-    return parent ?
-      (parent.childNodes[parent.indexOf(this) - 1] || null) :
-      null;
+    if (this.parentNode) {
+      const cn = this.parentNode.childNodes;
+      return cn[cn.indexOf(this) - 1] || null;
+    }
+    return null;
   }
 
   get textContent() {

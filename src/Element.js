@@ -38,8 +38,9 @@ const specialAttribute = (owner, attr) => {
   switch (attr.name) {
     case 'class':
       owner.classList.value = attr.value;
-      break;
+      return true;
   }
+  return false;
 };
 
 const stringifiedNode = el => {
@@ -58,7 +59,7 @@ const stringifiedNode = el => {
     case 2:
       return typeof el.value === 'boolean' ?
         (el.value ? el.name : '') :
-        (el.name + '="' + escape(el.value) + '"');
+        (el.name + '="' + escape(el.value || '') + '"');
     case 3:
       return el.data;
     case 8:
@@ -133,16 +134,18 @@ module.exports = class Element extends Node {
   removeAttribute(name) {
     const attr = this.getAttributeNode(name);
     if (attr) {
+      const oldValue = attr.value;
       this.attributes.splice(this.attributes.indexOf(attr), 1);
-      attr.value = '';
+      attr.value = null;
       specialAttribute(this, attr);
     }
   }
 
   setAttribute(name, value) {
     const attr = this.getAttributeNode(name);
-    if (attr) attr.value = value;
-    else {
+    if (attr) {
+      attr.value = value;
+    } else {
       const attr = this.ownerDocument.createAttribute(name);
       attr.ownerElement = this;
       this.attributes.push(attr);
@@ -151,7 +154,8 @@ module.exports = class Element extends Node {
   }
 
   setAttributeNode(attr) {
-    const old = this.getAttributeNode(attr.name);
+    const name = attr.name;
+    const old = this.getAttributeNode(name);
     if (old === attr) return attr;
     else {
       if (attr.ownerElement) {
@@ -162,11 +166,13 @@ module.exports = class Element extends Node {
       else attr.ownerElement = this;
       if (old) {
         this.attributes.splice(this.attributes.indexOf(old), 1, attr);
-        specialAttribute(this, attr);
+        if (!specialAttribute(this, attr))
+          utils.notifyAttributeChanged(this, name, old.value, attr.value);
         return old;
       } else {
         this.attributes.push(attr);
-        specialAttribute(this, attr);
+        if (!specialAttribute(this, attr))
+          utils.notifyAttributeChanged(this, name, null, attr.value);
         return null;
       }
     }
@@ -193,7 +199,9 @@ module.exports = class Element extends Node {
   }
 
   set innerHTML(html) {
-    this.childNodes.splice(0, this.childNodes.length);
+    this.childNodes
+      .splice(0, this.childNodes.length)
+      .forEach(utils.disconnectChild);
     parse(html).childNodes.forEach(utils.injectNode, this);
   }
 
@@ -241,7 +249,7 @@ module.exports = class Element extends Node {
   }
 
   querySelector(css) {
-    return this.querySelectorAll(css)[0];
+    return this.querySelectorAll(css)[0] || null;
   }
 
   querySelectorAll(css) {

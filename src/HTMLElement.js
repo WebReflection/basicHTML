@@ -8,6 +8,7 @@ class HTMLElement extends Element {
   constructor(ownerDocument, name) {
     super(ownerDocument, name);
     this.dataset = new DOMStringMap(this);
+    this.isCustomElement = this.constructor !== HTMLElement;
   }
 }
 

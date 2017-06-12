@@ -1,10 +1,11 @@
 const afterChanges = dtl => {
-  const attr = dtl._ownerElement.getAttributeNode('class');
+  const el = dtl._ownerElement;
+  const attr = el.getAttributeNode('class');
   if (attr) {
     if (attr.value !== dtl.value) {
       attr.value = dtl.value;
     }
-  } else {
+  } else if (dtl.value) {
     el.setAttribute('class', dtl.value);
   }
 };
@@ -63,7 +64,7 @@ module.exports = class DOMTokenList extends Array {
 
   set value(className) {
     this.splice(0, this.length);
-    this.add(...className.trim().split(/\s+/));
+    this.add(...String(className || '').trim().split(/\s+/));
     afterChanges(this);
   }
 

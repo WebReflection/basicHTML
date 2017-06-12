@@ -1,9 +1,10 @@
+const utils = require('./utils');
 const Node = require('./Node');
 
 // interface Attr // https://dom.spec.whatwg.org/#attr
 module.exports = class Attr extends Node {
 
-  constructor(ownerElement, name, value) {
+  constructor(ownerElement, name, value = null) {
     super(ownerElement.ownerDocument);
     this.ownerElement = ownerElement;
     this.name = name;
@@ -17,12 +18,26 @@ module.exports = class Attr extends Node {
   }
 
   set value(_value) {
-    this._value = _value;
-    if (this.ownerElement) {
-      switch (this.name) {
-        case 'class':
-          this.ownerElement.classList.value = _value;
-          break;
+    const oldValue = this._value;
+    const isNull = _value == null;
+    if (!isNull) _value = String(_value);
+    if (oldValue !== _value) {
+      this._value = _value;
+      if (this.ownerElement) {
+        switch (this.name) {
+          case 'class':
+            const cl = this.ownerElement.classList;
+            if (isNull) {
+              cl.splice(0, cl.length);
+            } else {
+              cl.value = _value;
+            }
+            break;
+        }
+        utils.notifyAttributeChanged(
+          this.ownerElement,
+          this.name, oldValue, _value
+        );
       }
     }
   }

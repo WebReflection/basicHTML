@@ -1,3 +1,4 @@
+const CustomElementRegistry = require('./CustomElementRegistry');
 const Event = require('./Event');
 const Node = require('./Node');
 const DocumentType = require('./DocumentType');
@@ -7,8 +8,6 @@ const DocumentFragment = require('./DocumentFragment');
 const HTMLElement = require('./HTMLElement');
 const HTMLHtmlElement = require('./HTMLHtmlElement');
 const Text = require('./Text');
-
-const freeze = Object.freeze;
 
 const headTag = el => el.nodeName === 'HEAD';
 const bodyTag = el => el.nodeName === 'BODY';
@@ -20,14 +19,15 @@ function findById(child) {'use strict';
 // interface Document // https://dom.spec.whatwg.org/#document
 module.exports = class Document extends Node {
 
-  constructor() {
+  constructor(customElements = new CustomElementRegistry()) {
     super(null);
     this.nodeType = 9;
     this.nodeName = '#document';
     this.appendChild(new DocumentType());
     this.documentElement = new HTMLHtmlElement(this, 'html');
     this.appendChild(this.documentElement);
-    freeze(this.childNodes);
+    this.customElements = customElements;
+    Object.freeze(this.childNodes);
   }
 
   createAttribute(name) {
@@ -45,7 +45,8 @@ module.exports = class Document extends Node {
   }
 
   createElement(name) {
-    return new HTMLElement(this, name);
+    const CE = this.customElements.get(name);
+    return CE ? new CE(this, name) : new HTMLElement(this, name);
   }
 
   createElementNS(ns, name) {
@@ -76,6 +77,18 @@ module.exports = class Document extends Node {
     return this.childNodes[0] + this.documentElement.outerHTML;
   }
 
+  get head() {
+    const html = this.documentElement;
+    return  this.documentElement.childNodes.find(headTag) ||
+            html.insertBefore(this.createElement('head'), this.body);
+  }
+
+  get body() {
+    const html = this.documentElement;
+    return  html.childNodes.find(bodyTag) ||
+            html.appendChild(this.createElement('body'));
+  }
+
   // interface NonElementParentNode // https://dom.spec.whatwg.org/#nonelementparentnode
   getElementById(id) {
     const html = this.documentElement;
@@ -97,14 +110,6 @@ module.exports = class Document extends Node {
 
   get childElementCount() {
     return 1;
-  }
-
-  get head() {
-    return this.documentElement.childNodes.find(headTag) || null;
-  }
-
-  get body() {
-    return this.documentElement.childNodes.find(bodyTag) || null;
   }
 
   prepend() { throw new Error('Only one element on document allowed.'); }

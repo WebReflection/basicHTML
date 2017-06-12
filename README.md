@@ -45,6 +45,12 @@ Above log will produce an output like the following one.
   * arbitrary Custom Elements creation
 
 
+### Todo
+
+  * improve the code coverage
+  * test possible hooks for NativeScript element as Custom Element <sub>(nativeHTML related)</sub>
+
+
 ### License
 ```
 ISC License
