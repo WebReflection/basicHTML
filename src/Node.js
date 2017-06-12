@@ -10,11 +10,10 @@ const removeFromParent = (parentNode, child) => {
 };
 
 const resetParent = (parentNode, child) => {
-  if (child.parentNode !== parentNode) {
-    if (child.parentNode) {
-      removeFromParent(child.parentNode, child);
-    }
-    child.parentNode = parentNode;
+  if (child.parentNode) {
+    removeFromParent(child.parentNode, child);
+  }
+  if ((child.parentNode = parentNode)) {
     utils.connect(parentNode, child);
   }
 };

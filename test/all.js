@@ -57,6 +57,29 @@ assert(
   'attributes direct changes are reflected'
 );
 
+log('## setAttributeNode');
+let targetA = document.createElement('yo');
+let targetB = document.createElement('yo');
+let an = document.createAttribute('a');
+let bn = document.createAttribute('a');
+targetA.setAttributeNode(an);
+assert(
+  targetA.setAttributeNode(an) === an,
+  'same attribute does not effect the node'
+);
+try {
+  targetB.setAttributeNode(an);
+  assert(false, 'attributes cannot be in two nodes');
+} catch(e) {
+  assert(true, e.message);
+}
+
+assert(targetA.setAttributeNode(bn) === an);
+assert(targetA.setAttributeNode(an) === bn);
+
+an = document.createAttribute('class');
+assert(targetA.setAttributeNode(an) === null);
+
 log('## DocumentType');
 const DocumentType = require('../src/DocumentType.js');
 let dt = new DocumentType();
@@ -111,11 +134,13 @@ assert(
 any.textContent = 'hello';
 any.appendChild(document.createElement('br'));
 any.setAttribute('hidden', true);
+any.setAttribute('wut', '');
 assert(
-  any.outerHTML === '<any test-attribute="something else" class="a d" hidden>hello<br></any>',
+  any.outerHTML === '<any test-attribute="something else" class="a d" hidden wut="">hello<br></any>',
   'nodes can have a text content'
 );
 any.setAttribute('hidden', false);
+any.removeAttribute('wut');
 
 any.innerHTML = '<p>OK</p>';
 assert(
@@ -424,6 +449,8 @@ assert(document.body.lastChild === two, 'you can replace fragments');
 document.body.replaceChild(one, two);
 assert(document.body.lastChild === one, 'or simple nodes too');
 document.body.insertBefore(one, one);
+document.body.replaceChild(one, one);
+assert(document.body.childNodes.length === 1);
 
 log('## className');
 document.body.className = 'a b';
@@ -434,10 +461,20 @@ assert(
 );
 
 log('## extras');
+document.body.textContent = '';
+assert(document.body.getAttributeNames().join('') === 'class', 'getAttributeNames works');
+assert(document.body.hasAttributes(), 'hasAttributes too');
 document.body.prepend('a', 'b', 'c');
 document.body.prepend('d');
-console.log(document.body.childNodes.length);
-console.log(document.body.innerHTML);
+assert(document.body.textContent === 'dabc', 'and so does .prepend(...)');
+assert(
+  document.body.closest('body') === document.body &&
+  document.body.closest('html') === document.documentElement &&
+  document.body.closest('shenanigans') === null,
+  'same goes for closest'
+);
+document.body.innerHTML = '<p with="attributes">some <!--content--></p>';
+assert(document.body.innerHTML === '<p with="attributes">some <!--content--></p>');
 
 log('## Custom Element');
 async(done => {

@@ -8,8 +8,6 @@ const connect = (parentNode, child) => {
   }
 };
 
-const connectChild = child => connect(child.parentNode, child);
-
 const disconnect = (parentNode, child) => {
   if (
     child.isCustomElement && 'disconnectedCallback' in child &&
@@ -56,7 +54,6 @@ function injectNode(node) {
 module.exports = {
   addAttribute,
   connect,
-  connectChild,
   disconnect,
   disconnectChild,
   injectNode,
