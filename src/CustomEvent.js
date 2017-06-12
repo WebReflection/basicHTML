@@ -9,6 +9,6 @@ module.exports = class CustomEvent extends Event {
     detail: null
   }) {
     super(type, eventInitDict);
-    this.detail = detail;
+    this.detail = eventInitDict.detail;
   }
 };

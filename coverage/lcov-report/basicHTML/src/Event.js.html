@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">27.27% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>6/22</span>
+        <span class='fraction'>22/22</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">27.27% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/22</span>
+        <span class='fraction'>22/22</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -90,8 +90,8 @@
 45
 46
 47</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -102,29 +102,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -136,41 +136,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const getTime = () =&gt; {
-<span class="cstat-no" title="statement not covered" >  const time = process.hrtime();</span>
-<span class="cstat-no" title="statement not covered" >  return time[0] * 1000000 + time[1] / 1000;</span>
+  const time = process.hrtime();
+  return time[0] * 1000000 + time[1] / 1000;
 };
 &nbsp;
 // interface Event // https://dom.spec.whatwg.org/#event
 class Event {
 &nbsp;
-  constructor<span class="fstat-no" title="function not covered" >(type, eventInitDict = {</span>
+  constructor(type, eventInitDict = {
     bubbles: false,
     cancelable: false,
     composed: false
   }) {
-<span class="cstat-no" title="statement not covered" >    this.type = type;</span>
-<span class="cstat-no" title="statement not covered" >    this.isTrusted = false;</span>
-<span class="cstat-no" title="statement not covered" >    this.defaultPrevented = false;</span>
-<span class="cstat-no" title="statement not covered" >    this.cancelBubble = false;</span>
-<span class="cstat-no" title="statement not covered" >    this.cancelImmediateBubble = false;</span>
-<span class="cstat-no" title="statement not covered" >    this.bubbles = eventInitDict.bubbles;</span>
-<span class="cstat-no" title="statement not covered" >    this.cancelable = eventInitDict.cancelable;</span>
-<span class="cstat-no" title="statement not covered" >    this.composed = eventInitDict.composed;</span>
-<span class="cstat-no" title="statement not covered" >    this.eventPhase = Event.NONE;</span>
-<span class="cstat-no" title="statement not covered" >    this.timeStamp = getTime();</span>
+    this.type = type;
+    this.isTrusted = false;
+    this.defaultPrevented = false;
+    this.cancelBubble = false;
+    this.cancelImmediateBubble = false;
+    this.bubbles = eventInitDict.bubbles;
+    this.cancelable = eventInitDict.cancelable;
+    this.composed = eventInitDict.composed;
+    this.eventPhase = Event.NONE;
+    this.timeStamp = getTime();
   }
 &nbsp;
-  stopPropagation<span class="fstat-no" title="function not covered" >() {</span>
-<span class="cstat-no" title="statement not covered" >    this.cancelBubble = true;</span>
+  stopPropagation() {
+    this.cancelBubble = true;
   }
 &nbsp;
-  stopImmediatePropagation<span class="fstat-no" title="function not covered" >() {</span>
-<span class="cstat-no" title="statement not covered" >    this.cancelBubble = true;</span>
-<span class="cstat-no" title="statement not covered" >    this.cancelImmediateBubble = true;</span>
+  stopImmediatePropagation() {
+    this.cancelBubble = true;
+    this.cancelImmediateBubble = true;
   }
 &nbsp;
-  preventDefault<span class="fstat-no" title="function not covered" >() {</span>
-<span class="cstat-no" title="statement not covered" >    this.defaultPrevented = true;</span>
+  preventDefault() {
+    this.defaultPrevented = true;
   }
 &nbsp;
 }
@@ -187,7 +187,7 @@ module.exports = Event;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 12 2017 14:47:32 GMT+0100 (BST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 12 2017 19:05:09 GMT+0100 (BST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

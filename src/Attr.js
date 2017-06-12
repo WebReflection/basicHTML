@@ -20,7 +20,9 @@ module.exports = class Attr extends Node {
   set value(_value) {
     const oldValue = this._value;
     const isNull = _value == null;
-    if (!isNull) _value = String(_value);
+    if (!isNull && typeof _value !== 'boolean') {
+      _value = String(_value);
+    }
     if (oldValue !== _value) {
       this._value = _value;
       if (this.ownerElement) {

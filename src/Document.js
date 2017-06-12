@@ -12,8 +12,20 @@ const Text = require('./Text');
 const headTag = el => el.nodeName === 'HEAD';
 const bodyTag = el => el.nodeName === 'BODY';
 
+const getFoundOrNull = result => {
+  if (result) {
+    const el = findById.found;
+    findById.found = null;
+    return el;
+  } else {
+    return null;
+  }
+};
+
 function findById(child) {'use strict';
-  return child.id === this || child.children.find(findById, this);
+  return child.id === this ?
+          !!(findById.found = child) :
+          child.children.some(findById, this);
 }
 
 // interface Document // https://dom.spec.whatwg.org/#document
@@ -62,9 +74,10 @@ module.exports = class Document extends Node {
   }
 
   getElementsByTagName(name) {
+    const html = this.documentElement;
     return /html/i.test(name) ?
-      this.documentElement :
-      this.documentElement.getElementsByTagName(name);
+      [html] :
+      (name === '*' ? [html] : []).concat(html.getElementsByTagName(name));
   }
 
   getElementsByClassName(name) {
@@ -92,7 +105,7 @@ module.exports = class Document extends Node {
   // interface NonElementParentNode // https://dom.spec.whatwg.org/#nonelementparentnode
   getElementById(id) {
     const html = this.documentElement;
-    return html.id === id ? [html] : html.children.find(findById, id) || null;
+    return html.id === id ? html : getFoundOrNull(html.children.some(findById, id));
   }
 
   // interface ParentNode @ https://dom.spec.whatwg.org/#parentnode

@@ -129,9 +129,14 @@ class HTMLElement extends Element {
     },
     set(value) {
       if (!value) {
-        if (_value) this.removeEventListener(type, _value);
+        if (_value) {
+          value = _value;
+          _value = null;
+          this.removeEventListener(type, value);
+        }
         this.removeAttribute(ontype);
       } else {
+        _value = value;
         this.addEventListener(type, value);
         this.setAttribute(ontype, 'return (' + escape(
           JS_SHORTCUT.test(value) && !JS_FUNCTION.test(value) ?
@@ -139,7 +144,6 @@ class HTMLElement extends Element {
             ('' + value)
         ) + ').call(this, event)');
       }
-      _value = value;
     }
   });
 });

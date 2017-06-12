@@ -49,7 +49,7 @@ const stringifiedNode = el => {
       const tag = el.nodeName.toLowerCase();
       return ('<' + tag).concat(
         el.attributes.length ?
-          (' ' + el.attributes.map(stringifiedNode).join(' ') + '>') :
+          (el.attributes.map(stringifiedNode).join('') + '>') :
           '>',
         el.childNodes.map(stringifiedNode).join(''),
         NO_CLOSING_TAG.test(tag) ?
@@ -58,8 +58,8 @@ const stringifiedNode = el => {
       );
     case 2:
       return typeof el.value === 'boolean' ?
-        (el.value ? el.name : '') :
-        (el.name + '="' + escape(el.value || '') + '"');
+        (el.value ? (' ' + el.name) : '') :
+        (' ' + el.name + '="' + escape(el.value || '') + '"');
     case 3:
       return el.data;
     case 8:
@@ -105,7 +105,7 @@ module.exports = class Element extends Node {
     name = name.toUpperCase();
     for (let i = 0; i < this.children.length; i++) {
       let el = this.children[i];
-      if (el.nodeName === name) list.push(el);
+      if (name === '*' || el.nodeName === name) list.push(el);
       list.push(...el.getElementsByTagName(name));
     }
     return list;
@@ -134,7 +134,6 @@ module.exports = class Element extends Node {
   removeAttribute(name) {
     const attr = this.getAttributeNode(name);
     if (attr) {
-      const oldValue = attr.value;
       this.attributes.splice(this.attributes.indexOf(attr), 1);
       attr.value = null;
       specialAttribute(this, attr);
@@ -219,6 +218,7 @@ module.exports = class Element extends Node {
       let child = this.childNodes[i];
       if (child.nodeType === 1) return child;
     }
+    return null;
   }
 
   get lastElementChild() {
@@ -226,6 +226,7 @@ module.exports = class Element extends Node {
       let child = this.childNodes[i];
       if (child.nodeType === 1) return child;
     }
+    return null;
   }
 
   get childElementCount() {

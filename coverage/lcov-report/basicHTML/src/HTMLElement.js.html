@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.07% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>18/29</span>
+        <span class='fraction'>31/31</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/8</span>
+        <span class='fraction'>8/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">16.67% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/6</span>
+        <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">64.29% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>18/28</span>
+        <span class='fraction'>31/31</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -194,7 +194,11 @@
 149
 150
 151
-152</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+152
+153
+154
+155
+156</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -202,9 +206,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7×</span>
-<span class="cline-any cline-yes">7×</span>
-<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,7 +220,7 @@
 <span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -236,8 +240,8 @@
 <span class="cline-any cline-yes">10×</span>
 <span class="cline-any cline-yes">10×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -321,21 +325,25 @@
 <span class="cline-any cline-yes">70×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -366,8 +374,8 @@ class HTMLElement extends Element {
 ].forEach(type =&gt; {
   Object.defineProperty(HTMLElement.prototype, type, {
     configurable: true,
-    value: <span class="fstat-no" title="function not covered" >function () {</span>
-<span class="cstat-no" title="statement not covered" >      this.dispatchEvent(this.ownerDocument.createEvent(type));</span>
+    value: function () {
+      this.dispatchEvent(this.ownerDocument.createEvent(type));
     }
   });
 });
@@ -387,8 +395,8 @@ class HTMLElement extends Element {
   const lowName = name.toLowerCase();
   Object.defineProperty(HTMLElement.prototype, name, {
     configurable: true,
-    get<span class="fstat-no" title="function not covered" >() {</span> <span class="cstat-no" title="statement not covered" >return this.getAttribute(lowName); </span>},
-    set<span class="fstat-no" title="function not covered" >(value) {</span> <span class="cstat-no" title="statement not covered" >this.setAttribute(lowName, value); </span>}
+    get() { return this.getAttribute(lowName); },
+    set(value) { this.setAttribute(lowName, value); }
   });
 });
 &nbsp;
@@ -471,22 +479,26 @@ class HTMLElement extends Element {
   const type = ontype.slice(2);
   Object.defineProperty(HTMLElement.prototype, ontype, {
     configurable: true,
-    get<span class="fstat-no" title="function not covered" >() {</span>
-<span class="cstat-no" title="statement not covered" >      return _value;</span>
+    get() {
+      return _value;
     },
-    set<span class="fstat-no" title="function not covered" >(value) {</span>
-<span class="cstat-no" title="statement not covered" >      if (!value) {</span>
-<span class="cstat-no" title="statement not covered" >        if (_value) <span class="cstat-no" title="statement not covered" >this.removeEventListener(type, _value);</span></span>
-<span class="cstat-no" title="statement not covered" >        this.removeAttribute(ontype);</span>
+    set(value) {
+      if (!value) {
+        if (_value) {
+          value = _value;
+          _value = null;
+          this.removeEventListener(type, value);
+        }
+        this.removeAttribute(ontype);
       } else {
-<span class="cstat-no" title="statement not covered" >        this.addEventListener(type, value);</span>
-<span class="cstat-no" title="statement not covered" >        this.setAttribute(ontype, 'return (' + escape(</span>
+        _value = value;
+        this.addEventListener(type, value);
+        this.setAttribute(ontype, 'return (' + escape(
           JS_SHORTCUT.test(value) &amp;&amp; !JS_FUNCTION.test(value) ?
             ('function ' + value) :
             ('' + value)
         ) + ').call(this, event)');
       }
-<span class="cstat-no" title="statement not covered" >      _value = value;</span>
     }
   });
 });
@@ -502,7 +514,7 @@ module.exports = HTMLElement;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 12 2017 14:47:32 GMT+0100 (BST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 12 2017 19:05:09 GMT+0100 (BST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

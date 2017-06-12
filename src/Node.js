@@ -56,7 +56,7 @@ module.exports = class Node extends EventTarget {
   insertBefore(node, child) {
     if (node.nodeType === 11) {
       node.childNodes.slice().forEach(node => this.insertBefore(node, child));
-    } else {
+    } else if (node !== child) {
       const i = this.childNodes.indexOf(child);
       this.childNodes.splice(i, 0, node);
       resetParent(this, node);
@@ -73,10 +73,11 @@ module.exports = class Node extends EventTarget {
     if (node.nodeType === 11) {
       this.insertBefore(node, child);
       this.removeChild(child);
-    } else {
+    } else if (node !== child) {
       const i = this.childNodes.indexOf(child);
-      this.childNodes.splice(i, 1, node);
+      this.childNodes.splice(i, 0, node);
       nullParent(child);
+      resetParent(this, node);
     }
     return child;
   }

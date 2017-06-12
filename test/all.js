@@ -57,6 +57,15 @@ assert(
   'attributes direct changes are reflected'
 );
 
+log('## DocumentType');
+const DocumentType = require('../src/DocumentType.js');
+let dt = new DocumentType();
+assert(
+  dt.textContent === null,
+  'DocumentType has no content'
+);
+
+log('## DOMTokenList');
 any.setAttribute('class', 'a b c');
 assert(
   any.classList.value === any.getAttribute('class'),
@@ -69,16 +78,49 @@ assert(
   'toggle works too'
 );
 
-any.textContent = 'hello';
+any.classList.replace('c', 'd');
 assert(
-  any.outerHTML === '<any test-attribute="something else" class="a c">hello</any>',
+  any.classList.value === 'a d',
+  'replace works too'
+);
+
+any.classList.toggle('b');
+any.classList.toggle('b', true);
+assert(
+  any.classList.value === 'a d b',
+  'toggle can add too'
+);
+
+any.classList.toggle('x');
+any.classList.toggle('y', false);
+any.classList.replace('z', 'w');
+any.classList.remove('b', 'x', 'y', 'w');
+
+assert(
+  any.classList.item(0) === 'a',
+  'classes preserve the order'
+);
+
+let nope = document.createElement('nope');
+nope.classList.value = 'OK';
+assert(
+  nope.getAttribute('class') === 'OK',
+  'of classList.value is set the class attribute is created'
+);
+
+any.textContent = 'hello';
+any.appendChild(document.createElement('br'));
+any.setAttribute('hidden', true);
+assert(
+  any.outerHTML === '<any test-attribute="something else" class="a d" hidden>hello<br></any>',
   'nodes can have a text content'
 );
+any.setAttribute('hidden', false);
 
 any.innerHTML = '<p>OK</p>';
 assert(
   any.innerHTML === '<p>OK</p>' &&
-  any.outerHTML === '<any test-attribute="something else" class="a c">' + any.innerHTML + '</any>',
+  any.outerHTML === '<any test-attribute="something else" class="a d">' + any.innerHTML + '</any>',
   'but also html'
 );
 
@@ -101,7 +143,13 @@ assert(
 );
 
 log('## text node');
-let text = document.createTextNode('Hello');
+let text = document.createTextNode('hellO');
+
+assert(text.nextSibling === null);
+assert(text.previousSibling === null);
+assert(text.textContent === 'hellO');
+text.textContent = 'Hello';
+
 document.body.appendChild(text);
 assert(
   document.body.lastChild === text,
@@ -140,10 +188,256 @@ assert(
   document.documentElement.firstElementChild === document.head,
   'firstElementChild works as expected'
 );
+
+document.head.append('text');
+assert(
+  document.head.firstElementChild === null,
+  'and it can  be null'
+);
 assert(
   document.documentElement.lastElementChild === document.body,
   'lastElementChild works as expected'
 );
+assert(
+  document.head.lastElementChild === null,
+  'and it can  be null'
+);
+
+log('## EventTarget');
+let first = document.createElement('first');
+let second = document.createElement('second');
+let third = document.createElement('third');
+first.appendChild(second).append(third);
+third.once = 0;
+third.addEventListener('once', e => third.once++, {once: true});
+third.twice = 0;
+let twice = e => {
+  third.twice++;
+  e.preventDefault();
+};
+third.addEventListener('twice', twice);
+third.addEventListener('twice', twice);
+third.dispatchEvent(new Event('once'));
+third.dispatchEvent(new Event('once'));
+third.dispatchEvent(new Event('twice'));
+third.dispatchEvent(new Event('twice'));
+assert(
+  third.once === 1,
+  'using {once: true} via addEventListener works'
+);
+assert(
+  third.twice === 2,
+  'setting twice same listener does not add them twice'
+);
+first.addEventListener('twice', e => first.called = true);
+second.addEventListener('twice', e => {
+  second.called = true;
+  e.stopPropagation();
+}, {once: true});
+third.dispatchEvent(document.createEvent('twice'));
+assert(
+  second.called === true,
+  'events bubble up'
+);
+assert(
+  first.called !== true,
+  'and you can stopPropagation'
+);
+second.addEventListener('twice', e => {
+  e.stopImmediatePropagation();
+}, {once: true});
+second.addEventListener('twice', e => {
+  second.nope = true;
+}, {once: true});
+third.dispatchEvent(new Event('twice'));
+assert(
+  second.nope !== true,
+  'you can also stopImmediatePropagation'
+);
+third.dispatchEvent(new Event('twice'));
+assert(
+  first.called === true,
+  'bubbles up to the top'
+);
+third.addEventListener('click', {handleEvent(e) {
+  assert(
+    this !== third && e.target === third,
+    'even {handleEvent(){}} works'
+  );
+}}, {once: true});
+third.click();
+third.removeEventListener('twice', {});
+third.removeEventListener('nope', {});
+
+first.addEventListener('custom', e => (first.detail = e.detail));
+first.dispatchEvent(new CustomEvent('custom', {detail: second}));
+assert(
+  first.detail === second,
+  'CustomEvent also works as expected'
+);
+
+log('## Comments');
+let comment = document.createComment('Here a comment');
+assert(comment.textContent === 'Here a comment');
+comment.textContent = 'here a comment';
+
+third.appendChild(comment);
+assert(
+  third.innerHTML === '<!--here a comment-->',
+  'comments also works as expected'
+);
+assert(
+  third.textContent === '',
+  'and do not interfere as textContent'
+);
+
+log('## DOMStringMap');
+first.dataset.testName = 'test value';
+assert(
+  first.hasAttribute('data-test-name'),
+  'dataset also works as expected'
+);
+assert(
+  'testName' in first.dataset,
+  'the attribute name is normalized'
+);
+assert(
+  first.dataset.testName === 'test value',
+  'the value is the expected'
+);
+
+delete first.dataset.testName;
+assert(
+  !first.hasAttribute('data-test-name'),
+  'properties can be deleted'
+);
+
+let id = String(Math.random());
+document.body.appendChild(document.createElement('by-id')).id = id;
+assert(
+  document.querySelector('#' + id) === document.body.lastChild &&
+  document.getElementById(id) === document.body.lastChild &&
+  document.body.lastChild.matches('#' + id),
+  'elements can be found by ID'
+);
+
+document.documentElement.id = 'whatever';
+assert(
+  document.getElementById('whatever') === document.documentElement,
+  'even the HTML one'
+);
+assert(document.getElementById('nope') === null);
+
+assert(
+  document.querySelector('by-id') === document.body.lastChild &&
+  document.getElementsByTagName('by-id')[0] === document.body.lastChild,
+  'elements can be found also by tag name'
+);
+
+assert(
+  document.getElementsByTagName('html')[0] === document.documentElement &&
+  document.children[0] === document.documentElement &&
+  document.firstElementChild === document.documentElement &&
+  document.lastElementChild === document.documentElement &&
+  document.documentElement.matches('html') &&
+  document.childElementCount === 1,
+  'even getting the HTML one'
+);
+
+
+document.body.classList.value = 'test';
+assert(
+  document.getElementsByClassName('test')[0] === document.body &&
+  document.querySelector('.test') === document.body &&
+  document.body.matches('.test'),
+  'getElementsByClassName works too'
+);
+
+document.documentElement.classList.value = 'the-html';
+assert(
+  document.getElementsByClassName('the-html')[0] === document.documentElement,
+  'even with HTML tag'
+);
+
+assert(
+  document.querySelectorAll('head,body')
+          .every((el, i) => i ? el === document.body : el === document.head),
+  'and querySelectorAll works too'
+);
+
+try { document.append('banana'); } catch(e) {
+  assert(true, 'append and prepend are not allowed on the document');
+}
+
+assert(
+  document.createElementNS('svg', 'test').nodeName === 'TEST:SVG',
+  'createElementNS simply puts tags and namespace together'
+);
+
+log('## documentElement');
+document.documentElement.title = 'some title';
+assert(
+  document.documentElement.getAttribute('title') === 'some title' &&
+  document.documentElement.title === 'some title',
+  'some attribute is special'
+);
+document.documentElement.onclick = e => {
+  assert(
+    e.type === 'click' && e.target === document.documentElement,
+    'and can be dispatched like others'
+  );
+};
+assert(
+  typeof document.documentElement.onclick === 'function',
+  'even DOM Level 0 events are supported'
+);
+document.documentElement.dispatchEvent(new Event('click'));
+document.documentElement.onclick = null;
+document.documentElement.dispatchEvent(new Event('click'));
+document.documentElement.onclick = null;
+document.documentElement.onclick = {method(){}}.method;
+
+document.documentElement.innerHTML = '<head></head><body></body>';
+assert(
+  document.documentElement.hasChildNodes() &&
+  document.getElementsByTagName('*').length === 3,
+  'both head and body can be assigned'
+);
+
+document.documentElement.removeChild(document.documentElement.firstChild);
+document.documentElement.removeChild(document.documentElement.firstChild);
+assert(
+  !document.documentElement.hasChildNodes() &&
+  document.getElementsByTagName('*').length === 1,
+  'or eventually removed too'
+);
+
+log('## playing with childNodes');
+let one = document.body.appendChild(document.createElement('one'));
+let two = document.createElement('two');
+document.body.appendChild(one);
+let fragment = document.createDocumentFragment();
+fragment.appendChild(two).textContent = '2';
+assert(fragment.textContent === '2');
+document.body.replaceChild(fragment, one);
+assert(document.body.lastChild === two, 'you can replace fragments');
+document.body.replaceChild(one, two);
+assert(document.body.lastChild === one, 'or simple nodes too');
+document.body.insertBefore(one, one);
+
+log('## className');
+document.body.className = 'a b';
+assert(
+  document.body.className === 'a b' &&
+  document.body.classList.value === 'a b',
+  'it can be set and retrieved back'
+);
+
+log('## extras');
+document.body.prepend('a', 'b', 'c');
+document.body.prepend('d');
+console.log(document.body.childNodes.length);
+console.log(document.body.innerHTML);
 
 log('## Custom Element');
 async(done => {
@@ -158,6 +452,8 @@ async(done => {
     attr = document.createAttribute('test');
     test.setAttributeNode(attr);
     attr.value = 345;
+    assert(attr.textContent == attr.value);
+    attr.textContent = '345';
     assert(
       actions.splice(0, actions.length).join(',') ===
       [
@@ -194,6 +490,13 @@ async(done => {
     done();
   });
 
+}).then(() => {
+  try {
+    customElements.define('test-node', class extends HTMLElement {});
+    assert(false, 'this should not happen');
+  } catch(e) {
+    assert(true, 'you cannot define same element twice');
+  }
 });
 
 const actions = [];
