@@ -3,6 +3,7 @@ const getTime = () => {
   return time[0] * 1000000 + time[1] / 1000;
 };
 
+// interface Event // https://dom.spec.whatwg.org/#event
 class Event {
 
   constructor(type, eventInitDict = {

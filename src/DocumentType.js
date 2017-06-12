@@ -1,5 +1,6 @@
 const Node = require('./Node');
 
+// interface DocumentType // https://dom.spec.whatwg.org/#documenttype
 module.exports = class DocumentType extends Node {
   constructor(ownerDocument) {
     super(ownerDocument);

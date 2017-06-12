@@ -5,12 +5,9 @@ const NO_CLOSING_TAG = /br|hr|img/;
 const escape = require('html-escaper').escape;
 const parse = require('parse5').parseFragment;
 
+const utils = require('./utils');
 const Node = require('./Node');
 const DOMTokenList = require('./DOMTokenList');
-
-function addAttribute(attr) {
-  this.setAttribute(attr.name, attr.value);
-}
 
 function asNode(node) {
   return typeof node === 'object' ?
@@ -26,23 +23,6 @@ function findBySelector(css) {
       return this.getElementsByClassName(css.slice(1));
     default:
       return this.getElementsByTagName(css);
-  }
-}
-
-function injectNode(node) {
-  switch (node.nodeName) {
-    case '#text':
-      this.appendChild(this.ownerDocument.createTextNode(node.value));
-      break;
-    case '#comment':
-      this.appendChild(this.ownerDocument.createComment(node.data));
-      break;
-    default:
-      const el = this.ownerDocument.createElement(node.nodeName);
-      node.attrs.forEach(addAttribute, el);
-      node.childNodes.forEach(injectNode, el);
-      this.appendChild(el);
-      break;
   }
 }
 
@@ -86,6 +66,7 @@ const stringifiedNode = el => {
   }
 };
 
+// interface Element // https://dom.spec.whatwg.org/#interface-element
 module.exports = class Element extends Node {
   constructor(ownerDocument, name) {
     super(ownerDocument);
@@ -213,7 +194,7 @@ module.exports = class Element extends Node {
 
   set innerHTML(html) {
     this.childNodes.splice(0, this.childNodes.length);
-    parse(html).childNodes.forEach(injectNode, this);
+    parse(html).childNodes.forEach(utils.injectNode, this);
   }
 
   get outerHTML() {

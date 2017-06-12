@@ -1,5 +1,6 @@
 const Event = require('./Event');
 
+// interface CustomEvent // https://dom.spec.whatwg.org/#customevent
 module.exports = class CustomEvent extends Event {
   constructor(type, eventInitDict = {
     bubbles: false,

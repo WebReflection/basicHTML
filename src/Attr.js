@@ -1,5 +1,6 @@
 const Node = require('./Node');
 
+// interface Attr // https://dom.spec.whatwg.org/#attr
 module.exports = class Attr extends Node {
 
   constructor(ownerElement, name, value) {

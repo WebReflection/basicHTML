@@ -11,6 +11,7 @@ const getOnce = (self, type, handler, options) =>
     getHandler(self, handler)(e);
   };
 
+// interface EventTarget // https://dom.spec.whatwg.org/#eventtarget
 module.exports = class EventTarget {
 
   constructor() {

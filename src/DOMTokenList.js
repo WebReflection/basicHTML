@@ -9,6 +9,7 @@ const afterChanges = dtl => {
   }
 };
 
+// interface DOMTokenList // https://dom.spec.whatwg.org/#interface-domtokenlist
 module.exports = class DOMTokenList extends Array {
 
   constructor(ownerElement) {

@@ -9,15 +9,21 @@ const DOMStringMapHandler = {
   },
 
   get(target, property) {
-    target._ownerElement.getAttribute(hyphen(property));
+    return target._ownerElement.getAttribute(hyphen(property));
   },
 
   set(target, property, value) {
     target._ownerElement.setAttribute(hyphen(property), value);
+    return true;
+  },
+
+  deleteProperty(target, property) {
+    target._ownerElement.removeAttribute(hyphen(property));
   }
 
 };
 
+// interface DOMStringMap // https://html.spec.whatwg.org/multipage/dom.html#domstringmap
 module.exports = function DOMStringMap(ownerElement) {'use strict';
   this._ownerElement = ownerElement;
   return new Proxy(this, DOMStringMapHandler);

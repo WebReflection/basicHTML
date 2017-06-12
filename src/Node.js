@@ -23,6 +23,7 @@ const stringifiedContent = el => {
   }
 };
 
+// interface Node : EventTarget // https://dom.spec.whatwg.org/#node
 module.exports = class Node extends EventTarget {
 
   constructor(ownerDocument) {

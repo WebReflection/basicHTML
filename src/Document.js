@@ -5,14 +5,19 @@ const Attr = require('./Attr');
 const Comment = require('./Comment');
 const DocumentFragment = require('./DocumentFragment');
 const HTMLElement = require('./HTMLElement');
+const HTMLHtmlElement = require('./HTMLHtmlElement');
 const Text = require('./Text');
 
 const freeze = Object.freeze;
+
+const headTag = el => el.nodeName === 'HEAD';
+const bodyTag = el => el.nodeName === 'BODY';
 
 function findById(child) {'use strict';
   return child.id === this || child.children.find(findById, this);
 }
 
+// interface Document // https://dom.spec.whatwg.org/#document
 module.exports = class Document extends Node {
 
   constructor() {
@@ -20,7 +25,7 @@ module.exports = class Document extends Node {
     this.nodeType = 9;
     this.nodeName = '#document';
     this.appendChild(new DocumentType());
-    this.documentElement = this.createElement('html');
+    this.documentElement = new HTMLHtmlElement(this, 'html');
     this.appendChild(this.documentElement);
     freeze(this.childNodes);
   }
@@ -92,6 +97,14 @@ module.exports = class Document extends Node {
 
   get childElementCount() {
     return 1;
+  }
+
+  get head() {
+    return this.documentElement.childNodes.find(headTag) || null;
+  }
+
+  get body() {
+    return this.documentElement.childNodes.find(bodyTag) || null;
   }
 
   prepend() { throw new Error('Only one element on document allowed.'); }
