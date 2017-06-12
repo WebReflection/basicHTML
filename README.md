@@ -1,6 +1,8 @@
-# basicHTML
+# basicHTML [![Build Status](https://travis-ci.org/WebReflection/basicHTML.svg?branch=master)](https://travis-ci.org/WebReflection/basicHTML) [![Coverage Status](https://coveralls.io/repos/github/WebReflection/basicHTML/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/basicHTML?branch=master)
 
 A NodeJS based, standard oriented, HTML implementation.
+
+**work in progress**
 
 ```js
 const {Document} = require('basichtml');
@@ -48,7 +50,7 @@ Above log will produce an output like the following one.
 ### Todo
 
   * improve the code coverage
-  * test possible hooks for NativeScript element as Custom Element <sub>(nativeHTML related)</sub>
+  * test possible hooks for NativeScript element as Custom Element <sub><sup>(nativeHTML related)</sup></sub>
 
 
 ### License
