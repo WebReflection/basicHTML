@@ -71,3 +71,15 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
 OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ```
+
+
+#### What is this about?
+
+This is an essential implementation of most common HTML operations without the necessary bloat brought in by the entire HTML specification.
+
+The ideal scenario is together with [hyperHTML](https://github.com/WebReflection/hyperHTML) to be able to create DOM trees and objects capable of being updated, refreshed, related to any native component.
+
+The perfect scenario would be to drive [NativeScript](https://www.nativescript.org/) components using a CustomElementRegistry like you would do on the Web for Custom Elements.
+
+Please bear in mind this is a work in progress, and it's not aiming to become a fully standard compliant implementation of the whole WebIDL based specifications, there are other projects for that.
+
