@@ -49,7 +49,7 @@ Above log will produce an output like the following one.
 
 ### Todo
 
-  * improve the code coverage, specially dataset cases
+  * improve logic and tests around dataset
   * test possible hooks for NativeScript element as Custom Element <sub><sup>(nativeHTML related)</sup></sub>
 
 
