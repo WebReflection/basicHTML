@@ -12,7 +12,6 @@
   "dependencies": {
     "broadcast": "^2.0.2",
     "html-escaper": "^1.0.1",
-    "hyperhtml": "^0.11.8",
     "parse5": "^3.0.2"
   },
   "devDependencies": {
