@@ -19,28 +19,28 @@ module.exports = class Attr extends Node {
 
   set value(_value) {
     const oldValue = this._value;
-    const isNull = _value == null;
-    if (!isNull && typeof _value !== 'boolean') {
-      _value = String(_value);
-    }
-    if (oldValue !== _value) {
-      this._value = _value;
-      if (this.ownerElement) {
-        switch (this.name) {
-          case 'class':
-            const cl = this.ownerElement.classList;
-            if (isNull) {
-              cl.splice(0, cl.length);
-            } else {
-              cl.value = _value;
-            }
-            break;
+    switch (this.name) {
+      case 'class':
+        const cl = this.ownerElement.classList;
+        if (_value == null) {
+          this._value = _value;
+          cl.splice(0, cl.length);
+        } else {
+          this._value = String(_value);
+          if (oldValue !== this._value) {
+            cl.value = this._value;
+          }
         }
-        utils.notifyAttributeChanged(
-          this.ownerElement,
-          this.name, oldValue, _value
-        );
-      }
+        break;
+      default:
+        this._value = _value;
+        break;
+    }
+    if (this.ownerElement && oldValue !== this._value) {
+      utils.notifyAttributeChanged(
+        this.ownerElement,
+        this.name, oldValue, this._value
+      );
     }
   }
 

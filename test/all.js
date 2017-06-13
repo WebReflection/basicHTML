@@ -490,7 +490,7 @@ async(done => {
     test.setAttributeNode(attr);
     attr.value = 345;
     assert(attr.textContent == attr.value);
-    attr.textContent = '345';
+    attr.textContent = 345;
     assert(
       actions.splice(0, actions.length).join(',') ===
       [
