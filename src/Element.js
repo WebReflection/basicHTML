@@ -1,6 +1,4 @@
 const CSS_SPLITTER = /\s*,\s*/;
-// TODO: improve
-const NO_CLOSING_TAG = /br|hr|img/;
 
 const escape = require('html-escaper').escape;
 const parse = require('parse5').parseFragment;
@@ -47,13 +45,10 @@ const stringifiedNode = el => {
   switch (el.nodeType) {
     case 1:
       return ('<' + el.nodeName).concat(
-        el.attributes.length ?
-          (el.attributes.map(stringifiedNode).join('') + '>') :
-          '>',
-        el.childNodes.map(stringifiedNode).join(''),
-        NO_CLOSING_TAG.test(el.nodeName) ?
-          '' :
-          ('</' + el.nodeName + '>')
+        el.attributes.map(stringifiedNode).join(''),
+        Element.VOID_ELEMENT.test(el.nodeName) ?
+          '/>' :
+          ('>' + el.childNodes.map(stringifiedNode).join('') + '</' + el.nodeName + '>')
       );
     case 2:
       return typeof el.value === 'boolean' ?
@@ -67,7 +62,7 @@ const stringifiedNode = el => {
 };
 
 // interface Element // https://dom.spec.whatwg.org/#interface-element
-module.exports = class Element extends Node {
+class Element extends Node {
   constructor(ownerDocument, name) {
     super(ownerDocument);
     this.attributes = [];
@@ -256,3 +251,7 @@ module.exports = class Element extends Node {
   }
 
 };
+
+Element.VOID_ELEMENT = /^area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr$/i;
+
+module.exports = Element;

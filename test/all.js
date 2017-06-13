@@ -136,7 +136,7 @@ any.appendChild(document.createElement('br'));
 any.setAttribute('hidden', true);
 any.setAttribute('wut', '');
 assert(
-  any.outerHTML === '<any test-attribute="something else" class="a d" hidden wut="">hello<br></any>',
+  any.outerHTML === '<any test-attribute="something else" class="a d" hidden wut="">hello<br/></any>',
   'nodes can have a text content'
 );
 any.setAttribute('hidden', false);
