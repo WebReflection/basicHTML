@@ -475,6 +475,10 @@ assert(
 );
 document.body.innerHTML = '<p with="attributes">some <!--content--></p>';
 assert(document.body.innerHTML === '<p with="attributes">some <!--content--></p>');
+let flexibility = document.createElement('_');
+let value = {thing: Math.random()};
+flexibility.setAttribute('any', value);
+assert(value === flexibility.getAttribute('any'));
 
 log('## Custom Element');
 async(done => {
