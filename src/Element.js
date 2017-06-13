@@ -30,7 +30,7 @@ function matchesBySelector(css) {
   switch (css[0]) {
     case '#': return this.id === css.slice(1);
     case '.': return this.classList.contains(css.slice(1));
-    default: return css.toUpperCase() === this.nodeName;
+    default: return css === this.nodeName;
   }
 }
 
@@ -46,15 +46,14 @@ const specialAttribute = (owner, attr) => {
 const stringifiedNode = el => {
   switch (el.nodeType) {
     case 1:
-      const tag = el.nodeName.toLowerCase();
-      return ('<' + tag).concat(
+      return ('<' + el.nodeName).concat(
         el.attributes.length ?
           (el.attributes.map(stringifiedNode).join('') + '>') :
           '>',
         el.childNodes.map(stringifiedNode).join(''),
-        NO_CLOSING_TAG.test(tag) ?
+        NO_CLOSING_TAG.test(el.nodeName) ?
           '' :
-          ('</' + tag + '>')
+          ('</' + el.nodeName + '>')
       );
     case 2:
       return typeof el.value === 'boolean' ?
@@ -73,7 +72,7 @@ module.exports = class Element extends Node {
     super(ownerDocument);
     this.attributes = [];
     this.nodeType = 1;
-    this.nodeName = name.toUpperCase();
+    this.nodeName = name;
     this.classList = new DOMTokenList(this);
   }
 
@@ -102,7 +101,6 @@ module.exports = class Element extends Node {
 
   getElementsByTagName(name) {
     const list = [];
-    name = name.toUpperCase();
     for (let i = 0; i < this.children.length; i++) {
       let el = this.children[i];
       if (name === '*' || el.nodeName === name) list.push(el);

@@ -395,7 +395,7 @@ try { document.append('banana'); } catch(e) {
 }
 
 assert(
-  document.createElementNS('svg', 'test').nodeName === 'TEST:SVG',
+  document.createElementNS('svg', 'test').nodeName === 'test:svg',
   'createElementNS simply puts tags and namespace together'
 );
 

@@ -9,8 +9,8 @@ const HTMLElement = require('./HTMLElement');
 const HTMLHtmlElement = require('./HTMLHtmlElement');
 const Text = require('./Text');
 
-const headTag = el => el.nodeName === 'HEAD';
-const bodyTag = el => el.nodeName === 'BODY';
+const headTag = el => el.nodeName === 'head';
+const bodyTag = el => el.nodeName === 'body';
 
 const getFoundOrNull = result => {
   if (result) {

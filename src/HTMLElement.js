@@ -37,7 +37,7 @@ class HTMLElement extends Element {
   'spellcheck',
   'contentEditable'
 ].forEach(name => {
-  const lowName = name.toLowerCase();
+  const lowName = name;
   Object.defineProperty(HTMLElement.prototype, name, {
     configurable: true,
     get() { return this.getAttribute(lowName); },

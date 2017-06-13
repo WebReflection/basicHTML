@@ -49,10 +49,12 @@ Above log will produce an output like the following one.
 
 #### About current caveats ...
 
+  * since `v0.2`, the property `nodeName` is **case-sensitive** to make _basicHTML_ compatible with _XML_ projects too
   * `el.querySelectorAll(css)` works with `tagName`, `#id`, or `.className`. More complex selectors are right now not planned.
   * `el.querySelector(css)` is not optimized and will return just index `0` of the whole collection. However, selecting a lot is not the goal of this library.
   * `el.getElementsByTagName` as well as `el.getElementsByClassName` and `el.getElementsById` are all available. The latter is the fastest one of the trio.
   * all collections are basically just arrays. You should use official DOM methods to mutate them. As example, do not ever `childNodes.push(new Node)` 'cause that's not what you could do on the DOM. The whole point here is to provide a Web like env, not to write defensive code for NodeJS or other non strictly Web environments.
+  * most historical properties and standards are most likely not implemented
 
 
 ### Todo
