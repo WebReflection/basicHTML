@@ -426,12 +426,14 @@ document.documentElement.innerHTML = `<!DOCTYPE html>
 <html>
   <head>
   </head>
-  <body>
+  <body test="attribute">
+    <br>
+    <!-- and comment -->
   </body>
 </html>`;
 assert(
   document.documentElement.hasChildNodes() &&
-  document.getElementsByTagName('*').length === 3,
+  document.getElementsByTagName('*').length === 4,
   'documentElement can inject whole documents'
 );
 

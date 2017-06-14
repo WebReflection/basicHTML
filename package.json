@@ -12,7 +12,7 @@
   "dependencies": {
     "broadcast": "^2.0.2",
     "html-escaper": "^1.0.1",
-    "parse5": "^3.0.2"
+    "htmlparser2": "^3.9.2"
   },
   "devDependencies": {
     "coveralls": "^2.13.1",

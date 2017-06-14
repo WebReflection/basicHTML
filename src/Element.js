@@ -1,7 +1,32 @@
 const CSS_SPLITTER = /\s*,\s*/;
 
 const escape = require('html-escaper').escape;
-const parse = require('parse5').parseFragment;
+const Parser = require('htmlparser2').Parser;
+const parseInto = (node, html) => {
+  const document = node.ownerDocument;
+  const content = new Parser({
+    onopentagname(name) {
+      node = node.appendChild(document.createElement(name));
+    },
+    onattribute(name, value) {
+      node.setAttribute(name, value);
+    },
+    oncomment(data) {
+      node.appendChild(document.createComment(data));
+    },
+    ontext(text) {
+      node.appendChild(document.createTextNode(text));
+    },
+    onclosetag(name) {
+      node = node.parentNode;
+    }
+  }, {
+    decodeEntities: true,
+    xmlMode: true
+  });
+  content.write(html);
+  content.end();
+};
 
 const utils = require('./utils');
 const Node = require('./Node');
@@ -194,7 +219,7 @@ class Element extends Node {
     this.childNodes
       .splice(0, this.childNodes.length)
       .forEach(utils.disconnectChild);
-    parse(html).childNodes.forEach(utils.injectNode, this);
+    parseInto(this, html);
   }
 
   get outerHTML() {
