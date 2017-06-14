@@ -14,7 +14,8 @@ module.exports = class HTMLHtmlElement extends HTMLElement {
     this.childNodes
         .splice(0, this.childNodes.length)
         .forEach(utils.disconnectChild);
-    parse(html).childNodes[0].childNodes.forEach(utils.injectNode, this);
+    const cn = parse(html).childNodes;
+    cn[cn.length - 1].childNodes.forEach(utils.injectNode, this);
   }
 
 };

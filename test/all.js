@@ -422,11 +422,24 @@ document.documentElement.dispatchEvent(new Event('click'));
 document.documentElement.onclick = null;
 document.documentElement.onclick = {method(){}}.method;
 
+document.documentElement.innerHTML = `<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+  </body>
+</html>`;
+assert(
+  document.documentElement.hasChildNodes() &&
+  document.getElementsByTagName('*').length === 3,
+  'documentElement can inject whole documents'
+);
+
 document.documentElement.innerHTML = '<head></head><body></body>';
 assert(
   document.documentElement.hasChildNodes() &&
   document.getElementsByTagName('*').length === 3,
-  'both head and body can be assigned'
+  'but partial head and body can also be assigned'
 );
 
 document.documentElement.removeChild(document.documentElement.firstChild);
