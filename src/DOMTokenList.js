@@ -72,10 +72,13 @@ module.exports = class DOMTokenList extends Array {
   }
 
   replace(token, newToken) {
-    const i = this.indexOf(token);
-    if (i < 0) this.add(newToken);
-    else this[i] = newToken;
-    afterChanges(this);
+    for (let i = 0, n = this.length; i < n; i++) {
+      if (this[i] === token) {
+        this[i] = newToken;
+        return afterChanges(this);
+  }
+    }
+    this.add(newToken);
   }
 
   toggle(token, force) {
