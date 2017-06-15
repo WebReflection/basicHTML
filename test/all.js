@@ -114,6 +114,57 @@ assert(
   'toggle can add too'
 );
 
+any.classList.add('a', 'd', 'b', 'f');
+assert(
+  any.classList.value === 'a d b f',
+  'add adds only new values'
+);
+
+any.classList.add('a');
+assert(
+  any.classList.value === 'a d b f',
+  'add returns on existing value'
+);
+
+any.classList.remove('x');
+assert(
+  any.classList.value === 'a d b f',
+  'remove returns on non-existing value'
+);
+
+any.classList.add('x');
+any.classList.remove('x');
+assert(
+  any.classList.value === 'a d b f',
+  'remove removes a single value'
+);
+
+any.classList.value = 'a d b f';
+assert(
+  any.classList.value === 'a d b f',
+  'value setter returns on same value'
+);
+
+any.classList.value = 'a d b';
+assert(
+  any.classList.value === 'a d b',
+  'value setter trims correctly to a shorter value'
+);
+
+any.classList.value = '';
+assert(
+  any.classList.value === '',
+  'value setter trims correctly on empty value'
+);
+
+any.classList.value = '';
+assert(
+  any.classList.value === '',
+  'value setter returns on same empty value'
+);
+// Reset to 'toggle can add too'
+any.classList.value = 'a d b';
+
 any.classList.toggle('x');
 any.classList.toggle('y', false);
 any.classList.replace('z', 'w');
