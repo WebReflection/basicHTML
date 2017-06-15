@@ -10,6 +10,8 @@ const afterChanges = dtl => {
   }
 };
 
+const splitter = /\s+/;
+
 // interface DOMTokenList // https://dom.spec.whatwg.org/#interface-domtokenlist
 module.exports = class DOMTokenList extends Array {
 
@@ -122,7 +124,7 @@ module.exports = class DOMTokenList extends Array {
   }
 
   set value(className) {
-    const tokens = String(className || '').trim().split(/\s+/);
+    const tokens = String(className || '').trim().split(splitter);
 
     const previous = this.length;
     const next = tokens.length;
