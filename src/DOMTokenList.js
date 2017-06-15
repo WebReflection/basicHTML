@@ -27,7 +27,22 @@ module.exports = class DOMTokenList extends Array {
   }
 
   add(...tokens) {
-    this.splice(0, this.length, ...new Set(this.concat(tokens)));
+    const current = this.length;
+    const adding = tokens.length;
+    if (adding === 1) {
+      const token = tokens[0];
+      for (let i = 0; i < current; i++) {
+        if (this[i] === token) return;
+      }
+      this.push(token);
+    } else {
+      main: for (let i = 0; i < adding; i++) {
+        for (let j = 0; j < current; j++) {
+          if (this[j] === tokens[i]) continue main;
+        }
+        this.push(tokens[i]);
+      }
+    }
     afterChanges(this);
   }
 
