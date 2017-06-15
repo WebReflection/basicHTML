@@ -47,8 +47,27 @@ module.exports = class DOMTokenList extends Array {
   }
 
   remove(...tokens) {
-    this.push(...this.splice(0, this.length)
-                    .filter(token => !tokens.includes(token)));
+    const current = this.length;
+    const removing = tokens.length;
+    if (removing === 1) {
+      const token = tokens[0];
+      for (let i = current - 1; i >= 0; i--) {
+        if (this[i] === token) {
+          this.splice(i, 1);
+          break;
+        }
+        if (i === 0) return;
+      }
+    } else {
+      main: for (let i = 0; i < removing; i++) {
+        for (let j = current - 1; j >= 0; j--) {
+          if (this[j] === tokens[i]) {
+            this.splice(j, 1);
+            continue main;
+          }
+        }
+      }
+    }
     afterChanges(this);
   }
 
