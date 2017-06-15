@@ -543,6 +543,15 @@ async(done => {
       ].join(','),
       'expected actions with class too'
     );
+    document.body.innerHTML = `<test-node test="123"></test-node>`;
+    console.log(actions);
+    assert(
+      actions.splice(0, actions.length).join(',') ===
+      [
+        'created', 'connected', 'attributeChanged'
+      ].join(','),
+      'attributes are notified if already there'
+    );
     done();
   });
 
