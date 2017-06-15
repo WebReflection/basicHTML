@@ -110,7 +110,15 @@ module.exports = class DOMTokenList extends Array {
   }
 
   get value() {
-    return this.join(' ');
+    let n = this.length, last = n - 1, o = '', w = ' ';
+    for (let i = 0; i < n; i++) {
+      if (i < last) {
+        o += this[i] + w;
+      } else {
+        o += this[i];
+        return o;
+      }
+    }
   }
 
   set value(className) {
