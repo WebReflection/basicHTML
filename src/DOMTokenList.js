@@ -76,20 +76,31 @@ module.exports = class DOMTokenList extends Array {
       if (this[i] === token) {
         this[i] = newToken;
         return afterChanges(this);
-  }
+      }
     }
     this.add(newToken);
   }
 
   toggle(token, force) {
-    let result = false;
-    if (this.contains(token)) {
-      if (force) result = true;
-      else this.remove(token);
+    let result = false, index = -1, length = this.length;
+    for (let i = 0; i < length; i++) {
+      if (this[i] === token) {
+        index = i;
+        break;
+      }
+    }
+    if (index > -1) {
+      if (force) {
+        result = true;
+      } else {
+        this.splice(index, 1);
+        afterChanges(this);
+      }
     } else {
       if (arguments.length < 2 || force) {
         result = true;
-        this.add(token);
+        this[length] = token;
+        afterChanges(this);
       }
     }
     return result;
