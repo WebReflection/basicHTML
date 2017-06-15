@@ -63,8 +63,28 @@ module.exports = class DOMTokenList extends Array {
   }
 
   set value(className) {
-    this.splice(0, this.length);
-    this.add(...String(className || '').trim().split(/\s+/));
+    const tokens = String(className || '').trim().split(/\s+/);
+
+    const previous = this.length;
+    const next = tokens.length;
+    const empty = previous === 0;
+
+    let existing, i;
+    for (i = 0, existing = 0; i < next; i++) {
+      if (this[i] === tokens[i]) {
+        existing += 1;
+        continue;
+      }
+      this[i] = tokens[i];
+    }
+    const unchanged = empty === false && existing === previous;
+    if (unchanged) return;
+
+    const trim = previous > next;
+    if (trim === true) {
+      const overflow = previous - next;
+      this.splice(next, overflow);
+    }
     afterChanges(this);
   }
 
