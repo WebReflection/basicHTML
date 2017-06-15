@@ -23,7 +23,10 @@ module.exports = class DOMTokenList extends Array {
   }
 
   contains(token) {
-    return this.includes(token);
+    for (let i = 0, n = this.length; i < n; i++) {
+      if (this[i] === token) return true;
+    }
+    return false;
   }
 
   add(...tokens) {
