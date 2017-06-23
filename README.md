@@ -2,6 +2,8 @@
 
 A NodeJS based, standard oriented, HTML implementation.
 
+<img alt="viperHTML logo" src="https://webreflection.github.io/hyperHTML/logo/basichtml.svg" width="116" height="81">
+
 **work in progress**
 
 ```js
