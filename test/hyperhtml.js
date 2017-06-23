@@ -4,7 +4,7 @@ const document = new Document();
 // hyperHTML needs at least a global document
 // to perform an initial feature detection
 global.document = document;
-const hyperHTML = require('hyperhtml');
+const hyperHTML = require('../../hyperHTML/hyperhtml.js');
 
 // most basic hyperHTML examples in node
 function tick(render) {
