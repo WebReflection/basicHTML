@@ -495,6 +495,36 @@ let value = {thing: Math.random()};
 flexibility.setAttribute('any', value);
 assert(value === flexibility.getAttribute('any'));
 
+log('## Node.cloneNode()');
+let toBeCloned = document.createDocumentFragment();
+let toBeClonedP = toBeCloned.appendChild(document.createElement('p'));
+toBeClonedP.setAttribute('one', 'two');
+toBeClonedP.appendChild(document.createTextNode('three'));
+toBeClonedP.appendChild(document.createComment('four'));
+assert(toBeClonedP.cloneNode().outerHTML === '<p one="two"></p>', 'clone Element');
+assert(toBeClonedP.cloneNode(true).outerHTML === toBeClonedP.outerHTML, 'clone Element deep');
+assert(toBeCloned.cloneNode(true).firstChild.outerHTML === toBeClonedP.outerHTML, 'clone #document-fragment');
+let toBeClonedAttr = toBeClonedP.getAttributeNode('one').cloneNode();
+assert(toBeClonedAttr.name === 'one' && toBeClonedAttr.value === 'two', 'clone attributes');
+
+
+log('## siblings');
+let ol = document.createElement('ol');
+let li = document.createElement('li');
+ol.appendChild(li);
+assert(li.previousElementSibling === null, 'null previousElementSibling');
+assert(li.nextElementSibling === null, 'null nextElementSibling');
+ol.insertBefore(document.createElement('li'), li);
+ol.appendChild(document.createElement('li'));
+assert(li.previousElementSibling === ol.childNodes[0], 'previousElementSibling');
+assert(li.nextElementSibling === ol.childNodes[2], 'nextElementSibling');
+ol.insertBefore(document.createElement('li'));
+assert(ol.childNodes.length === 4);
+
+log('## HTMLTemplateElement');
+assert(document.createElement('template').content.nodeType === 11, 'has a fragment content');
+
+
 log('## Custom Element');
 async(done => {
   customElements.whenDefined('test-node').then(() => {
@@ -544,7 +574,6 @@ async(done => {
       'expected actions with class too'
     );
     document.body.innerHTML = `<test-node test="123"></test-node>`;
-    console.log(actions);
     assert(
       actions.splice(0, actions.length).join(',') ===
       [
@@ -555,7 +584,8 @@ async(done => {
     done();
   });
 
-}).then(() => {
+})
+.then(() => {
   try {
     customElements.define('test-node', class extends HTMLElement {});
     assert(false, 'this should not happen');

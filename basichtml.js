@@ -1,8 +1,20 @@
 module.exports = {
+  Attr: require('./src/Attr'),
+  CharacterData: require('./src/CharacterData'),
+  Comment: require('./src/Comment'),
   CustomElementRegistry: require('./src/CustomElementRegistry'),
   CustomEvent: require('./src/CustomEvent'),
   Document: require('./src/Document'),
+  DocumentFragment: require('./src/DocumentFragment'),
+  DocumentType: require('./src/DocumentType'),
+  DOMStringMap: require('./src/DOMStringMap'),
+  DOMTokenList: require('./src/DOMTokenList'),
   Element: require('./src/Element'),
   Event: require('./src/Event'),
-  HTMLElement: require('./src/HTMLElement')
+  EventTarget: require('./src/EventTarget'),
+  HTMLElement: require('./src/HTMLElement'),
+  HTMLHtmlElement: require('./src/HTMLHtmlElement'),
+  HTMLTemplateElement: require('./src/HTMLTemplateElement'),
+  Node: require('./src/Node'),
+  Text: require('./src/Text')
 };

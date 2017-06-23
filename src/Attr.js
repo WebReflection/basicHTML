@@ -8,7 +8,7 @@ module.exports = class Attr extends Node {
     super(ownerElement.ownerDocument);
     this.ownerElement = ownerElement;
     this.name = name;
-    this.nodeType = 2;
+    this.nodeType = Node.ATTRIBUTE_NODE;
     this.nodeName = name;
     this._value = value;
   }

@@ -4,7 +4,7 @@ const Node = require('./Node');
 module.exports = class DocumentType extends Node {
   constructor(ownerDocument) {
     super(ownerDocument);
-    this.nodeType = 10;
+    this.nodeType = Node.DOCUMENT_TYPE_NODE;
     this.name = 'html';
   }
 

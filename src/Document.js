@@ -7,6 +7,7 @@ const Comment = require('./Comment');
 const DocumentFragment = require('./DocumentFragment');
 const HTMLElement = require('./HTMLElement');
 const HTMLHtmlElement = require('./HTMLHtmlElement');
+const HTMLTemplateElement = require('./HTMLTemplateElement');
 const Text = require('./Text');
 
 const headTag = el => el.nodeName === 'head';
@@ -33,7 +34,7 @@ module.exports = class Document extends Node {
 
   constructor(customElements = new CustomElementRegistry()) {
     super(null);
-    this.nodeType = 9;
+    this.nodeType = Node.DOCUMENT_NODE;
     this.nodeName = '#document';
     this.appendChild(new DocumentType());
     this.documentElement = new HTMLHtmlElement(this, 'html');
@@ -57,8 +58,13 @@ module.exports = class Document extends Node {
   }
 
   createElement(name) {
-    const CE = this.customElements.get(name);
-    return CE ? new CE(this, name) : new HTMLElement(this, name);
+    switch (name) {
+      case 'template':
+        return new HTMLTemplateElement(this, name);
+      default:
+        const CE = this.customElements.get(name);
+        return CE ? new CE(this, name) : new HTMLElement(this, name);
+    }
   }
 
   createElementNS(ns, name) {

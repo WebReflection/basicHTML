@@ -1,8 +1,19 @@
+// Used as Node.TYPE
+const types = {
+  ELEMENT_NODE: 1,
+  ATTRIBUTE_NODE: 2,
+  TEXT_NODE: 3,
+  COMMENT_NODE: 8,
+  DOCUMENT_NODE: 9,
+  DOCUMENT_TYPE_NODE: 10,
+  DOCUMENT_FRAGMENT_NODE: 11
+};
+
 // shared constants
 const connect = (parentNode, child) => {
   if (
     child.isCustomElement && 'connectedCallback' in child &&
-    parentNode && parentNode.nodeType !== 11
+    parentNode && parentNode.nodeType !== types.DOCUMENT_FRAGMENT_NODE
   ) {
     child.connectedCallback();
   }
@@ -11,7 +22,7 @@ const connect = (parentNode, child) => {
 const disconnect = (parentNode, child) => {
   if (
     child.isCustomElement && 'disconnectedCallback' in child &&
-    parentNode && parentNode.nodeType !== 11
+    parentNode && parentNode.nodeType !== types.DOCUMENT_FRAGMENT_NODE
   ) {
     child.disconnectedCallback();
   }
@@ -33,5 +44,6 @@ module.exports = {
   connect,
   disconnect,
   disconnectChild,
-  notifyAttributeChanged
+  notifyAttributeChanged,
+  types
 };

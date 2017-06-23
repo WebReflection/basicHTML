@@ -68,20 +68,20 @@ const specialAttribute = (owner, attr) => {
 
 const stringifiedNode = el => {
   switch (el.nodeType) {
-    case 1:
+    case Node.ELEMENT_NODE:
       return ('<' + el.nodeName).concat(
         el.attributes.map(stringifiedNode).join(''),
         Element.VOID_ELEMENT.test(el.nodeName) ?
           '/>' :
           ('>' + el.childNodes.map(stringifiedNode).join('') + '</' + el.nodeName + '>')
       );
-    case 2:
+    case Node.ATTRIBUTE_NODE:
       return typeof el.value === 'boolean' ?
         (el.value ? (' ' + el.name) : '') :
         (' ' + el.name + '="' + escape(el.value || '') + '"');
-    case 3:
+    case Node.TEXT_NODE:
       return el.data;
-    case 8:
+    case Node.COMMENT_NODE:
       return '<!--' + el.data + '-->';
   }
 };
@@ -91,7 +91,7 @@ class Element extends Node {
   constructor(ownerDocument, name) {
     super(ownerDocument);
     this.attributes = [];
-    this.nodeType = 1;
+    this.nodeType = Node.ELEMENT_NODE;
     this.nodeName = name;
     this.classList = new DOMTokenList(this);
   }
@@ -141,7 +141,7 @@ class Element extends Node {
     let el = this;
     do {
       if (el.matches(css)) return el;
-    } while ((el = el.parentNode) && el.nodeType === 1);
+    } while ((el = el.parentNode) && el.nodeType === Node.ELEMENT_NODE);
     return null;
   }
 
@@ -222,19 +222,33 @@ class Element extends Node {
     parseInto(this, html);
   }
 
+  get nextElementSibling() {
+    const children = this.parentNode.children;
+    let i = children.indexOf(this);
+    return ++i < children.length ? children[i] : null;
+  }
+
+  get previousElementSibling() {
+    const children = this.parentNode.children;
+    let i = children.indexOf(this);
+    return --i < 0 ? null : children[i];
+  }
+
   get outerHTML() {
     return stringifiedNode(this);
   }
 
   // interface ParentNode @ https://dom.spec.whatwg.org/#parentnode
   get children() {
-    return this.childNodes.filter(node => node.nodeType === 1);
+    return this.childNodes.filter(
+      node => node.nodeType === Node.ELEMENT_NODE
+    );
   }
 
   get firstElementChild() {
     for (let i = 0, length = this.childNodes.length; i < length; i++) {
       let child = this.childNodes[i];
-      if (child.nodeType === 1) return child;
+      if (child.nodeType === Node.ELEMENT_NODE) return child;
     }
     return null;
   }
@@ -242,7 +256,7 @@ class Element extends Node {
   get lastElementChild() {
     for (let i = this.childNodes.length; i--;) {
       let child = this.childNodes[i];
-      if (child.nodeType === 1) return child;
+      if (child.nodeType === Node.ELEMENT_NODE) return child;
     }
     return null;
   }
