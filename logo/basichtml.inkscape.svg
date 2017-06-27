@@ -14,7 +14,7 @@
    viewBox="0 0 60 48"
    version="1.1"
    id="svg8"
-   sodipodi:docname="basic.inkscape.svg"
+   sodipodi:docname="basichtml.inkscape.svg"
    inkscape:version="0.92.1 r"
    inkscape:export-filename="/home/webreflection/code/hyperHTML/logo/hyperhtml.png"
    inkscape:export-xdpi="25.4"
@@ -86,8 +86,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8182481"
-     inkscape:cx="69.905815"
-     inkscape:cy="125.39482"
+     inkscape:cx="119.75948"
+     inkscape:cy="67.912301"
      inkscape:document-units="mm"
      inkscape:current-layer="g4681"
      showgrid="false"
@@ -105,7 +105,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

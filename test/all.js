@@ -504,6 +504,7 @@ toBeClonedP.appendChild(document.createComment('four'));
 assert(toBeClonedP.cloneNode().outerHTML === '<p one="two"></p>', 'clone Element');
 assert(toBeClonedP.cloneNode(true).outerHTML === toBeClonedP.outerHTML, 'clone Element deep');
 assert(toBeCloned.cloneNode(true).firstChild.outerHTML === toBeClonedP.outerHTML, 'clone #document-fragment');
+assert(toBeClonedP.getAttributeNode('one') === toBeClonedP.attributes.one, 'attributes by name');
 let toBeClonedAttr = toBeClonedP.getAttributeNode('one').cloneNode();
 assert(toBeClonedAttr.name === 'one' && toBeClonedAttr.value === 'two', 'clone attributes');
 

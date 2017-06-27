@@ -140,6 +140,7 @@ class Element extends Node.implements(ParentNode) {
     if (attr) {
       this.attributes.splice(this.attributes.indexOf(attr), 1);
       attr.value = null;
+      delete this.attributes[name];
       specialAttribute(this, attr);
     }
   }
@@ -152,6 +153,7 @@ class Element extends Node.implements(ParentNode) {
       const attr = this.ownerDocument.createAttribute(name);
       attr.ownerElement = this;
       this.attributes.push(attr);
+      this.attributes[name] = attr;
       attr.value = value;
     }
   }
@@ -167,6 +169,7 @@ class Element extends Node.implements(ParentNode) {
         }
       }
       else attr.ownerElement = this;
+      this.attributes[name] = attr;
       if (old) {
         this.attributes.splice(this.attributes.indexOf(old), 1, attr);
         if (!specialAttribute(this, attr))
