@@ -582,6 +582,11 @@ async(done => {
       ].join(','),
       'attributes are notified if already there'
     );
+    const TestNode = customElements.get('test-node');
+    global.document = document;
+    const tn = new TestNode();
+    delete global.document;
+    assert(tn.nodeName === 'test-node', 'custom elements can be initialized via new');
     done();
   });
 
@@ -596,6 +601,7 @@ async(done => {
 });
 
 const actions = [];
+customElements.define('test-empty', class extends HTMLElement {});
 customElements.define('test-node', class extends HTMLElement {
   static get observedAttributes() {
     return ['class', 'test'];

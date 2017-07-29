@@ -4,6 +4,11 @@ const CSS_SPLITTER = /\s*,\s*/;
 
 const escape = require('html-escaper').escape;
 const Parser = require('htmlparser2').Parser;
+const findName = (Class, registry) => {
+  for (let key in registry)
+    if (registry[key] === Class)
+      return key;
+};
 const parseInto = (node, html) => {
   const document = node.ownerDocument;
   const content = new Parser({
@@ -78,7 +83,10 @@ class Element extends Node.implements(ParentNode) {
     super(ownerDocument);
     this.attributes = [];
     this.nodeType = Node.ELEMENT_NODE;
-    this.nodeName = name;
+    this.nodeName = name || findName(
+      this.constructor,
+      this.ownerDocument.customElements._registry
+    );
     this.classList = new DOMTokenList(this);
   }
 

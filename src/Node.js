@@ -32,7 +32,7 @@ class Node extends EventTarget {
 
   constructor(ownerDocument) {
     super();
-    this.ownerDocument = ownerDocument;
+    this.ownerDocument = ownerDocument || global.document;
     this.childNodes = [];
   }
 
