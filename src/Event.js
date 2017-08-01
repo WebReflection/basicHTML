@@ -11,16 +11,24 @@ class Event {
     cancelable: false,
     composed: false
   }) {
-    this.type = type;
+    if (type) this.initEvent(
+      type,
+      eventInitDict.bubbles,
+      eventInitDict.cancelable
+    );
+    this.composed = eventInitDict.composed;
     this.isTrusted = false;
     this.defaultPrevented = false;
     this.cancelBubble = false;
     this.cancelImmediateBubble = false;
-    this.bubbles = eventInitDict.bubbles;
-    this.cancelable = eventInitDict.cancelable;
-    this.composed = eventInitDict.composed;
     this.eventPhase = Event.NONE;
     this.timeStamp = getTime();
+  }
+
+  initEvent(type, bubbles, cancelable) {
+    this.type = type;
+    this.bubbles = bubbles;
+    this.cancelable = cancelable;
   }
 
   stopPropagation() {

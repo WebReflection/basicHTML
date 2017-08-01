@@ -71,8 +71,9 @@ module.exports = class Document extends Node {
     return new HTMLElement(this, name + ':' + ns);
   }
 
-  createEvent(type) {
-    return new Event(type, {bubbles: true, cancelable: true});
+  createEvent(name) {
+    if (name !== 'Event') throw new Error(name + ' not implemented');
+    return new Event();
   }
 
   createTextNode(text) {

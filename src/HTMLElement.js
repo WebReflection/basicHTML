@@ -20,7 +20,9 @@ class HTMLElement extends Element {
   Object.defineProperty(HTMLElement.prototype, type, {
     configurable: true,
     value: function () {
-      this.dispatchEvent(this.ownerDocument.createEvent(type));
+      const event = this.ownerDocument.createEvent('Event');
+      event.initEvent(type, true, true);
+      this.dispatchEvent(event);
     }
   });
 });

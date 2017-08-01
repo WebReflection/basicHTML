@@ -259,7 +259,15 @@ second.addEventListener('twice', e => {
   second.called = true;
   e.stopPropagation();
 }, {once: true});
-third.dispatchEvent(document.createEvent('twice'));
+try {
+  document.createEvent('MouseEvent');
+  assert(false, 'MouseEvent should not be allowed');
+} catch(e) {
+  assert(true, 'document.createEvent(...) can be used with "Event" only');
+}
+var createdEvent = document.createEvent('Event');
+createdEvent.initEvent('twice', true, true);
+third.dispatchEvent(createdEvent);
 assert(
   second.called === true,
   'events bubble up'
