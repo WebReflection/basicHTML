@@ -5,7 +5,9 @@
   "main": "basichtml.js",
   "scripts": {
     "test": "istanbul cover test/all.js",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "web": "echo \"$(cat basichtml.js)global.basicHTML=module.exports;\" | browserify - | uglifyjs --comments=/^!/ --compress --mangle -o web.js && npm run less-ag-licenses",
+    "less-ag-licenses": "node -e 'var fs=require(\"fs\");fs.writeFile(\"web.js\",fs.readFileSync(\"web.js\").toString().replace(/\\s*Permission[\\S\\s]+?SOFTWARE\\.\\s*/,\"\"),Object)'"
   },
   "author": "Andrea Giammarchi",
   "license": "ISC",
@@ -16,10 +18,12 @@
     "htmlparser2": "^3.9.2"
   },
   "devDependencies": {
+    "browserify": "^14.4.0",
     "coveralls": "^2.13.1",
     "hyperhtml": "^0.12.0",
     "istanbul": "^0.4.5",
-    "tressa": "^0.3.1"
+    "tressa": "^0.3.1",
+    "uglify-es": "^3.0.27"
   },
   "repository": {
     "type": "git",
