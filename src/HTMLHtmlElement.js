@@ -11,6 +11,7 @@ const parseInto = (node, html) => {
           node = document[name];
           break;
         default:
+          if (Element.VOID_ELEMENT.test(node.nodeName)) node = node.parentNode;
           node = node.appendChild(document.createElement(name));
           break;
       }
@@ -28,7 +29,8 @@ const parseInto = (node, html) => {
       switch (name) {
         case 'html': break;
         default:
-          node = node.parentNode;
+          if (node.nodeName === name)
+            node = node.parentNode;
           break;
       }
     }
@@ -41,6 +43,7 @@ const parseInto = (node, html) => {
 };
 
 const utils = require('./utils');
+const Element = require('./Element');
 const HTMLElement = require('./HTMLElement');
 
 // interface HTMLHtmlElement // https://html.spec.whatwg.org/multipage/semantics.html#htmlhtmlelement
@@ -48,6 +51,11 @@ module.exports = class HTMLHtmlElement extends HTMLElement {
 
   constructor(ownerDocument, name) {
     super(ownerDocument, name).isCustomElement = false;
+  }
+
+  get innerHTML() {
+    const document = this.ownerDocument;
+    return document.head.outerHTML + document.body.outerHTML;
   }
 
   set innerHTML(html) {

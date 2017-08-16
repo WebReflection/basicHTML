@@ -136,7 +136,7 @@ any.appendChild(document.createElement('br'));
 any.setAttribute('hidden', true);
 any.setAttribute('wut', '');
 assert(
-  any.outerHTML === '<any test-attribute="something else" class="a d" hidden wut="">hello<br/></any>',
+  any.outerHTML === '<any test-attribute="something else" class="a d" hidden wut="">hello<br /></any>',
   'nodes can have a text content'
 );
 any.setAttribute('hidden', false);
@@ -458,6 +458,30 @@ assert(
   !document.documentElement.hasChildNodes() &&
   document.getElementsByTagName('*').length === 1,
   'or eventually removed too'
+);
+
+document.documentElement.innerHTML = `
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/test">
+  </head>`;
+assert(
+  document.documentElement.innerHTML ===
+  "<head>\n    <meta charset=\"utf-8\" /><link rel=\"stylesheet\" href=\"/test\" /></head><body></body>",
+  'multi void elements are supported'
+);
+
+let voidInDiv = document.createElement('div');
+voidInDiv.innerHTML = `
+  <div>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/test">
+  </div>
+`;
+assert(
+  voidInDiv.innerHTML ===
+  "\n  <div>\n    <meta charset=\"utf-8\" /><link rel=\"stylesheet\" href=\"/test\" /></div>\n",
+  'also inside elements'
 );
 
 log('## playing with childNodes');

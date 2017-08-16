@@ -13,6 +13,7 @@ const parseInto = (node, html) => {
   const document = node.ownerDocument;
   const content = new Parser({
     onopentagname(name) {
+      if (Element.VOID_ELEMENT.test(node.nodeName)) node = node.parentNode;
       node = node.appendChild(document.createElement(name));
     },
     onattribute(name, value) {
@@ -24,8 +25,9 @@ const parseInto = (node, html) => {
     ontext(text) {
       node.appendChild(document.createTextNode(text));
     },
-    onclosetag() {
-      node = node.parentNode;
+    onclosetag(name) {
+      if (node.nodeName === name)
+        node = node.parentNode;
     }
   }, {
     decodeEntities: true,
@@ -63,7 +65,7 @@ const stringifiedNode = el => {
       return ('<' + el.nodeName).concat(
         el.attributes.map(stringifiedNode).join(''),
         Element.VOID_ELEMENT.test(el.nodeName) ?
-          '/>' :
+          ' />' :
           ('>' + el.childNodes.map(stringifiedNode).join('') + '</' + el.nodeName + '>')
       );
     case Node.ATTRIBUTE_NODE:
