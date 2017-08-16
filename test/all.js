@@ -540,6 +540,14 @@ assert(toBeClonedP.getAttributeNode('one') === toBeClonedP.attributes.one, 'attr
 let toBeClonedAttr = toBeClonedP.getAttributeNode('one').cloneNode();
 assert(toBeClonedAttr.name === 'one' && toBeClonedAttr.value === 'two', 'clone attributes');
 
+toBeClonedP.removeAttributeNode(toBeClonedP.attributes.one);
+assert(toBeClonedP.attributes.one == null, 'attributes can be removed');
+try {
+  toBeClonedP.removeAttributeNode(toBeClonedP.attributes.one);
+  assert(false, 'attributes must be valid to be removed');
+} catch(e) {
+  assert(true, 'attributes must be valid to be removed');
+}
 
 log('## siblings');
 let ol = document.createElement('ol');

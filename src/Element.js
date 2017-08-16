@@ -147,12 +147,7 @@ class Element extends Node.implements(ParentNode) {
 
   removeAttribute(name) {
     const attr = this.getAttributeNode(name);
-    if (attr) {
-      this.attributes.splice(this.attributes.indexOf(attr), 1);
-      attr.value = null;
-      delete this.attributes[name];
-      specialAttribute(this, attr);
-    }
+    if (attr) this.removeAttributeNode(attr);
   }
 
   setAttribute(name, value) {
@@ -166,6 +161,15 @@ class Element extends Node.implements(ParentNode) {
       this.attributes[name] = attr;
       attr.value = value;
     }
+  }
+
+  removeAttributeNode(attr) {
+    const i = this.attributes.indexOf(attr);
+    if (i < 0) throw new Error('unable to remove ' + attr);
+    this.attributes.splice(i, 1);
+    attr.value = null;
+    delete this.attributes[attr.name];
+    specialAttribute(this, attr);
   }
 
   setAttributeNode(attr) {

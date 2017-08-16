@@ -4,6 +4,7 @@
   "description": "A NodeJS based, standard oriented, HTML implementation.",
   "main": "basichtml.js",
   "scripts": {
+    "build": "npm test && npm run web",
     "test": "istanbul cover test/all.js",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "web": "echo \"$(cat basichtml.js)global.basicHTML=module.exports;\" | browserify - | uglifyjs --comments=/^!/ --compress --mangle -o web.js && npm run less-ag-licenses",
