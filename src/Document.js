@@ -97,6 +97,10 @@ module.exports = class Document extends Node {
     return this.childNodes[0] + this.documentElement.outerHTML;
   }
 
+  get defaultView() {
+    return global;
+  }
+
   get head() {
     const html = this.documentElement;
     return  this.documentElement.childNodes.find(headTag) ||

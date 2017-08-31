@@ -18,6 +18,10 @@ assert(
   document.customElements === customElements,
   'a document can share customElements with others'
 );
+assert(
+  document.defaultView === global,
+  'a document has a defaultView too'
+);
 
 document = new Document();
 assert(
