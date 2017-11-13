@@ -69,9 +69,9 @@ const stringifiedNode = el => {
           ('>' + el.childNodes.map(stringifiedNode).join('') + '</' + el.nodeName + '>')
       );
     case Node.ATTRIBUTE_NODE:
-      return typeof el.value === 'boolean' ?
+      return typeof el.value === 'boolean' || el.value == null ?
         (el.value ? (' ' + el.name) : '') :
-        (' ' + el.name + '="' + escape(el.value || '') + '"');
+        (' ' + el.name + '="' + escape(el.value) + '"');
     case Node.TEXT_NODE:
       return el.data;
     case Node.COMMENT_NODE:

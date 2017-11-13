@@ -143,13 +143,20 @@ assert(
   any.outerHTML === '<any test-attribute="something else" class="a d" hidden wut="">hello<br /></any>',
   'nodes can have a text content'
 );
+
+any.attributes['test-attribute'].value = null;
+assert(
+  any.outerHTML === '<any class="a d" hidden wut="">hello<br /></any>',
+  'attribute can have a null value'
+);
+
 any.setAttribute('hidden', false);
 any.removeAttribute('wut');
 
 any.innerHTML = '<p>OK</p>';
 assert(
   any.innerHTML === '<p>OK</p>' &&
-  any.outerHTML === '<any test-attribute="something else" class="a d">' + any.innerHTML + '</any>',
+  any.outerHTML === '<any class="a d">' + any.innerHTML + '</any>',
   'but also html'
 );
 
