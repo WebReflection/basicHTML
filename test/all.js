@@ -519,6 +519,15 @@ document.body.insertBefore(one, one);
 document.body.replaceChild(one, one);
 assert(document.body.childNodes.length === 1);
 
+let before = document.createElement('before');
+let after = document.createElement('after');
+document.body.append(before, after);
+assert(document.body.lastElementChild === after, 'after is the last element');
+assert(document.body.lastElementChild.previousElementSibling === before, 'before is the previous one');
+document.body.insertBefore(after, before);
+assert(document.body.lastElementChild === before, 'before is now after');
+assert(document.body.lastElementChild.previousElementSibling === after, 'after is now before');
+
 log('## style');
 assert(
   document.body.style && document.body.style === document.body.style,

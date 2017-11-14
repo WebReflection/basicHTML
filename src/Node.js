@@ -79,13 +79,15 @@ class Node extends EventTarget {
     if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       node.childNodes.slice().forEach(node => this.insertBefore(node, child));
     } else if (node !== child) {
+      const index = this.childNodes.indexOf(node);
+      const swapping = -1 < index;
+      if (swapping) this.childNodes.splice(index, 1);
       if (child) {
-        const i = this.childNodes.indexOf(child);
-        this.childNodes.splice(i, 0, node);
+        this.childNodes.splice(this.childNodes.indexOf(child), 0, node);
       } else {
         this.childNodes.push(node);
       }
-      resetParent(this, node);
+      if (!swapping) resetParent(this, node);
     }
     return node;
   }
