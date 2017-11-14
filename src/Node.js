@@ -150,7 +150,7 @@ class Node extends EventTarget {
     switch (this.nodeType) {
       case Node.ELEMENT_NODE:
       case Node.DOCUMENT_FRAGMENT_NODE:
-        this.childNodes.forEach(nullParent);
+        this.childNodes.slice().forEach(nullParent);
         if (text) {
           const node = this.ownerDocument.createTextNode(text);
           node.parentNode = this;

@@ -59,9 +59,7 @@ module.exports = class HTMLHtmlElement extends HTMLElement {
   }
 
   set innerHTML(html) {
-    this.childNodes
-        .splice(0, this.childNodes.length)
-        .forEach(utils.disconnectChild);
+    this.textContent = '';
     parseInto(this, html);
   }
 

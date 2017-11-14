@@ -28,8 +28,6 @@ const disconnect = (parentNode, child) => {
   }
 };
 
-const disconnectChild = child => disconnect(child.parentNode, child);
-
 const notifyAttributeChanged = (el, name, oldValue, newValue) => {
   if (
     el.isCustomElement &&
@@ -43,7 +41,6 @@ const notifyAttributeChanged = (el, name, oldValue, newValue) => {
 module.exports = {
   connect,
   disconnect,
-  disconnectChild,
   notifyAttributeChanged,
   types
 };
