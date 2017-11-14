@@ -2,6 +2,7 @@ const escape = require('html-escaper').escape;
 
 const Element = require('./Element');
 const DOMStringMap = require('./DOMStringMap');
+const CSSStyleDeclaration = require('./CSSStyleDeclaration');
 
 // interface HTMLElement // https://html.spec.whatwg.org/multipage/dom.html#htmlelement
 class HTMLElement extends Element {
@@ -148,6 +149,11 @@ class HTMLElement extends Element {
       }
     }
   });
+});
+
+Object.defineProperty(HTMLElement.prototype, 'style', {
+  configurable: true,
+  get() { return this._style || (this._style = new CSSStyleDeclaration); }
 });
 
 // helpers

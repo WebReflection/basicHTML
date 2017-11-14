@@ -510,6 +510,36 @@ document.body.insertBefore(one, one);
 document.body.replaceChild(one, one);
 assert(document.body.childNodes.length === 1);
 
+log('## style');
+assert(
+  document.body.style && document.body.style === document.body.style,
+  'style available per each element'
+);
+
+assert(
+  'cssText' in document.body.style,
+  'cssText available per each style'
+);
+
+
+document.body.style.fontFamily = 'sans-serif';
+assert(
+  document.body.style.cssText === 'font-family:sans-serif;',
+  'style text can be retrieved'
+);
+
+document.body.style.cssText = 'font-family:monospace;';
+assert(
+  document.body.style.cssText === 'font-family:monospace;',
+  'style text can be set'
+);
+
+assert(
+  'fontFamily' in document.body.style &&
+  document.body.style.fontFamily === 'monospace',
+  'style as a property'
+);
+
 log('## className');
 document.body.className = 'a b';
 assert(
