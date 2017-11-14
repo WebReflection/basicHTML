@@ -73,7 +73,7 @@ const stringifiedNode = el => {
         (el.value ? (' ' + el.name) : '') :
         (' ' + el.name + '="' + escape(el.value) + '"');
     case Node.TEXT_NODE:
-      return el.data;
+      return escape(el.data);
     case Node.COMMENT_NODE:
       return '<!--' + el.data + '-->';
   }

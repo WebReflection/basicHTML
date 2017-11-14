@@ -338,6 +338,12 @@ assert(
   'and do not interfere as textContent'
 );
 
+third.textContent = '<br/>';
+assert(
+  third.innerHTML === '&lt;br/&gt;',
+  'text nodes are sanitized'
+);
+
 log('## DOMStringMap');
 first.dataset.testName = 'test value';
 assert(
