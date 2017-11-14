@@ -169,6 +169,8 @@ class Node extends EventTarget {
 
 };
 
-Object.keys(utils.types).forEach(type => Node[type] = utils.types[type]);
+Object.keys(utils.types).forEach(type => {
+  Node[type] = (Node.prototype[type] = utils.types[type]);
+});
 
 module.exports = Node;
