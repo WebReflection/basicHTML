@@ -49,8 +49,8 @@ module.exports = class EventTarget {
   dispatchEvent(event) {
     const type = event.type;
     let node = this;
-    event.target = node;
-    event.currentTarget = node;
+    if (!event.target) event.target = node;
+    if (!event.currentTarget) event.currentTarget = node;
     event.eventPhase = Event.AT_TARGET;
     do {
       if (type in node._eventTarget) {

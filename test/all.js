@@ -253,7 +253,10 @@ let twice = e => {
 };
 third.addEventListener('twice', twice);
 third.addEventListener('twice', twice);
-third.dispatchEvent(new Event('once'));
+let e = new Event('once');
+e.target = third;
+e.currentTarget = third;
+third.dispatchEvent(e);
 third.dispatchEvent(new Event('once'));
 third.dispatchEvent(new Event('twice'));
 third.dispatchEvent(new Event('twice'));
