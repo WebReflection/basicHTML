@@ -1,5 +1,7 @@
 # basicHTML
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/WebReflection/basicHTML.svg)](https://greenkeeper.io/)
+
 [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC) [![Build Status](https://travis-ci.org/WebReflection/basicHTML.svg?branch=master)](https://travis-ci.org/WebReflection/basicHTML) [![Coverage Status](https://coveralls.io/repos/github/WebReflection/basicHTML/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/basicHTML?branch=master) [![donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&style=flat)](https://github.com/WebReflection/donate)
 
 A NodeJS based, standard oriented, HTML implementation.
