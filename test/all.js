@@ -624,6 +624,12 @@ assert(ol.childNodes.length === 4);
 log('## HTMLTemplateElement');
 assert(document.createElement('template').content.nodeType === 11, 'has a fragment content');
 
+log('## Range (partial)');
+const range = document.createRange();
+range.setStartBefore(ol.childNodes[1]);
+range.setEndAfter(ol.childNodes[2]);
+range.deleteContents();
+assert(ol.childNodes.length === 2, 'range removed two nodes');
 
 log('## Custom Element');
 async(done => {

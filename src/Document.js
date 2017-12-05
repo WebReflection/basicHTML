@@ -8,6 +8,7 @@ const DocumentFragment = require('./DocumentFragment');
 const HTMLElement = require('./HTMLElement');
 const HTMLHtmlElement = require('./HTMLHtmlElement');
 const HTMLTemplateElement = require('./HTMLTemplateElement');
+const Range = require('./Range');
 const Text = require('./Text');
 
 const headTag = el => el.nodeName === 'head';
@@ -74,6 +75,10 @@ module.exports = class Document extends Node {
   createEvent(name) {
     if (name !== 'Event') throw new Error(name + ' not implemented');
     return new Event();
+  }
+
+  createRange() {
+    return new Range;
   }
 
   createTextNode(text) {
