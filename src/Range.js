@@ -1,25 +1,69 @@
-// WARNING: this class is incomplete !!!
+// WARNING: this class is incomplete and
+//          it doesn't fully reflect the whole client side API
+
+const DocumentFragment = require('./DocumentFragment');
+
+function append(node) {
+  this.appendChild(node);
+}
+
+function clone(node) {
+  return node.cloneNode(true);
+}
+
+function remove(node) {
+  this.removeChild(node);
+}
+
+function getContents(start, end) {
+  const nodes = [start];
+  while (start !== end) {
+    nodes.push(start = start.nextSibling);
+  }
+  return nodes;
+}
 
 // interface Text // https://dom.spec.whatwg.org/#text
 module.exports = class Range {
 
+  cloneContents() {
+    return getContents(this._start, this._end).map(clone);
+  }
+
   deleteContents() {
-    const parentNode = this._[0].parentNode;
-    while (this._.length) {
-      parentNode.removeChild(this._.pop());
-    }
+    getContents(this._start, this._end)
+      .forEach(remove, this._start.parentNode);
+  }
+
+  extractContents() {
+    const fragment = new DocumentFragment(this._start.ownerDocument);
+    const nodes = getContents(this._start, this._end);
+    nodes.forEach(remove, this._start.parentNode);
+    nodes.forEach(append, fragment);
+    return fragment;
+  }
+
+  cloneRange() {
+    const range = new Range;
+    range._start = this._start;
+    range._end = this._end;
+    return range;
+  }
+
+  setStartAfter(node) {
+    this._start = node.nextSibling;
   }
 
   setStartBefore(node) {
-    this._ = [node];
+    this._start = node;
   }
 
   setEndAfter(node) {
-    let el = this._[0];
-    while (el !== node) {
-      el = el.nextSibling;
-      this._.push(el);
-    }
+    this._end = node;
+  }
+
+  setEndBefore(node) {
+    this._end = node.previousSibling;
   }
 
 };

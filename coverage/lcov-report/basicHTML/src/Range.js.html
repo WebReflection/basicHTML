@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>9/9</span>
+        <span class='fraction'>28/28</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>12/12</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>9/9</span>
+        <span class='fraction'>28/28</span>
       </div>
     </div>
   </div>
@@ -68,20 +68,93 @@
 23
 24
 25
-26</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -92,29 +165,88 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// WARNING: this class is incomplete !!!
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// WARNING: this class is incomplete and
+//          it doesn't fully reflect the whole client side API
+&nbsp;
+const DocumentFragment = require('./DocumentFragment');
+&nbsp;
+function append(node) {
+  this.appendChild(node);
+}
+&nbsp;
+function clone(node) {
+  return node.cloneNode(true);
+}
+&nbsp;
+function remove(node) {
+  this.removeChild(node);
+}
+&nbsp;
+function getContents(start, end) {
+  const nodes = [start];
+  while (start !== end) {
+    nodes.push(start = start.nextSibling);
+  }
+  return nodes;
+}
 &nbsp;
 // interface Text // https://dom.spec.whatwg.org/#text
 module.exports = class Range {
 &nbsp;
+  cloneContents() {
+    return getContents(this._start, this._end).map(clone);
+  }
+&nbsp;
   deleteContents() {
-    const parentNode = this._[0].parentNode;
-    while (this._.length) {
-      parentNode.removeChild(this._.pop());
-    }
+    getContents(this._start, this._end)
+      .forEach(remove, this._start.parentNode);
+  }
+&nbsp;
+  extractContents() {
+    const fragment = new DocumentFragment(this._start.ownerDocument);
+    const nodes = getContents(this._start, this._end);
+    nodes.forEach(remove, this._start.parentNode);
+    nodes.forEach(append, fragment);
+    return fragment;
+  }
+&nbsp;
+  cloneRange() {
+    const range = new Range;
+    range._start = this._start;
+    range._end = this._end;
+    return range;
+  }
+&nbsp;
+  setStartAfter(node) {
+    this._start = node.nextSibling;
   }
 &nbsp;
   setStartBefore(node) {
-    this._ = [node];
+    this._start = node;
   }
 &nbsp;
   setEndAfter(node) {
-    let el = this._[0];
-    while (el !== node) {
-      el = el.nextSibling;
-      this._.push(el);
-    }
+    this._end = node;
+  }
+&nbsp;
+  setEndBefore(node) {
+    this._end = node.previousSibling;
   }
 &nbsp;
 };
@@ -124,7 +256,7 @@ module.exports = class Range {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 05 2017 05:16:13 GMT-0200 (-02)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Dec 07 2017 08:30:27 GMT-0200 (-02)
 </div>
 </div>
 <script src="../../prettify.js"></script>

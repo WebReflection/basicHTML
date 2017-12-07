@@ -629,12 +629,38 @@ assert(ol.childNodes.length === 4);
 log('## HTMLTemplateElement');
 assert(document.createElement('template').content.nodeType === 11, 'has a fragment content');
 
-log('## Range (partial)');
-const range = document.createRange();
-range.setStartBefore(ol.childNodes[1]);
-range.setEndAfter(ol.childNodes[2]);
+log('## Range');
+let range = document.createRange();
+let clone = range.cloneRange();
+range.setStartAfter(ol.childNodes[0]);
+range.setEndBefore(ol.childNodes[3]);
 range.deleteContents();
 assert(ol.childNodes.length === 2, 'range removed two nodes');
+range = document.createRange();
+range.setStartBefore(ol.firstChild);
+range.setEndAfter(ol.lastChild);
+range.deleteContents();
+assert(ol.childNodes.length === 0, 'range removed two other nodes');
+ol.appendChild(document.createElement('li'));
+ol.appendChild(document.createElement('li'));
+ol.appendChild(document.createElement('li'));
+range = document.createRange();
+range.setStartBefore(ol.firstChild);
+range.setEndAfter(ol.lastChild);
+let olLive = ol.childNodes.slice(0);
+let olExtracted = range.extractContents();
+assert(olLive.every((li, i) => li === olExtracted.childNodes[i]), 'extractContents works');
+ol.appendChild(document.createElement('li')).textContent = '0';
+ol.appendChild(document.createElement('li')).textContent = '1';
+ol.appendChild(document.createElement('li')).textContent = '2';
+range = document.createRange();
+range.setStartBefore(ol.firstChild);
+range.setEndAfter(ol.lastChild);
+olExtracted = range.cloneContents();
+assert(olExtracted.every(
+  (li, i) => li.textContent == i &&
+  li.textContent === ol.childNodes[i].textContent
+), 'cloneContents works');
 
 log('## Custom Element');
 async(done => {
