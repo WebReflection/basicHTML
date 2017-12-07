@@ -239,6 +239,10 @@ class Element extends Node.implements(ParentNode) {
     return stringifiedNode(this);
   }
 
+  get tagName() {
+    return this.nodeName
+  }
+
 };
 
 Element.VOID_ELEMENT = /^area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr$/i;

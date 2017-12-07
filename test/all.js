@@ -427,6 +427,11 @@ assert(
   'createElementNS simply puts tags and namespace together'
 );
 
+assert(
+  document.createElement('something').tagName == 'something',
+  'elements have tagNames'
+)
+
 log('## documentElement');
 document.documentElement.title = 'some title';
 assert(
