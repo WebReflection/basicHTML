@@ -657,7 +657,7 @@ range = document.createRange();
 range.setStartBefore(ol.firstChild);
 range.setEndAfter(ol.lastChild);
 olExtracted = range.cloneContents();
-assert(olExtracted.every(
+assert(olExtracted.childNodes.every(
   (li, i) => li.textContent == i &&
   li.textContent === ol.childNodes[i].textContent
 ), 'cloneContents works');

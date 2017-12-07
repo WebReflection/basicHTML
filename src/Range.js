@@ -27,7 +27,9 @@ function getContents(start, end) {
 module.exports = class Range {
 
   cloneContents() {
-    return getContents(this._start, this._end).map(clone);
+    const fragment = new DocumentFragment(this._start.ownerDocument);
+    getContents(this._start, this._end).map(clone).forEach(append, fragment);
+    return fragment;
   }
 
   deleteContents() {
