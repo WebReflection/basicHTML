@@ -723,7 +723,16 @@ async(done => {
     const tn = new TestNode();
     delete global.document;
     assert(tn.nodeName === 'test-node', 'custom elements can be initialized via new');
-    done();
+
+    customElements.whenDefined('test-node-v0').then(() => {
+      document.body.innerHTML = `<test-node-v0></test-node-v0>`;
+      document.body.firstChild.setAttribute('test', '123');
+      assert(
+        document.body.firstChild.getAttribute('test') === '123',
+        'attribute sets without throwing'
+      );
+      done();
+    });
   });
 
 })
@@ -738,6 +747,11 @@ async(done => {
 
 const actions = [];
 customElements.define('test-empty', class extends HTMLElement {});
+customElements.define('test-node-v0', class extends HTMLElement {
+  attributeChangedCallback() {
+    throw 'this should not be called';
+  }
+});
 customElements.define('test-node', class extends HTMLElement {
   static get observedAttributes() {
     return ['class', 'test'];

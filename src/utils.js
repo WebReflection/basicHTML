@@ -32,7 +32,7 @@ const notifyAttributeChanged = (el, name, oldValue, newValue) => {
   if (
     el.isCustomElement &&
     'attributeChangedCallback' in el &&
-    el.constructor.observedAttributes.includes(name)
+    (el.constructor.observedAttributes || []).includes(name)
   ) {
     el.attributeChangedCallback(name, oldValue, newValue);
   }
