@@ -61,6 +61,16 @@ assert(
   'attributes direct changes are reflected'
 );
 
+log('## class attr');
+attribute = document.createAttribute('class');
+attribute.value = 'some class';
+let nodeWithoutClass = document.createElement('div');
+nodeWithoutClass.setAttributeNode(attribute);
+assert(
+  nodeWithoutClass.outerHTML === '<div class="some class"></div>',
+  'class attribute works even without owner element'
+);
+
 log('## setAttributeNode');
 let targetA = document.createElement('yo');
 let targetB = document.createElement('yo');

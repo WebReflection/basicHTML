@@ -21,17 +21,19 @@ module.exports = class Attr extends Node {
     const oldValue = this._value;
     switch (this.name) {
       case 'class':
-        const cl = this.ownerElement.classList;
-        if (_value == null) {
-          this._value = _value;
-          cl.splice(0, cl.length);
-        } else {
-          this._value = String(_value);
-          if (oldValue !== this._value) {
-            cl.value = this._value;
+        if (this.ownerElement) {
+          const cl = this.ownerElement.classList;
+          if (_value == null) {
+            this._value = _value;
+            cl.splice(0, cl.length);
+          } else {
+            this._value = String(_value);
+            if (oldValue !== this._value) {
+              cl.value = this._value;
+            }
           }
+          break;
         }
-        break;
       default:
         this._value = _value;
         break;
