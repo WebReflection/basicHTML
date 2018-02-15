@@ -35,5 +35,6 @@ module.exports = {
         return query(selector, this, css);
       };
     }
+    return window;
   }
 };

@@ -18,6 +18,8 @@ A NodeJS based, standard oriented, HTML implementation.
 //  - window
 //  - document
 //  - customElements
+// if a non global window is provided
+// it will use it as defaultView
 require('basichtml').init({
   // all properties are optional
   window: global,
@@ -34,6 +36,7 @@ require('basichtml').init({
     }
   }
 });
+// returns the window itself
 ```
 
 
