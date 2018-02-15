@@ -1,21 +1,14 @@
 const {title, assert, async, log} = require('tressa');
-const {Document, Element} = require('../basichtml.js');
+const HTML = require('../basichtml.js');
 
-const document = new Document();
-
-// Sizzle expectations in a nutshell ...
-global.window = global;
-global.document = document;
-const Sizzle = require('sizzle');
-// ... that could be cleaned up right away
-delete global.window;
-delete global.document;
-
-// plus one method prototype pollution
-// querySelector here returns querySelectorAll(...)[0]
-Element.prototype.querySelectorAll = function (css) {
-  return Sizzle(css, this);
-};
+HTML.init({
+  selector: {
+    name: 'sizzle', // will be required
+    $(Sizzle, element, css) {
+      return Sizzle(css, element);
+    }
+  }
+});
 
 title('basicHTML & Sizzle');
 document.documentElement.innerHTML =
@@ -27,3 +20,7 @@ assert(
   document.body.firstElementChild,
   'it can retrieve via core unsupported selectors'
 );
+
+// for code coverage sake
+global.self = global;
+HTML.init();

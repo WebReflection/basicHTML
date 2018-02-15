@@ -10,8 +10,31 @@ A NodeJS based, standard oriented, HTML implementation.
 
 <img alt="viperHTML logo" src="https://webreflection.github.io/hyperHTML/logo/basichtml.svg" width="116" height="81">
 
-**work in progress**
 
+### New `init(...)` in 0.13
+```js
+// easy way, introduced in 0.13
+// pollutes by default the global with:
+//  - window
+//  - document
+//  - customElements
+require('basichtml').init({
+  // all properties are optional
+  window: global,
+  // specify a different selector
+  selector: {
+    // use the module sizzle, it will be required
+    name: 'sizzle',
+    // how to retrieve results => querySelectorAll
+    $(Sizzle, element, css) {
+      return Sizzle(css, element);
+    }
+  }
+});
+```
+
+
+#### Good old way to init with basic selectors
 ```js
 const {Document} = require('basichtml');
 
@@ -32,6 +55,7 @@ document.querySelector('head').appendChild(
   document.createElement('title')
 ).textContent = 'HTML on NodeJS';
 
+// toString() necessary to read, it's a Buffer
 console.log(document.toString());
 ```
 
@@ -44,6 +68,7 @@ Above log will produce an output like the following one.
 </html>
 ```
 
+
 ### Features
 
   * create any amount of documents
@@ -53,9 +78,10 @@ Above log will produce an output like the following one.
   * DOM Level 0 compatible events
   * Attributes compatible with Custom Elements reactions
   * arbitrary Custom Elements creation
+  * customizable selector engine
 
 
-#### About current caveats ...
+#### Current caveats / exceptions
 
   * since `v0.2`, the property `nodeName` is **case-sensitive** to make _basicHTML_ compatible with _XML_ projects too
   * `el.querySelectorAll(css)` works with `tagName`, `#id`, or `.className`. You can use more complex selectors including 3rd parts libraries such [Sizzle](https://github.com/jquery/sizzle), as shown in this [test example](https://github.com/WebReflection/basicHTML/blob/master/test/sizzle.js).
@@ -63,11 +89,6 @@ Above log will produce an output like the following one.
   * `el.getElementsByTagName` as well as `el.getElementsByClassName` and `el.getElementsById` are all available. The latter is the fastest one of the trio.
   * all collections are basically just arrays. You should use official DOM methods to mutate them. As example, do not ever `childNodes.push(new Node)` 'cause that's not what you could do on the DOM. The whole point here is to provide a Web like env, not to write defensive code for NodeJS or other non strictly Web environments.
   * most historical properties and standards are most likely not implemented
-
-
-### Todo
-
-  * test possible hooks for NativeScript element as Custom Element <sub><sup>(nativeHTML related)</sup></sub>
 
 
 ### License
@@ -98,5 +119,4 @@ The ideal scenario is together with [hyperHTML](https://github.com/WebReflection
 
 The perfect scenario would be to drive [NativeScript](https://www.nativescript.org/) components using a CustomElementRegistry like you would do on the Web for Custom Elements.
 
-Please bear in mind this is a work in progress, and it's not aiming to become a fully standard compliant implementation of the whole WebIDL based specifications, there are other projects for that.
-
+Please bear in mind this project is not aiming to become a fully standard compliant implementation of the whole WebIDL based specifications, there are other projects for that.

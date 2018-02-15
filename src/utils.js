@@ -38,9 +38,24 @@ const notifyAttributeChanged = (el, name, oldValue, newValue) => {
   }
 };
 
+const CSS_SPLITTER = /\s*,\s*/;
+function findBySelector(css) {
+  switch (css[0]) {
+    case '#':
+      return this.ownerDocument.getElementById(css.slice(1));
+    case '.':
+      return this.getElementsByClassName(css.slice(1));
+    default:
+      return this.getElementsByTagName(css);
+  }
+}
+
 module.exports = {
   connect,
   disconnect,
   notifyAttributeChanged,
-  types
+  types,
+  querySelectorAll(css) {
+    return [].concat(...css.split(CSS_SPLITTER).map(findBySelector, this));
+  }
 };

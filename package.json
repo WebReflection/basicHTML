@@ -3,6 +3,7 @@
   "version": "0.12.3",
   "description": "A NodeJS based, standard oriented, HTML implementation.",
   "main": "basichtml.js",
+  "browser": "web.js",
   "scripts": {
     "build": "npm test && npm run web",
     "test": "istanbul cover test/all.js",

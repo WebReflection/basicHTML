@@ -1,8 +1,7 @@
 require('@webreflection/interface');
 
 const Node = require('./Node');
-
-const CSS_SPLITTER = /\s*,\s*/;
+const utils = require('./utils');
 
 const childrenType = node => node.nodeType === Node.ELEMENT_NODE;
 
@@ -10,17 +9,6 @@ function asNode(node) {
   return typeof node === 'object' ?
     node :
     this.createTextNode(node);
-}
-
-function findBySelector(css) {
-  switch (css[0]) {
-    case '#':
-      return this.ownerDocument.getElementById(css.slice(1));
-    case '.':
-      return this.getElementsByClassName(css.slice(1));
-    default:
-      return this.getElementsByTagName(css);
-  }
 }
 
 // interface ParentNode @ https://dom.spec.whatwg.org/#parentnode
@@ -71,7 +59,7 @@ module.exports = Object.interface({
   },
 
   querySelectorAll(css) {
-    return [].concat(...css.split(CSS_SPLITTER).map(findBySelector, this));
+    return utils.querySelectorAll.call(this, css);
   }
 
 });

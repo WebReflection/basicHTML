@@ -753,6 +753,8 @@ async(done => {
   } catch(e) {
     assert(true, 'you cannot define same element twice');
   }
+}).then(() => {
+  require('./sizzle.js');
 });
 
 const actions = [];
