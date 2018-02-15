@@ -24,7 +24,8 @@ module.exports = {
     if (!options) options = {};
     const window = options.window ||
                     (typeof self === 'undefined' ? global : self);
-    window.customElements = new CustomElementRegistry();
+    window.customElements = options.customElements ||
+                            new CustomElementRegistry();
     window.document = new Document(window.customElements);
     window.window = window;
     if (options.selector) {

@@ -21,6 +21,9 @@ A NodeJS based, standard oriented, HTML implementation.
 require('basichtml').init({
   // all properties are optional
   window: global,
+  // in case you'd like to share a predefined
+  // registry of Custom Elements
+  customElements,
   // specify a different selector
   selector: {
     // use the module sizzle, it will be required
