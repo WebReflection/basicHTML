@@ -18,6 +18,7 @@ A NodeJS based, standard oriented, HTML implementation.
 //  - window
 //  - document
 //  - customElements
+//  - HTMLElement
 // if a non global window is provided
 // it will use it as defaultView
 require('basichtml').init({
@@ -29,7 +30,12 @@ require('basichtml').init({
   // specify a different selector
   selector: {
     // use the module sizzle, it will be required
+    // automatically
     name: 'sizzle',
+    // or alternatively, use a module function
+    module() {
+      return require('sizzle');
+    },
     // how to retrieve results => querySelectorAll
     $(Sizzle, element, css) {
       return Sizzle(css, element);
