@@ -306,12 +306,12 @@ second.addEventListener('twice', e => {
 second.addEventListener('twice', e => {
   second.nope = true;
 }, {once: true});
-third.dispatchEvent(new Event('twice'));
+third.dispatchEvent(new Event('twice', {bubbles: true}));
 assert(
   second.nope !== true,
   'you can also stopImmediatePropagation'
 );
-third.dispatchEvent(new Event('twice'));
+third.dispatchEvent(new Event('twice', {bubbles: true}));
 assert(
   first.called === true,
   'bubbles up to the top'

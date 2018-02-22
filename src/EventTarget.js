@@ -59,7 +59,7 @@ module.exports = class EventTarget {
         );
       }
       event.eventPhase = Event.BUBBLING_PHASE;
-    } while (!event.cancelBubble && (node = node.parentNode));
+    } while (event.bubbles && !event.cancelBubble && (node = node.parentNode));
   }
 
 };
