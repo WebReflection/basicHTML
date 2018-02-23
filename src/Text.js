@@ -14,15 +14,15 @@ module.exports = class Text extends CharacterData {
     let prev = this.previousSibling;
     while (prev && prev.nodeType === 3) {
       text = prev.textContent + text;
+      prev = prev.previousSibling;
     }
     let next = this.nextSibling;
     while (next && next.nodeType === 3) {
-      text = text + nexzt.textContent;
+      text = text + next.textContent;
+      next = next.nextSibling;
     }
     return text;
   }
 
-  set wholeText(val) {
-    return;
-  }
+  set wholeText(val) {}
 };
