@@ -206,6 +206,26 @@ assert(
   document.body.lastElementChild === any,
   'but not retrieved as element child'
 );
+let text1 = document.body.insertBefore(document.createTextNode(''), text);
+let text2 = document.body.insertBefore(document.createTextNode('basicHTML: '), text);
+let text3 = document.body.appendChild(document.createTextNode(' world!'));
+let text4 = document.body.appendChild(document.createTextNode(''));
+assert(
+  text.wholeText === 'basicHTML: Hello world!'
+);
+assert(
+  text2.wholeText === 'basicHTML: Hello world!'
+);
+assert(
+  text3.wholeText === 'basicHTML: Hello world!'
+);
+assert(
+  text.wholeText = 'Does nothing'
+);
+document.body.removeChild(text1);
+document.body.removeChild(text2);
+document.body.removeChild(text3);
+document.body.removeChild(text4);
 
 log('## node siblings');
 assert(
