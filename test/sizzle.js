@@ -24,3 +24,12 @@ assert(
 // for code coverage sake
 global.self = global;
 HTML.init();
+
+HTML.init({
+  selector: {
+    module: () => require('sizzle'),
+    $(Sizzle, element, css) {
+      return Sizzle(css, element);
+    }
+  }
+});
