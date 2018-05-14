@@ -69,9 +69,11 @@ const stringifiedNode = el => {
           ('>' + el.childNodes.map(stringifiedNode).join('') + '</' + el.nodeName + '>')
       );
     case Node.ATTRIBUTE_NODE:
-      return typeof el.value === 'boolean' || el.value == null ?
-        (el.value ? (' ' + el.name) : '') :
-        (' ' + el.name + '="' + escape(el.value) + '"');
+      return el.name === 'style' && !el.value ? '' : (
+        typeof el.value === 'boolean' || el.value == null ?
+          (el.value ? (' ' + el.name) : '') :
+          (' ' + el.name + '="' + escape(el.value) + '"')
+      );
     case Node.TEXT_NODE:
       return escape(el.data);
     case Node.COMMENT_NODE:

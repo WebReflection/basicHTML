@@ -14,12 +14,15 @@ module.exports = class Attr extends Node {
   }
 
   get value() {
-    return this._value;
+    return this.name === 'style' ? this._value.cssText : this._value;
   }
 
   set value(_value) {
     const oldValue = this._value;
     switch (this.name) {
+      case 'style':
+        this._value.cssText = _value;
+        break;
       case 'class':
         if (this.ownerElement) {
           const cl = this.ownerElement.classList;

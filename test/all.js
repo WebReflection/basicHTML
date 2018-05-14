@@ -574,6 +574,11 @@ assert(
   'cssText available per each style'
 );
 
+assert(
+  document.body.style.ownerElement === document.body,
+  'style has owner too'
+);
+
 
 document.body.style.fontFamily = 'sans-serif';
 assert(
@@ -603,7 +608,7 @@ assert(
 
 log('## extras');
 document.body.textContent = '';
-assert(document.body.getAttributeNames().join('') === 'class', 'getAttributeNames works');
+assert(document.body.getAttributeNames().join(',') === 'style,class', 'getAttributeNames works');
 assert(document.body.hasAttributes(), 'hasAttributes too');
 document.body.prepend('a', 'b', 'c');
 document.body.prepend('d');

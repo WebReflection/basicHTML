@@ -1,5 +1,6 @@
 const escape = require('html-escaper').escape;
 
+const Attr = require('./Attr');
 const Element = require('./Element');
 const DOMStringMap = require('./DOMStringMap');
 const CSSStyleDeclaration = require('./CSSStyleDeclaration');
@@ -10,6 +11,10 @@ class HTMLElement extends Element {
     super(ownerDocument, name);
     this.dataset = new DOMStringMap(this);
     this.isCustomElement = this.constructor !== HTMLElement;
+    this.style = new CSSStyleDeclaration(this);
+    const style = new Attr(this, 'style', this.style);
+    this.attributes.push(style);
+    this.attributes.style = style;
   }
 }
 
@@ -149,11 +154,6 @@ class HTMLElement extends Element {
       }
     }
   });
-});
-
-Object.defineProperty(HTMLElement.prototype, 'style', {
-  configurable: true,
-  get() { return this._style || (this._style = new CSSStyleDeclaration); }
 });
 
 // helpers

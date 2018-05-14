@@ -9,7 +9,7 @@ const hyperHTML = require('hyperhtml');
 // most basic hyperHTML examples in node
 function tick(render) {
   console.log(render`
-    <div>
+    <div style=${{margin: 10}}>
       <h1>Hello, world!</h1>
       <h2>It is ${new Date().toLocaleTimeString()}.</h2>
     </div>

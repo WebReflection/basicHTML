@@ -1,41 +1,55 @@
 const handler = {
   has(target, property) {
     switch (property) {
-      case 'cssText': return true;
+      case 'cssText':
+      case 'ownerElement':
+        return true;
     }
-    return target.hasOwnProperty(property);
+    return _.get(target).props.hasOwnProperty(property);
   },
   get(target, property, receiver) {
     switch (property) {
       case 'cssText': return target.toString();
+      case 'ownerElement': return _.get(target).ownerElement;
     }
-    return target[property];
+    return _.get(target).props[property];
   },
   set(target, property, value) {
+    const {props} = _.get(target);
     switch (property) {
       case 'cssText':
-        for (var key in target) delete target[key];
-        value.split(';').forEach(pair => {
+        for (const key in props) delete props[key];
+        (value || '').split(';').forEach(pair => {
           const kv = pair.split(':');
           const key = toProperty((kv[0] || '').trim());
-          if (key) target[key] = kv[1].trim();
+          if (key) {
+            const value = kv[1].trim();
+            props[key] = (key === '_hyper' ? ' ' : '') + value;
+          }
         });
         break;
       default:
-        target[property] = value;
+        props[property] = value;
         break;
     }
     return true;
   }
 };
 
+const _ = new WeakMap;
+
 module.exports = class CSSStyleDeclaration {
-  constructor() {
+  constructor(ownerElement) {
+    _.set(this, {
+      ownerElement,
+      props: {}
+    });
     return new Proxy(this, handler);
   }
   toString() {
-    return Object.keys(this).reduce(
-      (css, key) => css + toStyle(key) + ':' + this[key] + ';',
+    const {props} = _.get(this);
+    return Object.keys(props).reduce(
+      (css, key) => css + toStyle(key) + ':' + props[key] + ';',
       ''
     );
   }
