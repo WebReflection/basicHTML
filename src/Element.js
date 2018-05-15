@@ -94,6 +94,16 @@ class Element extends Node.implements(ParentNode) {
     this.classList = new DOMTokenList(this);
   }
 
+  // it doesn't actually really work as expected
+  // it simply provides shadowRoot as the element itself
+  attachShadow(init) {
+    switch (init.mode) {
+      case 'open': return (this.shadowRoot = this);
+      case 'closed': return this;
+    }
+    throw new Error('element.attachShadow({mode: "open" | "closed"})');
+  }
+
   getAttribute(name) {
     const attr = this.getAttributeNode(name);
     return attr && attr.value;

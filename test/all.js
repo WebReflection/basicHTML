@@ -563,6 +563,28 @@ document.body.insertBefore(after, before);
 assert(document.body.lastElementChild === before, 'before is now after');
 assert(document.body.lastElementChild.previousElementSibling === after, 'after is now before');
 
+log('## attachShadow');
+try {
+  document.body.attachShadow();
+} catch(e) {
+  assert(true, 'attachShadow needs one argument');
+}
+try {
+  document.body.attachShadow({});
+} catch(e) {
+  assert(true, 'attachShadow needs one argument with a mode');
+}
+assert(
+  document.body.attachShadow({mode: 'closed'}) === document.body &&
+  document.body.shadowRoot === undefined,
+  'attachShadow({mode: "closed"})'
+);
+assert(
+  document.body.attachShadow({mode: 'open'}) === document.body &&
+  document.body.shadowRoot === document.body,
+  'attachShadow({mode: "open"})'
+);
+
 log('## style');
 assert(
   document.body.style && document.body.style === document.body.style,
@@ -573,6 +595,14 @@ assert(
   'cssText' in document.body.style,
   'cssText available per each style'
 );
+
+document.body.style.cssText = '_hyper:123';
+assert(
+  document.body.style.cssText === '_hyper: 123;',
+  '_hyper style has no issues'
+);
+
+document.body.style.cssText = '';
 
 assert(
   document.body.style.ownerElement === document.body,
