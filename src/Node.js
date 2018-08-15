@@ -62,6 +62,11 @@ class Node extends EventTarget {
         return document.createComment(this.data);
       case Node.ELEMENT_NODE:
         node = document.createElement(this.nodeName);
+        // if populated during constructor discard all content
+        if (this.nodeName in document.customElements._registry) {
+          node.childNodes.forEach(removeChild, node);
+          node.attributes.forEach(removeAttribute, node);
+        }
         this.attributes.forEach(a => node.setAttribute(a.name, a.value));
       case Node.DOCUMENT_FRAGMENT_NODE:
         if (!node) node = document.createDocumentFragment();
@@ -176,3 +181,14 @@ Object.keys(utils.types).forEach(type => {
 });
 
 module.exports = Node;
+
+function removeAttribute(attr) {
+  if (attr.name === 'style')
+    this.style.cssText = '';
+  else
+    this.removeAttributeNode(attr);
+}
+
+function removeChild(node) {
+  this.removeChild(node);
+}

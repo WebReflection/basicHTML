@@ -796,10 +796,19 @@ async(done => {
         document.body.firstChild.getAttribute('test') === '123',
         'attribute sets without throwing'
       );
-      done();
+      customElements.whenDefined('test-clone-outer').then(() => {
+        global.document = document;
+        document.body.innerHTML = '<test-clone-outer></test-clone-outer>';
+        document.body.firstElementChild.removeAttribute('test');
+        const value = document.body.innerHTML;
+        assert(value === '<test-clone-outer><test-clone-inner>wut</test-clone-inner></test-clone-outer>', 'nested content is OK');
+        document.body.appendChild(document.body.firstElementChild.cloneNode(true));
+        assert(document.body.innerHTML === (value + value), 'cloned content is not repeated');
+        delete global.document;
+        done();
+      });
     });
   });
-
 })
 .then(() => {
   try {
@@ -835,5 +844,18 @@ customElements.define('test-node', class extends HTMLElement {
   }
   attributeChangedCallback() {
     actions.push('attributeChanged');
+  }
+});
+
+customElements.define('test-clone-outer', class extends HTMLElement {
+  constructor() {
+    super();
+    this.innerHTML = '<test-clone-inner></test-clone-inner>';
+    this.setAttribute('test', 'value');
+  }
+});
+customElements.define('test-clone-inner', class extends HTMLElement {
+  constructor() {
+    super().textContent = 'wut';
   }
 });
