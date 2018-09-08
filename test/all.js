@@ -602,6 +602,16 @@ assert(
   '_hyper style has no issues'
 );
 
+document.body.style.setProperty('--custom', 456);
+assert(
+  document.body.style.getPropertyValue('--custom') == 456,
+  'getPropertyValue works as expected'
+);
+assert(
+  document.body.style.cssText === '_hyper: 123;--custom:456;',
+  'custom style has no issues'
+);
+
 document.body.style.cssText = '';
 
 assert(

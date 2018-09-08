@@ -10,7 +10,9 @@ const handler = {
   get(target, property, receiver) {
     switch (property) {
       case 'cssText': return target.toString();
+      case 'getPropertyValue': return target.getPropertyValue.bind(_.get(target).props);
       case 'ownerElement': return _.get(target).ownerElement;
+      case 'setProperty': return target.setProperty.bind(_.get(target).props);
     }
     return _.get(target).props[property];
   },
@@ -45,6 +47,12 @@ module.exports = class CSSStyleDeclaration {
       props: {}
     });
     return new Proxy(this, handler);
+  }
+  getPropertyValue(key) {
+    return this[key];
+  }
+  setProperty(key, value) {
+    this[key] = value;
   }
   toString() {
     const {props} = _.get(this);
