@@ -11,7 +11,7 @@ class HTMLElement extends Element {
     super(ownerDocument, name);
     this.dataset = new DOMStringMap(this);
     this.isCustomElement = this.constructor !== HTMLElement;
-    this.style = new CSSStyleDeclaration(this);
+    this.style = new CSSStyleDeclaration();
     const style = new Attr(this, 'style', this.style);
     this.attributes.push(style);
     this.attributes.style = style;

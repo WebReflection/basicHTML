@@ -3,6 +3,7 @@ const Event = require('./Event');
 const Node = require('./Node');
 const DocumentType = require('./DocumentType');
 const Attr = require('./Attr');
+const CSSStyleDeclaration = require('./CSSStyleDeclaration');
 const Comment = require('./Comment');
 const DocumentFragment = require('./DocumentFragment');
 const HTMLElement = require('./HTMLElement');
@@ -45,7 +46,13 @@ module.exports = class Document extends Node {
   }
 
   createAttribute(name) {
-    const attr = new Attr({ownerDocument: this}, name, null);
+    const attr = new Attr(
+      {ownerDocument: this},
+      name,
+      name === 'style' ?
+        new CSSStyleDeclaration() :
+        null
+    );
     attr.ownerElement = null;
     return attr;
   }

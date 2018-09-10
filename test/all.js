@@ -586,6 +586,12 @@ assert(
 );
 
 log('## style');
+
+assert(
+  document.createAttribute('style').value === '',
+  'it can be created as attribute'
+);
+
 assert(
   document.body.style && document.body.style === document.body.style,
   'style available per each element'
@@ -613,11 +619,6 @@ assert(
 );
 
 document.body.style.cssText = '';
-
-assert(
-  document.body.style.ownerElement === document.body,
-  'style has owner too'
-);
 
 
 document.body.style.fontFamily = 'sans-serif';

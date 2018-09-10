@@ -2,7 +2,6 @@ const handler = {
   has(target, property) {
     switch (property) {
       case 'cssText':
-      case 'ownerElement':
         return true;
     }
     return _.get(target).props.hasOwnProperty(property);
@@ -11,13 +10,13 @@ const handler = {
     switch (property) {
       case 'cssText': return target.toString();
       case 'getPropertyValue': return target.getPropertyValue.bind(_.get(target).props);
-      case 'ownerElement': return _.get(target).ownerElement;
       case 'setProperty': return target.setProperty.bind(_.get(target).props);
     }
     return _.get(target).props[property];
   },
   set(target, property, value) {
-    const {props} = _.get(target);
+    const rel = _.get(target);
+    const {props} = rel;
     switch (property) {
       case 'cssText':
         for (const key in props) delete props[key];
@@ -41,11 +40,8 @@ const handler = {
 const _ = new WeakMap;
 
 module.exports = class CSSStyleDeclaration {
-  constructor(ownerElement) {
-    _.set(this, {
-      ownerElement,
-      props: {}
-    });
+  constructor() {
+    _.set(this, {props: {}});
     return new Proxy(this, handler);
   }
   getPropertyValue(key) {
