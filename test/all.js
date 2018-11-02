@@ -1,5 +1,5 @@
 const {title, assert, async, log} = require('tressa');
-const {CustomElementRegistry, CustomEvent, Document, Event, HTMLElement} = require('../basichtml.js');
+const {CustomElementRegistry, CustomEvent, Document, Event, HTMLElement, HTMLUnknownElement} = require('../basichtml.js');
 
 title('basicHTML');
 assert(
@@ -7,7 +7,8 @@ assert(
   typeof CustomEvent === 'function' &&
   typeof Document === 'function' &&
   typeof Event === 'function' &&
-  typeof HTMLElement === 'function',
+  typeof HTMLElement === 'function' &&
+  typeof HTMLUnknownElement === 'function',
   'classes exported'
 );
 

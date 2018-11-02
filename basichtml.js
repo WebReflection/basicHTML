@@ -2,6 +2,7 @@ const utils = require('./src/utils');
 const CustomElementRegistry = require('./src/CustomElementRegistry');
 const Document = require('./src/Document');
 const HTMLElement = require('./src/HTMLElement');
+const HTMLUnknownElement = require('./src/HTMLUnknownElement');
 module.exports = {
   Attr: require('./src/Attr'),
   CharacterData: require('./src/CharacterData'),
@@ -17,6 +18,7 @@ module.exports = {
   Event: require('./src/Event'),
   EventTarget: require('./src/EventTarget'),
   HTMLElement: HTMLElement,
+  HTMLUnknownElement: HTMLUnknownElement,
   HTMLHtmlElement: require('./src/HTMLHtmlElement'),
   HTMLTemplateElement: require('./src/HTMLTemplateElement'),
   Node: require('./src/Node'),
@@ -24,17 +26,18 @@ module.exports = {
   init: (options) => {
     if (!options) options = {};
     const window = options.window ||
-                    (typeof self === 'undefined' ? global : self);
+      (typeof self === 'undefined' ? global : self);
     window.customElements = options.customElements ||
-                            new CustomElementRegistry();
+      new CustomElementRegistry();
     window.document = new Document(window.customElements);
     window.window = window;
     window.HTMLElement = HTMLElement;
+    window.HTMLTemplateElement = HTMLUnknownElement;
     if (options.selector) {
       const $ = options.selector.$;
       const selector = options.selector.module ?
-                        options.selector.module(window) :
-                        require(options.selector.name);
+        options.selector.module(window) :
+        require(options.selector.name);
       utils.querySelectorAll = function querySelectorAll(css) {
         return $(selector, this, css);
       };
