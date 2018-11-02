@@ -7,7 +7,8 @@ assert(
   typeof CustomEvent === 'function' &&
   typeof Document === 'function' &&
   typeof Event === 'function' &&
-  typeof HTMLElement === 'function',
+  typeof HTMLElement === 'function' &&
+  typeof HTMLUnknownElement === 'function',
   'classes exported'
 );
 
