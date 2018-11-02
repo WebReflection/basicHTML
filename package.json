@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@webreflection/interface": "^0.1.1",
-    "broadcast": "^2.0.2",
+    "broadcast": "^3.0.0",
     "html-escaper": "^1.0.1",
     "htmlparser2": "^3.9.2"
   },
