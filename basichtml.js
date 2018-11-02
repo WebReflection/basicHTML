@@ -2,7 +2,7 @@ const utils = require('./src/utils');
 const CustomElementRegistry = require('./src/CustomElementRegistry');
 const Document = require('./src/Document');
 const HTMLElement = require('./src/HTMLElement');
-const HTMLUnknownElement = require('./src/HTMLElement');
+const HTMLUnknownElement = require('./src/HTMLUnknownElement');
 module.exports = {
   Attr: require('./src/Attr'),
   CharacterData: require('./src/CharacterData'),
