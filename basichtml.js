@@ -32,7 +32,7 @@ module.exports = {
     window.document = new Document(window.customElements);
     window.window = window;
     window.HTMLElement = HTMLElement;
-    window.HTMLTemplateElement = HTMLUnknownElement;
+    window.HTMLUnknownElement = HTMLUnknownElement;
     if (options.selector) {
       const $ = options.selector.$;
       const selector = options.selector.module ?
