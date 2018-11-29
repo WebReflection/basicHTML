@@ -22,6 +22,8 @@ const handler = {
         for (const key in props) delete props[key];
         (value || '').split(';').forEach(pair => {
           const kv = pair.split(':');
+          if (kv.length < 2)
+            return;
           const key = toProperty((kv[0] || '').trim());
           if (key) {
             const value = kv[1].trim();
