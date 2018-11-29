@@ -605,14 +605,14 @@ assert(
 
 document.body.style.cssText = '-00.0123456%';
 assert(
-  document.body.style.cssText === '',
-  'meaningless styles are ignored'
+  document.body.style.cssText === '-00.0123456%',
+  'meaningless styles are not ignored'
 );
 
 document.body.style.cssText = ':-00.0123456%';
 assert(
-  document.body.style.cssText === '',
-  'empty keys are ignored too'
+  document.body.style.cssText === ':-00.0123456%',
+  'empty keys are not ignored either'
 );
 
 document.body.style.cssText = '_hyper:123';

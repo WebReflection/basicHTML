@@ -17,6 +17,7 @@ const handler = {
   set(target, property, value) {
     const rel = _.get(target);
     const {props} = rel;
+    rel.value = ('' + value).trim();
     switch (property) {
       case 'cssText':
         for (const key in props) delete props[key];
@@ -43,7 +44,7 @@ const _ = new WeakMap;
 
 module.exports = class CSSStyleDeclaration {
   constructor() {
-    _.set(this, {props: {}});
+    _.set(this, {props: {}, value: ''});
     return new Proxy(this, handler);
   }
   getPropertyValue(key) {
@@ -53,11 +54,11 @@ module.exports = class CSSStyleDeclaration {
     this[key] = value;
   }
   toString() {
-    const {props} = _.get(this);
+    const {props, value} = _.get(this);
     return Object.keys(props).reduce(
       (css, key) => css + toStyle(key) + ':' + props[key] + ';',
       ''
-    );
+    ) || value;
   }
 };
 
