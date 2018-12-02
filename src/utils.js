@@ -56,6 +56,6 @@ module.exports = {
   notifyAttributeChanged,
   types,
   querySelectorAll(css) {
-    return [].concat(...css.split(CSS_SPLITTER).map(findBySelector, this));
+    return [].concat(...('' + css).split(CSS_SPLITTER).map(findBySelector, this));
   }
 };
