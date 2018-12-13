@@ -76,6 +76,9 @@ module.exports = class Document extends Node {
   }
 
   createElementNS(ns, name) {
+    if (ns === 'http://www.w3.org/1999/xhtml') {
+      return this.createElement(name);
+    }
     return new HTMLElement(this, name + ':' + ns);
   }
 

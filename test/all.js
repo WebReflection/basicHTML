@@ -1,5 +1,5 @@
 const {title, assert, async, log} = require('tressa');
-const {CustomElementRegistry, CustomEvent, Document, Event, HTMLElement, HTMLUnknownElement} = require('../basichtml.js');
+const {CustomElementRegistry, CustomEvent, Document, Event, HTMLElement, HTMLTemplateElement, HTMLUnknownElement} = require('../basichtml.js');
 
 title('basicHTML');
 assert(
@@ -457,6 +457,8 @@ assert(
   document.createElementNS('svg', 'test').nodeName === 'test:svg',
   'createElementNS simply puts tags and namespace together'
 );
+
+assert(document.createElementNS('http://www.w3.org/1999/xhtml', 'template') instanceof HTMLTemplateElement, 'createElementNS uses createElement for HTML namespace');
 
 assert(
   document.createElement('something').tagName == 'something',
