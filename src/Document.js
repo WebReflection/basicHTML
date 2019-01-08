@@ -83,8 +83,14 @@ module.exports = class Document extends Node {
   }
 
   createEvent(name) {
-    if (name !== 'Event') throw new Error(name + ' not implemented');
-    return new Event();
+    switch (name) {
+      case 'Event':
+        return new Event();
+      case 'CustomEvent':
+        return new CustomEvent();
+      default:
+        throw new Error(name + ' not implemented');
+    }
   }
 
   createRange() {
