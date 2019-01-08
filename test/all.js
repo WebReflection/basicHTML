@@ -354,6 +354,13 @@ assert(
   'CustomEvent also works as expected'
 );
 
+var createdCustomEvent = document.createEvent('CustomEvent');
+createdCustomEvent.initCustomEvent('custom', true, true, 'detail');
+assert(
+  createdCustomEvent.detail === 'detail',
+  'CustomEvent can be created procedurally'
+);
+
 log('## Comments');
 let comment = document.createComment('Here a comment');
 assert(comment.textContent === 'Here a comment');

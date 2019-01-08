@@ -1,5 +1,6 @@
 const CustomElementRegistry = require('./CustomElementRegistry');
 const Event = require('./Event');
+const CustomEvent = require('./CustomEvent');
 const Node = require('./Node');
 const DocumentType = require('./DocumentType');
 const Attr = require('./Attr');
