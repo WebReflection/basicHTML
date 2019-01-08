@@ -11,4 +11,9 @@ module.exports = class CustomEvent extends Event {
     super(type, eventInitDict);
     this.detail = eventInitDict.detail;
   }
+
+  initCustomEvent(type, bubbles, cancelable, detail) {
+    this.initEvent(type, bubbles, cancelable);
+    this.detail = detail;
+  }
 };
