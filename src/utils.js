@@ -45,6 +45,8 @@ function findBySelector(css) {
       return this.ownerDocument.getElementById(css.slice(1));
     case '.':
       return this.getElementsByClassName(css.slice(1));
+    case '[':
+      return findBAttributeName(this, css.replace(/[\[\]]/g, ''), []);
     default:
       return this.getElementsByTagName(css);
   }
@@ -59,3 +61,13 @@ module.exports = {
     return [].concat(...('' + css).split(CSS_SPLITTER).map(findBySelector, this));
   }
 };
+
+function findBAttributeName(node, name, all) {
+  for (let children = node.children, {length} = children, i = 0; i < length; i++) {
+    const child = children[i];
+    if (child.hasAttribute(name))
+      all.push(child);
+    findBAttributeName(child, name, all);
+  }
+  return all;
+}

@@ -405,9 +405,11 @@ assert(
 
 let id = String(Math.random());
 document.body.appendChild(document.createElement('by-id')).id = id;
+document.body.lastChild.setAttribute('ref', '');
 assert(
   document.querySelector('#' + id) === document.body.lastChild &&
   document.getElementById(id) === document.body.lastChild &&
+  document.querySelector('[ref]') === document.body.lastChild &&
   document.body.lastChild.matches('#' + id),
   'elements can be found by ID'
 );
