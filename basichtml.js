@@ -3,12 +3,14 @@ const CustomElementRegistry = require('./src/CustomElementRegistry');
 const Document = require('./src/Document');
 const HTMLElement = require('./src/HTMLElement');
 const HTMLUnknownElement = require('./src/HTMLUnknownElement');
+const CustomEvent = require('./src/CustomEvent');
+
 module.exports = {
   Attr: require('./src/Attr'),
   CharacterData: require('./src/CharacterData'),
   Comment: require('./src/Comment'),
   CustomElementRegistry: CustomElementRegistry,
-  CustomEvent: require('./src/CustomEvent'),
+  CustomEvent: CustomEvent,
   Document: Document,
   DocumentFragment: require('./src/DocumentFragment'),
   DocumentType: require('./src/DocumentType'),
@@ -33,6 +35,7 @@ module.exports = {
     window.window = window;
     window.HTMLElement = HTMLElement;
     window.HTMLUnknownElement = HTMLUnknownElement;
+    window.CustomEvent = CustomEvent;
     if (options.selector) {
       const $ = options.selector.$;
       const selector = options.selector.module ?
