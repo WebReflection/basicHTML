@@ -762,6 +762,21 @@ assert(olExtracted.childNodes.every(
   li.textContent === ol.childNodes[i].textContent
 ), 'cloneContents works');
 
+log('## NamedNodeMap');
+let withAttrs = document.createElement('div');
+withAttrs.setAttribute('test', 'value');
+let attr = withAttrs.getAttributeNode('test');
+let attrs = withAttrs.attributes;
+assert(attrs.length, 'NamedNodeMap#length');
+let last = attrs.length - 1;
+assert(attrs.item(last) === attr, 'NamedNodeMap#item');
+assert(attrs.getNamedItem('test') === attr, 'NamedNodeMap#getNamedItem');
+attrs.removeNamedItem('test');
+assert(!withAttrs.hasAttribute('test'), 'NamedNodeMap#removeNamedItem');
+assert(attrs.item(last) === null, 'NamedNodeMap#item(...) as null');
+attrs.setNamedItem(attr);
+assert(withAttrs.hasAttribute('test'), 'NamedNodeMap#setNamedItem');
+
 log('## Custom Element');
 async(done => {
   customElements.whenDefined('test-node').then(() => {

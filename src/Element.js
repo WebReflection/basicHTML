@@ -39,6 +39,7 @@ const parseInto = (node, html) => {
 
 const utils = require('./utils');
 const ParentNode = require('./ParentNode');
+const NamedNodeMap = require('./NamedNodeMap');
 const Node = require('./Node');
 const DOMTokenList = require('./DOMTokenList');
 
@@ -85,7 +86,7 @@ const stringifiedNode = el => {
 class Element extends Node.implements(ParentNode) {
   constructor(ownerDocument, name) {
     super(ownerDocument);
-    this.attributes = [];
+    this.attributes = new NamedNodeMap(this);
     this.nodeType = Node.ELEMENT_NODE;
     this.nodeName = name || findName(
       this.constructor,
