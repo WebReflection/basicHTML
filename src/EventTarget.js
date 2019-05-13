@@ -66,6 +66,7 @@ module.exports = class EventTarget {
       }
       event.eventPhase = Event.BUBBLING_PHASE;
     } while (event.bubbles && !event.cancelBubble && (node = crawlUp(node)));
+    return !event.defaultPrevented;
   }
 
 };
