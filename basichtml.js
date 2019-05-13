@@ -37,11 +37,7 @@ module.exports = {
     window.HTMLElement = HTMLElement;
     window.HTMLUnknownElement = HTMLUnknownElement;
     window.CustomEvent = CustomEvent;
-    const et = EventTarget.prototype;
-    window._eventTarget = Object.create(null);
-    window.addEventListener = et.addEventListener;
-    window.removeEventListener = et.removeEventListener;
-    window.dispatchEvent = et.dispatchEvent;
+    EventTarget.init(window);
     if (options.selector) {
       const $ = options.selector.$;
       const selector = options.selector.module ?

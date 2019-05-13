@@ -1,10 +1,8 @@
 const Event = require('./Event');
-const Node = require('./Node');
 
 const crawlUp = node =>
   node.parentNode ||
-  (node.nodeType === Node.DOCUMENT_NODE ? node.defaultView : null);
-
+  (node.nodeType === node.DOCUMENT_NODE ? node.defaultView : null);
 
 const getHandler = (self, handler) =>
   handler.handleEvent ?
@@ -20,8 +18,18 @@ const getOnce = (self, type, handler, options) =>
 // interface EventTarget // https://dom.spec.whatwg.org/#eventtarget
 module.exports = class EventTarget {
 
+  static init(self) {
+    self._eventTarget = Object.create(null);
+    if (self instanceof EventTarget)
+      return;
+    const et = EventTarget.prototype;
+    self.addEventListener = et.addEventListener;
+    self.removeEventListener = et.removeEventListener;
+    self.dispatchEvent = et.dispatchEvent;
+  }
+
   constructor() {
-    this._eventTarget = Object.create(null);
+    EventTarget.init(this);
   }
 
   addEventListener(type, handler, options) {

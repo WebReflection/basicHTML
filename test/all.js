@@ -1,5 +1,5 @@
 const {title, assert, async, log} = require('tressa');
-const {CustomElementRegistry, CustomEvent, Document, Event, HTMLElement, HTMLTemplateElement, HTMLUnknownElement} = require('../basichtml.js');
+const {CustomElementRegistry, CustomEvent, Document, Event, EventTarget, HTMLElement, HTMLTemplateElement, HTMLUnknownElement} = require('../basichtml.js');
 
 title('basicHTML');
 assert(
@@ -271,6 +271,16 @@ assert(
 );
 
 log('## EventTarget');
+
+let globalEventTarget = false;
+EventTarget.init(document.defaultView);
+document.defaultView.addEventListener('global-event-target', () => { globalEventTarget = true; });
+document.body.dispatchEvent(new Event('global-event-target', { bubbles: true }));
+assert(
+  globalEventTarget,
+  'window is reached while dispatching events'
+);
+
 let first = document.createElement('first');
 let second = document.createElement('second');
 let third = document.createElement('third');
@@ -291,6 +301,7 @@ third.dispatchEvent(e);
 third.dispatchEvent(new Event('once'));
 third.dispatchEvent(new Event('twice'));
 third.dispatchEvent(new Event('twice'));
+
 assert(
   third.once === 1,
   'using {once: true} via addEventListener works'
