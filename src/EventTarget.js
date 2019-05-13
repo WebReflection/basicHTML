@@ -60,6 +60,8 @@ module.exports = class EventTarget {
       }
       event.eventPhase = Event.BUBBLING_PHASE;
     } while (event.bubbles && !event.cancelBubble && (node = node.parentNode));
+    if (event.cancelable)
+      return event.defaultPrevented;
   }
 
 };
