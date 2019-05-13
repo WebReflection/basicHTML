@@ -1,4 +1,10 @@
 const Event = require('./Event');
+const Node = require('./Node');
+
+const crawlUp = node =>
+  node.parentNode ||
+  (node.nodeType === Node.DOCUMENT_NODE ? node.defaultView : null);
+
 
 const getHandler = (self, handler) =>
   handler.handleEvent ?
@@ -59,7 +65,7 @@ module.exports = class EventTarget {
         );
       }
       event.eventPhase = Event.BUBBLING_PHASE;
-    } while (event.bubbles && !event.cancelBubble && (node = node.parentNode));
+    } while (event.bubbles && !event.cancelBubble && (node = crawlUp(node)));
   }
 
 };

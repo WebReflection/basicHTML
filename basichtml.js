@@ -1,6 +1,7 @@
 const utils = require('./src/utils');
 const CustomElementRegistry = require('./src/CustomElementRegistry');
 const Document = require('./src/Document');
+const EventTarget = require('./src/EventTarget');
 const HTMLElement = require('./src/HTMLElement');
 const HTMLUnknownElement = require('./src/HTMLUnknownElement');
 const CustomEvent = require('./src/CustomEvent');
@@ -18,7 +19,7 @@ module.exports = {
   DOMTokenList: require('./src/DOMTokenList'),
   Element: require('./src/Element'),
   Event: require('./src/Event'),
-  EventTarget: require('./src/EventTarget'),
+  EventTarget: EventTarget,
   HTMLElement: HTMLElement,
   HTMLUnknownElement: HTMLUnknownElement,
   HTMLHtmlElement: require('./src/HTMLHtmlElement'),
@@ -36,6 +37,11 @@ module.exports = {
     window.HTMLElement = HTMLElement;
     window.HTMLUnknownElement = HTMLUnknownElement;
     window.CustomEvent = CustomEvent;
+    const et = EventTarget.prototype;
+    window._eventTarget = Object.create(null);
+    window.addEventListener = et.addEventListener;
+    window.removeEventListener = et.removeEventListener;
+    window.dispatchEvent = et.dispatchEvent;
     if (options.selector) {
       const $ = options.selector.$;
       const selector = options.selector.module ?
