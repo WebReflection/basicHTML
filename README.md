@@ -10,6 +10,9 @@ A NodeJS based, standard oriented, HTML implementation.
 
 <img alt="viperHTML logo" src="https://webreflection.github.io/hyperHTML/logo/basichtml.svg" width="116" height="81">
 
+### New `init(...)` in 0.23
+
+Custom Elements built-in extends are finally supported 🎉
 
 ### New `init(...)` in 0.13
 ```js
