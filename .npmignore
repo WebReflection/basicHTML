@@ -4,3 +4,5 @@ test/*
 .DS_Store
 .gitignore
 .travis.yml
+package-lock.json
+

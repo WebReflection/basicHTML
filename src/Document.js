@@ -16,6 +16,11 @@ const Text = require('./Text');
 const headTag = el => el.nodeName === 'head';
 const bodyTag = el => el.nodeName === 'body';
 
+const createElement = (self, is, name) => {
+  const Class = self.customElements.get(is) || HTMLElement;
+  return new Class(self, name);
+};
+
 const getFoundOrNull = result => {
   if (result) {
     const el = findById.found;
@@ -66,13 +71,16 @@ module.exports = class Document extends Node {
     return new DocumentFragment(this);
   }
 
-  createElement(name) {
+  createElement(name, options) {
     switch (name) {
       case 'template':
         return new HTMLTemplateElement(this, name);
       default:
-        const CE = this.customElements.get(name);
-        return CE ? new CE(this, name) : new HTMLElement(this, name);
+        const extending = 1 < arguments.length && 'is' in options;
+        const el = createElement(this, extending ? options.is : name, name);
+        if (extending)
+          el.setAttribute('is', options.is);
+        return el;
     }
   }
 

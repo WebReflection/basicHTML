@@ -866,7 +866,11 @@ async(done => {
         document.body.appendChild(document.body.firstElementChild.cloneNode(true));
         assert(document.body.innerHTML === (value + value), 'cloned content is not repeated');
         delete global.document;
-        done();
+        customElements.whenDefined('built-in').then(() => {
+          const div = document.createElement('div', {is: 'built-in'});
+          assert(div.outerHTML === '<div is="built-in"></div>', 'built-in extends work too');
+          done();
+        });
       });
     });
   });
@@ -907,7 +911,6 @@ customElements.define('test-node', class extends HTMLElement {
     actions.push('attributeChanged');
   }
 });
-
 customElements.define('test-clone-outer', class extends HTMLElement {
   constructor() {
     super();
@@ -920,3 +923,4 @@ customElements.define('test-clone-inner', class extends HTMLElement {
     super().textContent = 'wut';
   }
 });
+customElements.define('built-in', class extends HTMLElement {}, {extends: 'div'});
