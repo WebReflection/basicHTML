@@ -7,10 +7,10 @@ const CSSStyleDeclaration = require('./CSSStyleDeclaration');
 
 // interface HTMLElement // https://html.spec.whatwg.org/multipage/dom.html#htmlelement
 class HTMLElement extends Element {
-  constructor(ownerDocument, name) {
+  constructor(ownerDocument, name, is = name) {
     super(ownerDocument, name);
     this.dataset = new DOMStringMap(this);
-    this.isCustomElement = this.constructor !== HTMLElement;
+    this.isCustomElement = name !== is || this.constructor !== HTMLElement;
     this.style = new CSSStyleDeclaration();
     const style = new Attr(this, 'style', this.style);
     this.attributes.push(style);

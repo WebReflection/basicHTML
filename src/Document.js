@@ -16,9 +16,9 @@ const Text = require('./Text');
 const headTag = el => el.nodeName === 'head';
 const bodyTag = el => el.nodeName === 'body';
 
-const createElement = (self, is, name) => {
+const createElement = (self, name, is) => {
   const Class = self.customElements.get(is) || HTMLElement;
-  return new Class(self, name);
+  return new Class(self, name, is);
 };
 
 const getFoundOrNull = result => {
@@ -77,7 +77,7 @@ module.exports = class Document extends Node {
         return new HTMLTemplateElement(this, name);
       default:
         const extending = 1 < arguments.length && 'is' in options;
-        const el = createElement(this, extending ? options.is : name, name);
+        const el = createElement(this, name, extending ? options.is : name);
         if (extending)
           el.setAttribute('is', options.is);
         return el;
