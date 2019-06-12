@@ -5,6 +5,8 @@ const Element = require('./Element');
 const DOMStringMap = require('./DOMStringMap');
 const CSSStyleDeclaration = require('./CSSStyleDeclaration');
 
+const {setPrototypeOf} = Object;
+
 // interface HTMLElement // https://html.spec.whatwg.org/multipage/dom.html#htmlelement
 class HTMLElement extends Element {
   constructor(ownerDocument, name) {
@@ -14,10 +16,22 @@ class HTMLElement extends Element {
     const style = new Attr(this, 'style', this.style);
     this.attributes.push(style);
     this.attributes.style = style;
+    this.__isCE = -1;
   }
   get isCustomElement() {
-    const is = this.getAttribute('is') || this.nodeName;
-    return -1 < is.indexOf('-');
+    if (this.__isCE < 0) {
+      this.__isCE = 0;
+      const is = this.getAttribute('is') || this.nodeName;
+      const ceName = -1 < is.indexOf('-');
+      if (ceName) {
+        const Class = this.ownerDocument.customElements.get(is);
+        if (Class) {
+          this.__isCE = 1;
+          setPrototypeOf(this, Class.prototype);
+        }
+      }
+    }
+    return this.__isCE === 1;
   }
 }
 
