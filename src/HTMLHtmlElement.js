@@ -49,10 +49,6 @@ const HTMLElement = require('./HTMLElement');
 // interface HTMLHtmlElement // https://html.spec.whatwg.org/multipage/semantics.html#htmlhtmlelement
 module.exports = class HTMLHtmlElement extends HTMLElement {
 
-  constructor(ownerDocument, name) {
-    super(ownerDocument, name).isCustomElement = false;
-  }
-
   get innerHTML() {
     const document = this.ownerDocument;
     return document.head.outerHTML + document.body.outerHTML;

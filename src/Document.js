@@ -18,7 +18,7 @@ const bodyTag = el => el.nodeName === 'body';
 
 const createElement = (self, name, is) => {
   const Class = self.customElements.get(is) || HTMLElement;
-  return new Class(self, name, is);
+  return new Class(self, name);
 };
 
 const getFoundOrNull = result => {
