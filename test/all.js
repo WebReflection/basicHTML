@@ -511,6 +511,7 @@ document.documentElement.onclick = {method(){}}.method;
 document.documentElement.innerHTML = `<!DOCTYPE html>
 <html>
   <head>
+    <style>body>*{}</style>
   </head>
   <body test="attribute">
     <br>
@@ -519,8 +520,14 @@ document.documentElement.innerHTML = `<!DOCTYPE html>
 </html>`;
 assert(
   document.documentElement.hasChildNodes() &&
-  document.getElementsByTagName('*').length === 4,
+  document.getElementsByTagName('*').length === 5,
   'documentElement can inject whole documents'
+);
+
+assert(
+  document.getElementsByTagName('style')[0].outerHTML ===
+  '<style>body>*{}</style>',
+  'style preserves HTML entities'
 );
 
 document.documentElement.innerHTML = '<head></head><body></body>';

@@ -1,6 +1,7 @@
 require('@webreflection/interface');
 
 const CSS_SPLITTER = /\s*,\s*/;
+const AVOID_ESCAPING = /^(?:script|style)$/i;
 
 const escape = require('html-escaper').escape;
 const Parser = require('htmlparser2').Parser;
@@ -67,7 +68,11 @@ const stringifiedNode = el => {
         el.attributes.map(stringifiedNode).join(''),
         Element.VOID_ELEMENT.test(el.nodeName) ?
           ' />' :
-          ('>' + el.childNodes.map(stringifiedNode).join('') + '</' + el.nodeName + '>')
+          ('>' + (
+            AVOID_ESCAPING.test(el.nodeName) ?
+              el.textContent :
+              el.childNodes.map(stringifiedNode).join('')
+          ) + '</' + el.nodeName + '>')
       );
     case Node.ATTRIBUTE_NODE:
       return el.name === 'style' && !el.value ? '' : (
