@@ -35,5 +35,8 @@
   "bugs": {
     "url": "https://github.com/WebReflection/basicHTML/issues"
   },
-  "homepage": "https://github.com/WebReflection/basicHTML#readme"
+  "homepage": "https://github.com/WebReflection/basicHTML#readme",
+  "optionalDependencies": {
+    "canvas": "^2.5.0"
+  }
 }

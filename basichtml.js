@@ -5,6 +5,7 @@ const EventTarget = require('./src/EventTarget');
 const HTMLElement = require('./src/HTMLElement');
 const HTMLUnknownElement = require('./src/HTMLUnknownElement');
 const CustomEvent = require('./src/CustomEvent');
+const Image = require('./src/ImageFactory');
 
 module.exports = {
   Attr: require('./src/Attr'),
@@ -24,6 +25,7 @@ module.exports = {
   HTMLUnknownElement: HTMLUnknownElement,
   HTMLHtmlElement: require('./src/HTMLHtmlElement'),
   HTMLTemplateElement: require('./src/HTMLTemplateElement'),
+  Image: Image,
   Node: require('./src/Node'),
   Text: require('./src/Text'),
   init: (options) => {
@@ -37,6 +39,9 @@ module.exports = {
     window.HTMLElement = HTMLElement;
     window.HTMLUnknownElement = HTMLUnknownElement;
     window.CustomEvent = CustomEvent;
+    window.Image = function (...args) {
+      return Image(window.document, ...args);
+    };
     EventTarget.init(window);
     if (options.selector) {
       const $ = options.selector.$;

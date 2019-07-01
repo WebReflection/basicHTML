@@ -75,6 +75,14 @@ module.exports = class Document extends Node {
     switch (name) {
       case 'template':
         return new HTMLTemplateElement(this, name);
+      case 'canvas':
+      case 'img':
+        try {
+          const file = name === 'img' ? './HTMLImageElement' : './HTMLCanvasElement';
+          const Constructor = require(file);
+          return new Constructor(this);
+        }
+        catch (o_O) {}
       default:
         const extending = 1 < arguments.length && 'is' in options;
         const el = createElement(this, name, extending ? options.is : name);

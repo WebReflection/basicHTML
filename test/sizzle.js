@@ -25,7 +25,7 @@ assert(
 global.self = global;
 HTML.init();
 
-HTML.init({
+const {Image} = HTML.init({
   selector: {
     module: () => require('sizzle'),
     $(Sizzle, element, css) {
@@ -33,3 +33,5 @@ HTML.init({
     }
   }
 });
+
+assert(new Image(3).width === 3);

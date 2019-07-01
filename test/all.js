@@ -1,5 +1,11 @@
 const {title, assert, async, log} = require('tressa');
-const {CustomElementRegistry, CustomEvent, Document, Event, EventTarget, HTMLElement, HTMLTemplateElement, HTMLUnknownElement} = require('../basichtml.js');
+const {
+  CustomElementRegistry, CustomEvent,
+  Document,
+  Event, EventTarget,
+  HTMLElement, HTMLTemplateElement, HTMLUnknownElement,
+  Image
+} = require('../basichtml.js');
 
 title('basicHTML');
 assert(
@@ -61,6 +67,58 @@ assert(
   any.getAttribute('test-attribute') === 'something else',
   'attributes direct changes are reflected'
 );
+
+log('## canvas');
+let canvas = document.createElement('canvas');
+assert(
+  canvas.width === 300 && canvas.height === 150,
+  'a canvas has default size'
+);
+canvas.width = canvas.height = 1;
+assert(
+  canvas.width === 1 && canvas.height === 1,
+  'a canvas can change size'
+);
+assert(
+  canvas.toDataURL() === 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABmJLR0QA/wD/AP+gvaeTAAAAC0lEQVQImWNgAAIAAAUAAWJVMogAAAAASUVORK5CYII=',
+  'a canvas produces an image'
+);
+assert(
+  typeof canvas.getContext('2d') === 'object',
+  'a canvas has a context'
+);
+
+log('## image');
+let img = Image(document, 1, 1);
+assert(
+  img.outerHTML === '<img width="1" height="1" />',
+  'img rendered correctly with two args'
+);
+img = Image(document, 2);
+assert(
+  img.outerHTML === '<img width="2" height="2" />',
+  'img rendered correctly with one arg'
+);
+img.width = canvas.width;
+img.height = canvas.height;
+img.onload = img.onerror = Object;
+img.src = canvas.toDataURL();
+assert(
+  img.onload && img.onerror && img.width && img.height &&
+  img.src === canvas.toDataURL(),
+  'same properties'
+);
+
+document.createElement = (function (createElement) {
+  return function (name) {
+    return name === 'img' ?
+      new HTMLElement(document, name) :
+      createElement.apply(this, arguments);
+  };
+}(document.createElement));
+img = Image(document);
+assert(img.tagName === 'img', 'Simple image works too');
+
 
 log('## class attr');
 attribute = document.createAttribute('class');
