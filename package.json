@@ -1,6 +1,6 @@
 {
   "name": "basichtml",
-  "version": "0.24.0",
+  "version": "1.0.0",
   "description": "A NodeJS based, standard oriented, HTML implementation.",
   "main": "basichtml.js",
   "unpkg": "web.js",

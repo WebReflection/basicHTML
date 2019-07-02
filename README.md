@@ -31,10 +31,10 @@ ctx.lineTo(320, 200);
 ctx.stroke();
 
 const img = new Image();
-img.src = canvas.toDataURL();
 img.onload = () => {
   console.log(img.outerHTML);
 };
+img.src = canvas.toDataURL();
 ```
 
 
