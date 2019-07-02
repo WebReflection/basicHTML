@@ -10,6 +10,34 @@ A NodeJS based, standard oriented, HTML implementation.
 
 <img alt="viperHTML logo" src="https://webreflection.github.io/hyperHTML/logo/basichtml.svg" width="116" height="81">
 
+### New in v1
+
+Introduced optional [node-canvas](https://www.npmjs.com/package/canvas) dependency behind the `<canvas>` and `<img>` scene 🦄
+
+  * automatic fallback if the `canvas` module doesn't build
+  * provide canvas 2d API, with the ability to create real images
+  * provide the `node-canvas` Image ability to react on `load` and `error` events
+
+```js
+const {Image, document} = require('basichtml').init({});
+
+const canvas = document.createElement('canvas');
+canvas.width = 320;
+canvas.height = 200;
+
+const ctx = canvas.getContext('2d');
+ctx.moveTo(0, 0);
+ctx.lineTo(320, 200);
+ctx.stroke();
+
+const img = new Image();
+img.src = canvas.toDataURL();
+img.onload = () => {
+  console.log(img.outerHTML);
+};
+```
+
+
 ### New in 0.23
 
 Custom Elements built-in extends are finally supported 🎉
