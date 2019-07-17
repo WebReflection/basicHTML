@@ -43,7 +43,9 @@ class HTMLElement extends Element {
   Object.defineProperty(HTMLElement.prototype, type, {
     configurable: true,
     value: function () {
-      const event = this.ownerDocument.createEvent('Event');
+      const {ownerDocument} = this;
+      ownerDocument.activeElement = type === 'blur' ? null : this;
+      const event = ownerDocument.createEvent('Event');
       event.initEvent(type, true, true);
       this.dispatchEvent(event);
     }
