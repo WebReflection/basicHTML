@@ -413,6 +413,9 @@ third.addEventListener('click', {handleEvent(e) {
   );
 }}, {once: true});
 third.click();
+assert(document.activeElement === third, 'activeElement');
+third.blur();
+assert(document.activeElement == null, 'activeElement as null');
 third.removeEventListener('twice', {});
 third.removeEventListener('nope', {});
 
