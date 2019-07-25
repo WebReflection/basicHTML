@@ -34,6 +34,8 @@ const parseInto = (node, html) => {
       node.appendChild(document.createTextNode(text));
     },
     onclosetag(name) {
+      while (stack.length)
+        stack.shift().appendChild(stack.shift());
       if (node.nodeName === name)
         node = node.parentNode;
     }
@@ -43,8 +45,6 @@ const parseInto = (node, html) => {
   });
   content.write(html);
   content.end();
-  for (let i = 0, {length} = stack; i < length; i += 2)
-    stack[i].appendChild(stack[i + 1]);
 };
 
 const utils = require('./utils');
