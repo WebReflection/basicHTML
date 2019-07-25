@@ -3,6 +3,16 @@ const {Document, HTMLElement} = require('../basichtml.js');
 const document = new Document();
 const customElements = document.customElements;
 
+customElements.define('test-component', class extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `Hello ${this.getAttribute('greet')}!`;
+  }
+});
+
+document.body.innerHTML = '<test-component greet="David"></test-component>';
+
+console.log(document.toString());
+
 customElements.define('test-node', class extends HTMLElement {
 
   static get observedAttributes() {
@@ -50,5 +60,3 @@ attr.value = 345;
 test.removeAttribute('class');
 console.log(test.outerHTML);
 document.body.textContent = '';
-
-

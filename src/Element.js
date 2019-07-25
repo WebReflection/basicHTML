@@ -11,11 +11,18 @@ const findName = (Class, registry) => {
       return key;
 };
 const parseInto = (node, html) => {
+  const stack = [];
   const document = node.ownerDocument;
   const content = new Parser({
     onopentagname(name) {
       if (Element.VOID_ELEMENT.test(node.nodeName)) node = node.parentNode;
-      node = node.appendChild(document.createElement(name));
+      const child = document.createElement(name);
+      if (child.isCustomElement) {
+        stack.push(node, child);
+        node = child;
+      }
+      else
+        node = node.appendChild(child);
     },
     onattribute(name, value) {
       node.setAttribute(name, value);
@@ -36,6 +43,8 @@ const parseInto = (node, html) => {
   });
   content.write(html);
   content.end();
+  for (let i = 0, {length} = stack; i < length; i += 2)
+    stack[i].appendChild(stack[i + 1]);
 };
 
 const utils = require('./utils');

@@ -908,7 +908,7 @@ async(done => {
     assert(
       actions.splice(0, actions.length).join(',') ===
       [
-        'created', 'connected', 'attributeChanged'
+        'created', 'attributeChanged', 'connected'
       ].join(','),
       'attributes are notified if already there'
     );

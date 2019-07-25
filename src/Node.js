@@ -38,7 +38,7 @@ class Node extends EventTarget {
 
   appendChild(node) {
     if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-      node.childNodes.slice().forEach(this.appendChild, this);
+      node.childNodes.splice(0).forEach(this.appendChild, this);
     } else {
       const i = this.childNodes.indexOf(node);
       if (-1 < i) this.childNodes.splice(i, 1);
@@ -82,7 +82,7 @@ class Node extends EventTarget {
 
   insertBefore(node, child) {
     if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-      node.childNodes.slice().forEach(node => this.insertBefore(node, child));
+      node.childNodes.splice(0).forEach(node => this.insertBefore(node, child));
     } else if (node !== child) {
       const index = this.childNodes.indexOf(node);
       const swapping = -1 < index;
@@ -157,7 +157,7 @@ class Node extends EventTarget {
     switch (this.nodeType) {
       case Node.ELEMENT_NODE:
       case Node.DOCUMENT_FRAGMENT_NODE:
-        this.childNodes.slice().forEach(nullParent);
+        this.childNodes.splice(0).forEach(nullParent);
         if (text) {
           const node = this.ownerDocument.createTextNode(text);
           node.parentNode = this;
