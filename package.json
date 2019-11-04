@@ -16,17 +16,17 @@
   "dependencies": {
     "@webreflection/interface": "^0.1.1",
     "broadcast": "^3.0.0",
-    "html-escaper": "^1.0.1",
+    "html-escaper": "^2.0.0",
     "htmlparser2": "^4.0.0"
   },
   "devDependencies": {
-    "browserify": "^16.1.1",
-    "coveralls": "^3.0.0",
-    "hyperhtml": "^2.10.1",
+    "browserify": "^16.5.0",
+    "coveralls": "^3.0.7",
+    "hyperhtml": "^2.31.1",
     "istanbul": "^0.4.5",
-    "sizzle": "^2.3.3",
+    "sizzle": "^2.3.4",
     "tressa": "^0.3.1",
-    "uglify-es": "^3.0.27"
+    "uglify-es": "^3.3.9"
   },
   "repository": {
     "type": "git",
