@@ -21,8 +21,8 @@
   },
   "devDependencies": {
     "browserify": "^16.5.0",
-    "coveralls": "^3.0.7",
-    "hyperhtml": "^2.31.1",
+    "coveralls": "^3.0.9",
+    "hyperhtml": "^2.31.6",
     "istanbul": "^0.4.5",
     "sizzle": "^2.3.4",
     "tressa": "^0.3.1",
