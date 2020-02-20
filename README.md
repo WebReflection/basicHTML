@@ -10,6 +10,18 @@ A NodeJS based, standard oriented, HTML implementation.
 
 <img alt="viperHTML logo" src="https://webreflection.github.io/hyperHTML/logo/basichtml.svg" width="116" height="81">
 
+
+### Breaking V2 Changes
+
+As the `canvas` module brought in ~100MB of dependency, and as it's not even a common use case, I've decided to move the `canvas` package into `devDependencies`, so that you need to explicitly include it when you use _basicHTML_.
+
+```js
+npm i basichtml canvas
+```
+
+By default, no `canvas` module will be installed at all.
+
+
 ### New in v1
 
 Introduced optional [node-canvas](https://www.npmjs.com/package/canvas) dependency behind the `<canvas>` and `<img>` scene 🦄
