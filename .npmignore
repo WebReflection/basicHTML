@@ -1,8 +1,8 @@
 coverage/*
+logo/*
 node_modules/*
 test/*
 .DS_Store
 .gitignore
 .travis.yml
 package-lock.json
-
