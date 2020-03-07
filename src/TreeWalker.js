@@ -11,7 +11,8 @@ const flat = (parentNode, list) => {
     flat(childNodes[i], list);
   if (!root && nextSibling)
     flat(nextSibling, list);
-  return [...list];
+  if (root)
+    return [...list];
 };
 
 // this is dumb, but it works for uhtml 😎
