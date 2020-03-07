@@ -6,6 +6,8 @@ const HTMLElement = require('./src/HTMLElement');
 const HTMLUnknownElement = require('./src/HTMLUnknownElement');
 const CustomEvent = require('./src/CustomEvent');
 const Image = require('./src/ImageFactory');
+const NodeFilter = require('./src/NodeFilter');
+const TreeWalker = require('./src/TreeWalker');
 
 module.exports = {
   Attr: require('./src/Attr'),
@@ -28,6 +30,8 @@ module.exports = {
   Image: Image,
   Node: require('./src/Node'),
   Text: require('./src/Text'),
+  NodeFilter: NodeFilter,
+  TreeWalker: TreeWalker,
   init: (options) => {
     if (!options) options = {};
     const window = options.window ||

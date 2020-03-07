@@ -770,6 +770,31 @@ let value = {thing: Math.random()};
 flexibility.setAttribute('any', value);
 assert(value === flexibility.getAttribute('any'));
 
+log('## TreeWalker');
+let twFragment = document.createDocumentFragment();
+let twNode = twFragment.appendChild(document.createElement('p'));
+let twComment = twFragment.appendChild(document.createComment('comment'));
+let twText = twFragment.appendChild(document.createTextNode('node'));
+let tw = document.createTreeWalker(twFragment, 1);
+let currentNode = tw.nextNode();
+assert(currentNode === twNode, 'TreeWalker node');
+currentNode = tw.nextNode();
+assert(currentNode === null, 'TreeWalker one node only');
+tw = document.createTreeWalker(twFragment, 128);
+currentNode = tw.nextNode();
+assert(currentNode === twComment, 'TreeWalker comment');
+currentNode = tw.nextNode();
+assert(currentNode === null, 'TreeWalker one comment only');
+tw = document.createTreeWalker(twFragment, -1);
+currentNode = tw.nextNode();
+assert(currentNode === twNode, 'TreeWalker node');
+currentNode = tw.nextNode();
+assert(currentNode === twComment, 'TreeWalker comment');
+currentNode = tw.nextNode();
+assert(currentNode === twText, 'TreeWalker text');
+currentNode = tw.nextNode();
+assert(currentNode === null, 'TreeWalker all children parsed');
+
 log('## Node.cloneNode()');
 let toBeCloned = document.createDocumentFragment();
 let toBeClonedP = toBeCloned.appendChild(document.createElement('p'));
@@ -992,3 +1017,4 @@ customElements.define('test-clone-inner', class extends HTMLElement {
   }
 });
 customElements.define('built-in', class extends HTMLElement {}, {extends: 'div'});
+//*/

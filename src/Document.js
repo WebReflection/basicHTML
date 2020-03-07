@@ -12,6 +12,7 @@ const HTMLHtmlElement = require('./HTMLHtmlElement');
 const HTMLTemplateElement = require('./HTMLTemplateElement');
 const Range = require('./Range');
 const Text = require('./Text');
+const TreeWalker = require('./TreeWalker');
 
 const headTag = el => el.nodeName === 'head';
 const bodyTag = el => el.nodeName === 'body';
@@ -116,6 +117,10 @@ module.exports = class Document extends Node {
 
   createTextNode(text) {
     return new Text(this, text);
+  }
+
+  createTreeWalker(root, whatToShow) {
+    return new TreeWalker(root, whatToShow);
   }
 
   getElementsByTagName(name) {
