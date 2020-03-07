@@ -795,6 +795,10 @@ assert(currentNode === twText, 'TreeWalker text');
 currentNode = tw.nextNode();
 assert(currentNode === null, 'TreeWalker all children parsed');
 
+log('## document.importNode()');
+let toBeImported = document.createDocumentFragment();
+assert(document.importNode(toBeImported) !== toBeImported, 'import node');
+
 log('## Node.cloneNode()');
 let toBeCloned = document.createDocumentFragment();
 let toBeClonedP = toBeCloned.appendChild(document.createElement('p'));

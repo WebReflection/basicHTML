@@ -136,6 +136,10 @@ module.exports = class Document extends Node {
             .concat(html.getElementsByClassName(name));
   }
 
+  importNode(node) {
+    return node.cloneNode(!!arguments[1]);
+  }
+
   toString() {
     return this.childNodes[0] + this.documentElement.outerHTML;
   }
