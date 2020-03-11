@@ -1,14 +1,2 @@
-const HTMLElement = require('./HTMLElement');
-const {COMMENT_NODE} = HTMLElement;
-
-module.exports = class HTMLTextAreaElement extends HTMLElement {
-
-  appendChild(node) {
-    super.appendChild(
-      node.nodeType === COMMENT_NODE ?
-        this.ownerDocument.createTextNode(`<!--${node.textContent}-->`) :
-        node
-    );
-  }
-
-};
+const HTMLNoComments = require('./HTMLNoComments');
+module.exports = class HTMLTextAreaElement extends HTMLNoComments {};

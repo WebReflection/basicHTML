@@ -9,6 +9,7 @@ const Comment = require('./Comment');
 const DocumentFragment = require('./DocumentFragment');
 const HTMLElement = require('./HTMLElement');
 const HTMLHtmlElement = require('./HTMLHtmlElement');
+const HTMLStyleElement = require('./HTMLStyleElement');
 const HTMLTemplateElement = require('./HTMLTemplateElement');
 const HTMLTextAreaElement = require('./HTMLTextAreaElement');
 const Range = require('./Range');
@@ -75,6 +76,8 @@ module.exports = class Document extends Node {
 
   createElement(name, options) {
     switch (name) {
+      case 'style':
+        return new HTMLStyleElement(this, name);
       case 'template':
         return new HTMLTemplateElement(this, name);
       case 'textarea':
