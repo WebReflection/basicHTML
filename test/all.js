@@ -1022,3 +1022,6 @@ customElements.define('test-clone-inner', class extends HTMLElement {
 });
 customElements.define('built-in', class extends HTMLElement {}, {extends: 'div'});
 //*/
+
+
+require('./textarea');

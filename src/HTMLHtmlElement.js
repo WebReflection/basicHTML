@@ -42,7 +42,6 @@ const parseInto = (node, html) => {
   content.end();
 };
 
-const utils = require('./utils');
 const Element = require('./Element');
 const HTMLElement = require('./HTMLElement');
 
