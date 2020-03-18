@@ -19,6 +19,7 @@ const DOMStringMapHandler = {
 
   deleteProperty(target, property) {
     target._ownerElement.removeAttribute(hyphen(property));
+    return true;
   }
 
 };
