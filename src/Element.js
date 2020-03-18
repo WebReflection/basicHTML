@@ -49,6 +49,7 @@ const parseInto = (node, html) => {
 
 const utils = require('./utils');
 const ParentNode = require('./ParentNode');
+const ChildNode = require('./ChildNode');
 const NamedNodeMap = require('./NamedNodeMap');
 const Node = require('./Node');
 const DOMTokenList = require('./DOMTokenList');
@@ -97,7 +98,7 @@ const stringifiedNode = el => {
 };
 
 // interface Element // https://dom.spec.whatwg.org/#interface-element
-class Element extends Node.implements(ParentNode) {
+class Element extends Node.implements(ParentNode, ChildNode) {
   constructor(ownerDocument, name) {
     super(ownerDocument);
     this.attributes = new NamedNodeMap(this);

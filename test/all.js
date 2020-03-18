@@ -763,6 +763,19 @@ assert(
   document.body.closest('shenanigans') === null,
   'same goes for closest'
 );
+
+document.body.innerHTML = '<p>1</p>';
+document.body.firstChild.replaceWith(document.createElement('p'));
+assert(document.body.firstChild.textContent === '');
+document.body.firstChild.after(document.createElement('div'));
+document.body.lastChild.before(document.createElement('div'));
+let tmpChild = document.body.firstChild;
+tmpChild.remove();
+tmpChild.remove();
+tmpChild.before();
+tmpChild.after();
+tmpChild.replaceWith();
+
 document.body.innerHTML = '<p with="attributes">some <!--content--></p>';
 assert(document.body.innerHTML === '<p with="attributes">some <!--content--></p>');
 let flexibility = document.createElement('_');
