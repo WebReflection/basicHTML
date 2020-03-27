@@ -17,7 +17,7 @@
   "dependencies": {
     "@webreflection/interface": "^0.1.1",
     "broadcast": "^3.0.0",
-    "html-escaper": "^2.0.1",
+    "html-escaper": "^3.0.0",
     "htmlparser2": "^4.1.0"
   },
   "devDependencies": {
