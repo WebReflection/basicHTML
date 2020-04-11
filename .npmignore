@@ -1,3 +1,4 @@
+.nyc_output/*
 coverage/*
 logo/*
 node_modules/*

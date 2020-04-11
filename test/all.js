@@ -624,9 +624,10 @@ voidInDiv.innerHTML = `
     <link rel="stylesheet" href="/test">
   </div>
 `;
+
 assert(
   voidInDiv.innerHTML ===
-  "\n  <div>\n    <meta charset=\"utf-8\" /><link rel=\"stylesheet\" href=\"/test\" /></div>\n",
+  "\n  <div>\n    <meta charset=\"utf-8\" />\n    <link rel=\"stylesheet\" href=\"/test\" />\n  </div>\n",
   'also inside elements'
 );
 
@@ -798,7 +799,7 @@ currentNode = tw.nextNode();
 assert(currentNode === twComment, 'TreeWalker comment');
 currentNode = tw.nextNode();
 assert(currentNode === null, 'TreeWalker one comment only');
-tw = document.createTreeWalker(twFragment, -1);
+tw = document.createTreeWalker(twFragment);
 currentNode = tw.nextNode();
 assert(currentNode === twNode, 'TreeWalker node');
 currentNode = tw.nextNode();
@@ -1038,3 +1039,4 @@ customElements.define('built-in', class extends HTMLElement {}, {extends: 'div'}
 
 require('./textarea');
 require('./style');
+require('./void');

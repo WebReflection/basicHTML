@@ -10,6 +10,11 @@ const types = {
   DOCUMENT_FRAGMENT_NODE: 11
 };
 
+// void cases
+const VOID_ELEMENT = /^area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr$/i;
+const VOID_ELEMENTS = new RegExp(`<(${VOID_ELEMENT.source})([^>]*?)>`, 'gi');
+const VOID_SANITIZER = (_, $1, $2) => `<${$1}${$2}${/\/$/.test($2) ? '' : ' /'}>`;
+
 // shared constants
 const connect = (parentNode, child) => {
   if (
@@ -56,13 +61,15 @@ function findBySelector(css) {
 }
 
 module.exports = {
+  VOID_ELEMENT,
   connect,
   disconnect,
   notifyAttributeChanged,
   types,
   querySelectorAll(css) {
     return [].concat(...('' + css).split(CSS_SPLITTER).map(findBySelector, this));
-  }
+  },
+  voidSanitizer: html => html.replace(VOID_ELEMENTS, VOID_SANITIZER)
 };
 
 function findBAttributeName(node, name, all) {

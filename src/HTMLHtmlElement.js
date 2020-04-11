@@ -1,4 +1,6 @@
 const Parser = require('htmlparser2').Parser;
+const {VOID_ELEMENT} = require('./utils');
+
 const parseInto = (node, html) => {
   const document = node.ownerDocument;
   const content = new Parser({
@@ -11,7 +13,7 @@ const parseInto = (node, html) => {
           node = document[name];
           break;
         default:
-          if (Element.VOID_ELEMENT.test(node.nodeName)) node = node.parentNode;
+          if (VOID_ELEMENT.test(node.nodeName)) node = node.parentNode;
           node = node.appendChild(document.createElement(name));
           break;
       }

@@ -2,6 +2,7 @@ require('@webreflection/interface');
 
 const CSS_SPLITTER = /\s*,\s*/;
 const AVOID_ESCAPING = /^(?:script|style)$/i;
+const {VOID_ELEMENT, voidSanitizer} = require('./utils');
 
 const escape = require('html-escaper').escape;
 const Parser = require('htmlparser2').Parser;
@@ -15,7 +16,6 @@ const parseInto = (node, html) => {
   const document = node.ownerDocument;
   const content = new Parser({
     onopentagname(name) {
-      if (Element.VOID_ELEMENT.test(node.nodeName)) node = node.parentNode;
       const child = document.createElement(name);
       if (child.isCustomElement) {
         stack.push(node, child);
@@ -36,6 +36,7 @@ const parseInto = (node, html) => {
     onclosetag(name) {
       while (stack.length)
         stack.shift().appendChild(stack.shift());
+      /* istanbul ignore else */
       if (node.nodeName === name)
         node = node.parentNode;
     }
@@ -43,7 +44,7 @@ const parseInto = (node, html) => {
     decodeEntities: true,
     xmlMode: true
   });
-  content.write(html);
+  content.write(voidSanitizer(html));
   content.end();
 };
 
@@ -76,7 +77,7 @@ const stringifiedNode = el => {
     case Node.ELEMENT_NODE:
       return ('<' + el.nodeName).concat(
         el.attributes.map(stringifiedNode).join(''),
-        Element.VOID_ELEMENT.test(el.nodeName) ?
+        VOID_ELEMENT.test(el.nodeName) ?
           ' />' :
           ('>' + (
             AVOID_ESCAPING.test(el.nodeName) ?
@@ -272,7 +273,5 @@ class Element extends Node.implements(ParentNode, ChildNode) {
   }
 
 };
-
-Element.VOID_ELEMENT = /^area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr$/i;
 
 module.exports = Element;
