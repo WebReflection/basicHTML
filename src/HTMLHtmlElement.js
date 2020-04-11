@@ -1,5 +1,5 @@
 const Parser = require('htmlparser2').Parser;
-const {VOID_ELEMENT} = require('./utils');
+const {VOID_ELEMENT, voidSanitizer} = require('./utils');
 
 const parseInto = (node, html) => {
   const document = node.ownerDocument;
@@ -13,7 +13,6 @@ const parseInto = (node, html) => {
           node = document[name];
           break;
         default:
-          if (VOID_ELEMENT.test(node.nodeName)) node = node.parentNode;
           node = node.appendChild(document.createElement(name));
           break;
       }
@@ -31,8 +30,7 @@ const parseInto = (node, html) => {
       switch (name) {
         case 'html': break;
         default:
-          if (node.nodeName === name)
-            node = node.parentNode;
+          node = node.parentNode;
           break;
       }
     }
@@ -40,7 +38,7 @@ const parseInto = (node, html) => {
     decodeEntities: true,
     xmlMode: true
   });
-  content.write(html);
+  content.write(voidSanitizer(html));
   content.end();
 };
 

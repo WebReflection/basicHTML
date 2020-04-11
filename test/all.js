@@ -613,7 +613,7 @@ document.documentElement.innerHTML = `
   </head>`;
 assert(
   document.documentElement.innerHTML ===
-  "<head>\n    <meta charset=\"utf-8\" /><link rel=\"stylesheet\" href=\"/test\" /></head><body></body>",
+  "<head>\n    <meta charset=\"utf-8\" />\n    <link rel=\"stylesheet\" href=\"/test\" />\n  </head><body></body>",
   'multi void elements are supported'
 );
 
