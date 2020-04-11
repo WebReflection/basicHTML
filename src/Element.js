@@ -16,13 +16,23 @@ const parseInto = (node, html) => {
   const document = node.ownerDocument;
   const content = new Parser({
     onopentagname(name) {
-      const child = document.createElement(name);
-      if (child.isCustomElement) {
-        stack.push(node, child);
-        node = child;
+      switch (name) {
+        case 'html': break;
+        case 'head':
+        case 'body':
+          node.replaceChild(document.createElement(name), document[name]);
+          node = document[name];
+          break;
+        default:
+          const child = document.createElement(name);
+          if (child.isCustomElement) {
+            stack.push(node, child);
+            node = child;
+          }
+          else
+            node = node.appendChild(child);
+          break;
       }
-      else
-        node = node.appendChild(child);
     },
     onattribute(name, value) {
       node.setAttribute(name, value);
@@ -34,11 +44,16 @@ const parseInto = (node, html) => {
       node.appendChild(document.createTextNode(text));
     },
     onclosetag(name) {
-      while (stack.length)
-        stack.shift().appendChild(stack.shift());
-      /* istanbul ignore else */
-      if (node.nodeName === name)
-        node = node.parentNode;
+      switch (name) {
+        case 'html': break;
+        default:
+          while (stack.length)
+            stack.shift().appendChild(stack.shift());
+          /* istanbul ignore else */
+          if (node.nodeName === name)
+            node = node.parentNode;
+          break;
+      }
     }
   }, {
     decodeEntities: true,
