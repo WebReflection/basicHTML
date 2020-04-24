@@ -23,7 +23,7 @@
   "devDependencies": {
     "browserify": "^16.5.1",
     "canvas": "^2.6.1",
-    "coveralls": "^3.0.13",
+    "coveralls": "^3.0.14",
     "hyperhtml": "^2.32.2",
     "nyc": "^15.0.1",
     "sizzle": "^2.3.5",
