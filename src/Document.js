@@ -66,6 +66,10 @@ module.exports = class Document extends Node {
     return attr;
   }
 
+  createAttributeNS(_, name) {
+    return this.createAttribute(name);
+  }
+
   createComment(comment) {
     return new Comment(this, comment);
   }

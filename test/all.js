@@ -909,7 +909,7 @@ async(done => {
     test.setAttribute('test', 123);
     var attr = test.getAttributeNode('test');
     attr.value = 456;
-    attr = document.createAttribute('test');
+    attr = document.createAttributeNS(null, 'test');
     test.setAttributeNode(attr);
     attr.value = 345;
     assert(attr.textContent == attr.value);
