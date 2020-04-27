@@ -216,6 +216,10 @@ class Element extends Node.implements(ParentNode, ChildNode) {
     specialAttribute(this, attr);
   }
 
+  removeAttributeNodeNS(attr) {
+    return this.removeAttributeNode(attr);
+  }
+
   setAttributeNode(attr) {
     const name = attr.name;
     const old = this.getAttributeNode(name);
@@ -240,6 +244,10 @@ class Element extends Node.implements(ParentNode, ChildNode) {
         return null;
       }
     }
+  }
+
+  setAttributeNodeNS(attr) {
+    return this.setAttribute(attr);
   }
 
   get id() {

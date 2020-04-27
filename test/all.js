@@ -826,7 +826,7 @@ assert(toBeClonedP.getAttributeNode('one') === toBeClonedP.attributes.one, 'attr
 let toBeClonedAttr = toBeClonedP.getAttributeNode('one').cloneNode();
 assert(toBeClonedAttr.name === 'one' && toBeClonedAttr.value === 'two', 'clone attributes');
 
-toBeClonedP.removeAttributeNode(toBeClonedP.attributes.one);
+toBeClonedP.removeAttributeNodeNS(toBeClonedP.attributes.one);
 assert(toBeClonedP.attributes.one == null, 'attributes can be removed');
 try {
   toBeClonedP.removeAttributeNode(toBeClonedP.attributes.one);
@@ -910,19 +910,19 @@ async(done => {
     var attr = test.getAttributeNode('test');
     attr.value = 456;
     attr = document.createAttributeNS(null, 'test');
-    test.setAttributeNode(attr);
+    test.setAttributeNodeNS(attr);
     attr.value = 345;
     assert(attr.textContent == attr.value);
     attr.textContent = 345;
     assert(
-      actions.splice(0, actions.length).join(',') ===
+      actions.splice(0).join(',') ===
       [
         'created',
         'connected',
         'attributeChanged',
         'attributeChanged',
-        'attributeChanged',
-        'attributeChanged'
+        // 'attributeChanged',
+        // 'attributeChanged'
       ].join(','),
       'expected actions'
     );
