@@ -921,8 +921,8 @@ async(done => {
         'connected',
         'attributeChanged',
         'attributeChanged',
-        // 'attributeChanged',
-        // 'attributeChanged'
+        'attributeChanged',
+        'attributeChanged'
       ].join(','),
       'expected actions'
     );

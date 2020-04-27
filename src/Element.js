@@ -247,7 +247,7 @@ class Element extends Node.implements(ParentNode, ChildNode) {
   }
 
   setAttributeNodeNS(attr) {
-    return this.setAttribute(attr);
+    return this.setAttributeNode(attr);
   }
 
   get id() {
