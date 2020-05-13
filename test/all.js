@@ -826,7 +826,7 @@ assert(toBeClonedP.getAttributeNode('one') === toBeClonedP.attributes.one, 'attr
 let toBeClonedAttr = toBeClonedP.getAttributeNode('one').cloneNode();
 assert(toBeClonedAttr.name === 'one' && toBeClonedAttr.value === 'two', 'clone attributes');
 
-toBeClonedP.removeAttributeNodeNS(toBeClonedP.attributes.one);
+toBeClonedP.removeAttributeNode(toBeClonedP.attributes.one);
 assert(toBeClonedP.attributes.one == null, 'attributes can be removed');
 try {
   toBeClonedP.removeAttributeNode(toBeClonedP.attributes.one);
