@@ -17,12 +17,17 @@ const parseInto = (node, html) => {
   const content = new Parser({
     onopentagname(name) {
       switch (name) {
-        case 'html': break;
+        /* TODO this actually breaks heresy-ssr
+        case 'html':
+          node = document.documentElement;
+          node.childNodes = [];
+          break;
         case 'head':
         case 'body':
           node.replaceChild(document.createElement(name), document[name]);
           node = document[name];
           break;
+        */
         default:
           const child = document.createElement(name);
           if (child.isCustomElement) {
@@ -45,7 +50,6 @@ const parseInto = (node, html) => {
     },
     onclosetag(name) {
       switch (name) {
-        case 'html': break;
         default:
           while (stack.length)
             stack.shift().appendChild(stack.shift());
