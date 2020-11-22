@@ -1,7 +1,7 @@
 {
   "name": "basichtml",
   "type": "commonjs",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "A NodeJS based, standard oriented, HTML implementation.",
   "main": "basichtml.js",
   "unpkg": "web.js",
