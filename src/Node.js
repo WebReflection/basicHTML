@@ -1,5 +1,6 @@
 const utils = require('./utils');
 const EventTarget = require('./EventTarget');
+const ChildNode = require('./ChildNode');
 
 const nullParent = node => resetParent(null, node);
 
@@ -28,7 +29,7 @@ const stringifiedContent = el => {
 };
 
 // interface Node : EventTarget // https://dom.spec.whatwg.org/#node
-class Node extends EventTarget {
+class Node extends EventTarget.implements(ChildNode) {
 
   constructor(ownerDocument) {
     super();

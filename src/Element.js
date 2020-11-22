@@ -118,7 +118,7 @@ const stringifiedNode = el => {
 };
 
 // interface Element // https://dom.spec.whatwg.org/#interface-element
-class Element extends Node.implements(ParentNode, ChildNode) {
+class Element extends Node.implements(ParentNode) {
   constructor(ownerDocument, name) {
     super(ownerDocument);
     this.attributes = new NamedNodeMap(this);
