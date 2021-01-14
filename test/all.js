@@ -784,6 +784,15 @@ let value = {thing: Math.random()};
 flexibility.setAttribute('any', value);
 assert(value === flexibility.getAttribute('any'));
 
+log('## Node.normalize()');
+tmpChild = document.createElement('ul');
+tmpChild.innerHTML = `
+  <li>a</li>
+  <li>b</li>
+`;
+tmpChild.normalize();
+assert(tmpChild.innerHTML === '<li>a</li><li>b</li>');
+
 log('## TreeWalker');
 let twFragment = document.createDocumentFragment();
 let twNode = twFragment.appendChild(document.createElement('p'));

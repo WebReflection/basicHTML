@@ -97,6 +97,16 @@ class Node extends EventTarget {
     return node;
   }
 
+  normalize() {
+    for (let {childNodes} = this, i = 0; i < childNodes.length; i++) {
+      const node = childNodes[i];
+      if (node.nodeType === 3 && !node.textContent.trim())
+        childNodes.splice(i--, 1);
+      else if (node.nodeType === 1)
+        node.normalize();
+    }
+  }
+
   removeChild(child) {
     nullParent(child);
     return child;
