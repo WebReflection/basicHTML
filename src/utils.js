@@ -20,7 +20,9 @@ const connect = (parentNode, child) => {
   if (
     child.nodeType === ELEMENT_NODE &&
     child.isCustomElement && 'connectedCallback' in child &&
-    parentNode && parentNode.nodeType !== types.DOCUMENT_FRAGMENT_NODE
+    parentNode &&
+    parentNode.nodeType !== types.DOCUMENT_FRAGMENT_NODE &&
+    parentNode.nodeName !== 'template'
   ) {
     child.connectedCallback();
   }
