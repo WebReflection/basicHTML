@@ -1,5 +1,7 @@
 const Event = require('./Event');
 
+const {defineProperty} = Object;
+
 const crawlUp = node =>
   node.parentNode ||
   (node.nodeType === node.DOCUMENT_NODE ? node.defaultView : null);
@@ -63,16 +65,19 @@ module.exports = class EventTarget {
   dispatchEvent(event) {
     const type = event.type;
     let node = this;
-    if (!event.target) event.target = node;
-    if (!event.currentTarget) event.currentTarget = node;
-    event.eventPhase = Event.AT_TARGET;
+    /* istanbul ignore next */
+    if (!event.target) defineProperty(event, 'target', {value: node});
+    /* istanbul ignore next */
+    if (!event.currentTarget) defineProperty(event, 'currentTarget', {value: node});
+    /* istanbul ignore next */
+    if (!event.eventPhase) defineProperty(event, 'eventPhase', {configurable: true, value: Event.AT_TARGET});
     do {
       if (type in node._eventTarget) {
         node._eventTarget[type].callbacks.some(
           cb => (cb(event), event.cancelImmediateBubble)
         );
       }
-      event.eventPhase = Event.BUBBLING_PHASE;
+      defineProperty(event, 'eventPhase', {configurable: true, value: Event.BUBBLING_PHASE});
     } while (event.bubbles && !event.cancelBubble && (node = crawlUp(node)));
     return !event.defaultPrevented;
   }
