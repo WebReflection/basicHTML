@@ -66,9 +66,9 @@ module.exports = class EventTarget {
     const type = event.type;
     let node = this;
     /* istanbul ignore next */
-    if (!event.target) defineProperty(event, 'target', {value: node});
+    if (!event.target) defineProperty(event, 'target', {get: () => node});
     /* istanbul ignore next */
-    if (!event.currentTarget) defineProperty(event, 'currentTarget', {value: node});
+    if (!event.currentTarget) defineProperty(event, 'currentTarget', {get: () => node});
     /* istanbul ignore next */
     if (!event.eventPhase) defineProperty(event, 'eventPhase', {configurable: true, value: Event.AT_TARGET});
     do {
