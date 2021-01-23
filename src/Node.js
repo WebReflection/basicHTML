@@ -141,6 +141,11 @@ class Node extends EventTarget {
     return null;
   }
 
+  get parentElement() {
+    const {parentNode} = this;
+    return parentNode && parentNode.nodeType === 1 ? parentNode : null;
+  }
+
   get previousSibling() {
     if (this.parentNode) {
       const cn = this.parentNode.childNodes;

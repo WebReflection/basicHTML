@@ -848,6 +848,8 @@ log('## siblings');
 let ol = document.createElement('ol');
 let li = document.createElement('li');
 ol.appendChild(li);
+assert(li.parentElement === ol, 'parentElement');
+assert(ol.parentElement === null, 'parentElement');
 assert(li.previousElementSibling === null, 'null previousElementSibling');
 assert(li.nextElementSibling === null, 'null nextElementSibling');
 ol.insertBefore(document.createElement('li'), li);
