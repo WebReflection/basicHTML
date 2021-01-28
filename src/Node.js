@@ -97,11 +97,21 @@ class Node extends EventTarget {
     return node;
   }
 
+  /* istanbul ignore next */
   normalize() {
     for (let {childNodes} = this, i = 0; i < childNodes.length; i++) {
       const node = childNodes[i];
-      if (node.nodeType === 3 && !node.textContent.trim())
-        childNodes.splice(i--, 1);
+      if (node.nodeType === 3) {
+        if (!node.textContent.trim())
+          childNodes.splice(i--, 1);
+        else {
+          const {previousSibling} = node;
+          if (previousSibling && previousSibling.nodeType === 3) {
+            previousSibling.textContent += node.textContent;
+            childNodes.splice(i--, 1);
+          }
+        }
+      }
       else if (node.nodeType === 1)
         node.normalize();
     }
