@@ -1,10 +1,19 @@
 # basicHTML
 
-[![donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&style=flat)](https://github.com/WebReflection/donate)
 [![Coverage Status](https://coveralls.io/repos/github/WebReflection/basicHTML/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/basicHTML?branch=master)
 [![Build Status](https://travis-ci.org/WebReflection/basicHTML.svg?branch=master)](https://travis-ci.org/WebReflection/basicHTML)
 [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC)
-[![Greenkeeper badge](https://badges.greenkeeper.io/WebReflection/basicHTML.svg)](https://greenkeeper.io/)
+
+
+## 📣 Announcement
+
+Be aware there is a shiny new module called **[LinkeDOM](https://github.com/WebReflection/linkedom#readme)** which is completely different, but better than *basicHTML*, at pretty much everything.
+
+All modules of mine are going to use *linkedom* instead, and *basicHTML* will be soon deprecated or put in maintainance mode.
+
+Feel free to read the [related post](https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311) to know more about this decision.
+
+- - -
 
 A NodeJS based, standard oriented, HTML implementation.
 
