@@ -7,7 +7,7 @@
 
 ## 📣 Announcement
 
-Be aware there is a shiny new module called **[linkedom](https://github.com/WebReflection/linkedom#readme)** which is completely different, but better than *basicHTML*, at pretty much everything.
+Be aware there is a shiny new module called **[LinkeDOM](https://github.com/WebReflection/linkedom#readme)** which is completely different, but better than *basicHTML*, at pretty much everything.
 
 All modules of mine are going to use *linkedom* instead, and *basicHTML* will be soon deprecated or put in maintainance mode.
 
