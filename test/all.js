@@ -1051,3 +1051,5 @@ customElements.define('built-in', class extends HTMLElement {}, {extends: 'div'}
 require('./textarea');
 require('./style');
 require('./void');
+
+require('./issue-56');

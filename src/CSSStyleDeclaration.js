@@ -63,7 +63,7 @@ module.exports = class CSSStyleDeclaration {
 };
 
 function toProperty(key) {
-  return key.replace(/(.?)-([^-])/g, ($0, $1, $2) => ($1 === '-' ? $0 : ($1 + $2).toUpperCase()));
+  return key.replace(/(.?)-([^-])/g, ($0, $1, $2) => ($1 === '-' ? $0 : ($1 + $2.toUpperCase())));
 }
 
 function toStyle(key) {
