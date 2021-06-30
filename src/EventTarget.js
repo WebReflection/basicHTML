@@ -73,7 +73,7 @@ module.exports = class EventTarget {
     if (!event.eventPhase) defineProperty(event, 'eventPhase', {configurable: true, value: Event.AT_TARGET});
     do {
       if (type in node._eventTarget) {
-        node._eventTarget[type].callbacks.some(
+        [...node._eventTarget[type].callbacks].some(
           cb => (cb(event), event.cancelImmediateBubble)
         );
       }
